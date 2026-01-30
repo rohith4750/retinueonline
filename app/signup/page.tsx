@@ -106,20 +106,19 @@ function SignupForm() {
   }
 
   return (
-    <div className="min-h-screen app-shell">
-      <header className="app-header border-b">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
-          <Link href="/" className="text-lg font-semibold text-slate-100">
-            Hotel The Retinue
-          </Link>
-          <nav className="flex flex-wrap gap-3 text-sm">
-            <Link href="/rooms" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Rooms</Link>
-            <Link href="/conventions" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Conventions</Link>
-            <Link href="/contact" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Contact</Link>
-            <Link href="/book" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Book a room</Link>
-            <Link href="/my-booking" className="text-slate-400 hover:text-[var(--accent)] transition-colors">View my booking</Link>
-            <Link href="/blog" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Blog</Link>
-          </nav>
+    <div className="min-h-screen app-shell animate-fade-in">
+      <header className="border-b border-white/5 py-4" style={{ background: "rgba(12, 15, 20, 0.9)" }}>
+        <div className="w-full max-w-6xl mx-auto px-4 flex items-center flex-nowrap">
+          <span className="flex-1 min-w-0" aria-hidden />
+          <span className="font-heading text-lg font-medium text-slate-100 shrink-0 whitespace-nowrap">Hotel The Retinue & Buchiraju Conventions</span>
+          <span className="flex-1 min-w-0 flex justify-end">
+            <Link
+              href="/"
+              className="text-sm text-[var(--accent)] hover:underline transition-colors whitespace-nowrap"
+            >
+              Back to home →
+            </Link>
+          </span>
         </div>
       </header>
       <main className="max-w-md mx-auto px-4 py-8">
