@@ -128,7 +128,7 @@ function SignupForm() {
             Sign up
           </h2>
           <p className="text-slate-400 text-sm mb-6">
-            {step === "email" && "Enter your email. We’ll send a one-time code."}
+            {step === "email" && "Enter your email. We’ll send a verification code."}
             {step === "otp" && `Enter the 6-digit code sent to ${maskEmail(email)}.`}
             {step === "profile" && "Complete your profile."}
           </p>

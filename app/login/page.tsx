@@ -71,8 +71,17 @@ function LoginForm() {
   return (
     <div className="min-h-screen app-shell animate-fade-in">
       <header className="border-b border-white/5 py-4" style={{ background: "rgba(12, 15, 20, 0.9)" }}>
-        <div className="max-w-md mx-auto px-4 flex items-center justify-center text-center">
-          <span className="font-heading text-lg font-medium text-slate-100">Hotel The Retinue & Buchiraju Conventions</span>
+        <div className="w-full max-w-6xl mx-auto px-4 flex items-center flex-nowrap">
+          <span className="flex-1 min-w-0" aria-hidden />
+          <span className="font-heading text-lg font-medium text-slate-100 shrink-0 whitespace-nowrap">Hotel The Retinue & Buchiraju Conventions</span>
+          <span className="flex-1 min-w-0 flex justify-end">
+            <Link
+              href="/"
+              className="text-sm text-[var(--accent)] hover:underline transition-colors whitespace-nowrap"
+            >
+              Back to home →
+            </Link>
+          </span>
         </div>
       </header>
       <main className="max-w-md mx-auto px-4 py-12 animate-slide-up">
@@ -81,7 +90,7 @@ function LoginForm() {
             Log in
           </h2>
           <p className="text-slate-400 text-sm mb-6">
-            {step === "email" && "Enter your email. We&apos;ll send a one-time code."}
+            {step === "email" && "Enter your email. We'll send a verification code."}
             {step === "otp" && `Enter the 6-digit code sent to ${maskEmail(email)}.`}
           </p>
 
