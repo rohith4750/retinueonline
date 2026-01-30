@@ -23,6 +23,9 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Hotel The Retinue | Book Online",
   description: "Book your stay online. Check availability and manage your booking.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
