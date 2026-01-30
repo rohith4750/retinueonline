@@ -37,28 +37,17 @@ export default function BlogPage() {
       <header className="app-header border-b sticky top-0 z-20">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/" className="text-lg font-semibold text-slate-100">
-            Hotel The Retinue
+            Hotel The Retinue & Buchiraju Conventions
           </Link>
-          <nav className="flex gap-4 text-sm">
-            <Link
-              href="/book"
-              className="text-slate-300 hover:text-sky-400 transition-colors"
-            >
-              Book a room
-            </Link>
-            <Link
-              href="/my-booking"
-              className="text-slate-300 hover:text-sky-400 transition-colors"
-            >
-              View my booking
-            </Link>
-            <Link
-              href="/signup"
-              className="text-slate-300 hover:text-sky-400 transition-colors"
-            >
-              Sign up
-            </Link>
-            <span className="text-sky-400 font-medium">Blog</span>
+          <nav className="flex flex-wrap gap-3 text-sm">
+            <Link href="/rooms" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Rooms</Link>
+            <Link href="/conventions" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Conventions</Link>
+            <Link href="/contact" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Contact</Link>
+            <Link href="/book" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Book a room</Link>
+            <Link href="/my-booking" className="text-slate-400 hover:text-[var(--accent)] transition-colors">View my booking</Link>
+            <Link href="/login" className="text-slate-400 hover:text-[var(--accent)] transition-all duration-300">Log in</Link>
+            <Link href="/signup" className="text-slate-400 hover:text-[var(--accent)] transition-all duration-300">Sign up</Link>
+            <span className="text-[var(--accent)] font-medium">Blog</span>
           </nav>
         </div>
       </header>
@@ -141,7 +130,7 @@ function BlogCard({ post }: { post: BlogPost }) {
             {post.author && ` · ${post.author}`}
           </p>
         </div>
-        <span className="text-sky-400 shrink-0" aria-hidden>
+        <span className="text-[var(--accent)] shrink-0" aria-hidden>
           →
         </span>
       </div>

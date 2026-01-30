@@ -1,4 +1,16 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Hotel The Retinue – customer booking portal (Next.js). Book rooms, view bookings, sign up with OTP, blog.
+
+## Environment variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `NEXT_PUBLIC_API_BASE` | **No** | API base URL. Default: `https://hoteltheretinue.in/api/public` |
+| `NEXT_PUBLIC_USE_API_PROXY` | **No** | Set to `true` for **local dev** so API calls go via your app (avoids CORS from localhost). Leave unset/false in production. |
+
+- **Local:** Copy `.env.local.example` to `.env.local` and set `NEXT_PUBLIC_USE_API_PROXY=true` so availability, booking, and signup work without CORS.
+- **Vercel:** Do **not** set `NEXT_PUBLIC_USE_API_PROXY` (or set false). Ensure the API allows your deployed origin in CORS.
+
+No API keys or secrets are needed in this frontend; the backend handles auth and CORS.
 
 ## Getting Started
 

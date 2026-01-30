@@ -22,18 +22,18 @@ export default async function BlogPostPage({ params }: Props) {
       <header className="app-header border-b">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/" className="text-lg font-semibold text-slate-100">
-            Hotel The Retinue
+            Hotel The Retinue & Buchiraju Conventions
           </Link>
           <nav className="flex gap-4 text-sm">
             <Link
               href="/book"
-              className="text-slate-300 hover:text-sky-400 transition-colors"
+              className="text-slate-400 hover:text-[var(--accent)] transition-colors"
             >
               Book a room
             </Link>
             <Link
               href="/my-booking"
-              className="text-slate-300 hover:text-sky-400 transition-colors"
+              className="text-slate-400 hover:text-[var(--accent)] transition-colors"
             >
               View my booking
             </Link>
@@ -50,7 +50,7 @@ export default async function BlogPostPage({ params }: Props) {
       <main className="max-w-4xl mx-auto px-4 py-8">
         <Link
           href="/blog"
-          className="text-sm text-sky-400 hover:underline mb-6 inline-block"
+          className="text-sm text-[var(--accent)] hover:underline mb-6 inline-block"
         >
           ← Back to blog
         </Link>

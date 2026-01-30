@@ -22,6 +22,7 @@ type Stored = {
 
 export default function BookConfirmationPage() {
   const [data, setData] = useState<Stored | null>(null);
+  const [hasChecked, setHasChecked] = useState(false);
 
   useEffect(() => {
     try {
@@ -29,10 +30,20 @@ export default function BookConfirmationPage() {
       if (raw) {
         const parsed = JSON.parse(raw) as Stored;
         setData(parsed);
-        sessionStorage.removeItem(CONFIRM_KEY);
       }
     } catch (_) {}
+    setHasChecked(true);
   }, []);
+
+  if (!hasChecked) {
+    return (
+      <BookLayout currentStep="/book/confirmation">
+        <div className="card p-8 max-w-md mx-auto text-center text-slate-400">
+          Loading…
+        </div>
+      </BookLayout>
+    );
+  }
 
   if (data === null) {
     return (
@@ -87,7 +98,7 @@ export default function BookConfirmationPage() {
           <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">
             Booking reference
           </p>
-          <p className="text-2xl font-mono font-bold text-sky-400 tracking-wider">
+          <p className="text-2xl font-mono font-bold text-[var(--accent)] tracking-wider">
             {data.bookingReference}
           </p>
           {data.bookingId && (
@@ -130,6 +141,11 @@ export default function BookConfirmationPage() {
           <Link
             href="/my-booking"
             className="btn-primary w-full py-3 flex items-center justify-center gap-2"
+            onClick={() => {
+              try {
+                sessionStorage.removeItem(CONFIRM_KEY);
+              } catch (_) {}
+            }}
           >
             View my booking
           </Link>

@@ -197,7 +197,7 @@ function BookCheckoutContent() {
               type="checkbox"
               checked={agreeTerms}
               onChange={(e) => setAgreeTerms(e.target.checked)}
-              className="mt-1 rounded border-slate-600 bg-slate-800 text-sky-500 focus:ring-sky-500"
+              className="mt-1 rounded border-slate-600 bg-slate-800 text-[var(--accent)] focus:ring-[var(--accent)]"
             />
             <span className="text-sm text-slate-400">
               I agree to the booking terms and cancellation policy.

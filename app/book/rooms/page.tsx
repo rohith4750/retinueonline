@@ -111,7 +111,7 @@ function BookRoomsContent() {
         </p>
         <Link
           href={`/book?checkIn=${checkIn}&checkOut=${checkOut}`}
-          className="text-sm text-sky-400 hover:underline"
+          className="text-sm text-[var(--accent)] hover:underline"
         >
           Change dates
         </Link>
@@ -145,7 +145,7 @@ function BookRoomsContent() {
                 <p className="text-slate-400 text-sm mb-2">
                   Up to {room.capacity} guests · Floor {room.floor}
                 </p>
-                <p className="text-xl font-semibold text-sky-400">
+                <p className="text-xl font-semibold text-[var(--accent)]">
                   {formatCurrency(room.basePrice)}
                   <span className="text-sm font-normal text-slate-400">
                     /night

@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import PrivateHeader from "../components/PrivateHeader";
+import { isLoggedIn, getCustomerEmail } from "@/lib/auth";
 import {
   publicApi,
   isApiError,
@@ -18,17 +21,62 @@ const statusBadge: Record<string, string> = {
   CHECKED_OUT: "badge-gray",
 };
 
-export default function MyBookingPage() {
+function doLookup(
+  ref: string,
+  ph: string,
+  setError: (s: string) => void,
+  setBooking: (b: ViewBookingData | null) => void,
+  setLoading: (v: boolean) => void
+) {
+  setError("");
+  setBooking(null);
+  setLoading(true);
+  const params = new URLSearchParams({
+    bookingReference: ref.trim().toUpperCase(),
+    phone: ph.trim().replace(/\D/g, ""),
+  });
+  publicApi<ViewBookingData>(`/bookings/by-reference?${params.toString()}`)
+    .then((res) => {
+      if (isApiError(res)) {
+        setError(res.message || res.error);
+        return;
+      }
+      setBooking(res.data);
+    })
+    .catch(() => setError("Unable to load booking. Please try again."))
+    .finally(() => setLoading(false));
+}
+
+function MyBookingContent() {
+  const searchParams = useSearchParams();
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [email, setEmail] = useState("");
   const [reference, setReference] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [booking, setBooking] = useState<ViewBookingData | null>(null);
 
+  useEffect(() => {
+    setLoggedIn(isLoggedIn());
+    const stored = getCustomerEmail();
+    if (stored) setEmail(stored);
+  }, []);
+
+  useEffect(() => {
+    const ref = searchParams.get("ref") ?? "";
+    const ph = searchParams.get("phone") ?? "";
+    const em = searchParams.get("email") ?? "";
+    if (ref) setReference(ref);
+    if (ph) setPhone(ph);
+    if (em) setEmail(em);
+    if (ref && ph && ref.trim() && ph.trim().replace(/\D/g, "").length >= 4) {
+      doLookup(ref, ph, setError, setBooking, setLoading);
+    }
+  }, [searchParams]);
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError("");
-    setBooking(null);
     const ref = reference.trim().toUpperCase();
     const ph = phone.trim().replace(/\D/g, "");
     if (!ref || !ph) {
@@ -39,53 +87,32 @@ export default function MyBookingPage() {
       setError("Enter full 10-digit phone or last 4 digits.");
       return;
     }
-    setLoading(true);
-    const params = new URLSearchParams({
-      bookingReference: ref,
-      phone: ph,
-    });
-    publicApi<ViewBookingData>(`/bookings/by-reference?${params.toString()}`)
-      .then((res) => {
-        if (isApiError(res)) {
-          setError(res.message || res.error);
-          return;
-        }
-        setBooking(res.data);
-      })
-      .catch(() => setError("Unable to load booking. Please try again."))
-      .finally(() => setLoading(false));
+    doLookup(reference, phone, setError, setBooking, setLoading);
   }
 
   return (
     <div className="min-h-screen app-shell">
-      <header className="app-header border-b">
-        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link href="/" className="text-lg font-semibold text-slate-100">
-            Hotel The Retinue
-          </Link>
-          <nav className="flex gap-4 text-sm">
-            <Link
-              href="/book"
-              className="text-slate-300 hover:text-sky-400 transition-colors"
-            >
-              Book a room
+      {loggedIn ? (
+        <PrivateHeader />
+      ) : (
+        <header className="app-header border-b" style={{ background: "rgba(12, 15, 20, 0.9)" }}>
+          <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-3">
+            <Link href="/" className="text-lg font-semibold text-slate-100">
+              Hotel The Retinue
             </Link>
-            <Link
-              href="/blog"
-              className="text-slate-300 hover:text-sky-400 transition-colors"
-            >
-              Blog
-            </Link>
-            <Link
-              href="/signup"
-              className="text-slate-300 hover:text-sky-400 transition-colors"
-            >
-              Sign up
-            </Link>
-            <span className="text-sky-400 font-medium">View my booking</span>
-          </nav>
-        </div>
-      </header>
+            <nav className="flex flex-wrap gap-3 text-sm">
+              <Link href="/rooms" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Rooms</Link>
+              <Link href="/conventions" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Conventions</Link>
+              <Link href="/contact" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Contact</Link>
+              <Link href="/book" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Book a room</Link>
+              <Link href="/blog" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Blog</Link>
+              <Link href="/login" className="text-slate-400 hover:text-[var(--accent)] transition-all duration-300">Log in</Link>
+              <Link href="/signup" className="text-slate-400 hover:text-[var(--accent)] transition-all duration-300">Sign up</Link>
+              <span className="text-[var(--accent)] font-medium">View my booking</span>
+            </nav>
+          </div>
+        </header>
+      )}
 
       <main className="max-w-4xl mx-auto px-4 py-8">
         <div className="card p-6 max-w-md mx-auto">
@@ -93,10 +120,19 @@ export default function MyBookingPage() {
             View my booking
           </h2>
           <p className="text-slate-400 text-sm mb-4">
-            Enter the booking reference from your confirmation and the phone
-            number used at booking.
+            Email is used as priority. Enter your email, booking reference, and phone used at booking.
           </p>
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="form-label">Email (priority)</label>
+              <input
+                type="email"
+                className="form-input"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+              />
+            </div>
             <div>
               <label className="form-label">Booking reference</label>
               <input
@@ -150,7 +186,7 @@ export default function MyBookingPage() {
               <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">
                 Reference
               </p>
-              <p className="text-xl font-mono font-semibold text-sky-400">
+              <p className="text-xl font-mono font-semibold text-[var(--accent)]">
                 {booking.bookingReference}
               </p>
             </div>
@@ -213,5 +249,19 @@ export default function MyBookingPage() {
         )}
       </main>
     </div>
+  );
+}
+
+export default function MyBookingPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen app-shell flex items-center justify-center">
+          <p className="text-slate-400">Loading…</p>
+        </div>
+      }
+    >
+      <MyBookingContent />
+    </Suspense>
   );
 }
