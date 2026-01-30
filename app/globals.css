@@ -4,26 +4,28 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
   --font-mono: var(--font-geist-mono);
 }
 
 @layer base {
   :root {
-    /* Hotel & convention theme */
-    --background: #0c0f14;
-    --foreground: #e8eaed;
-    --surface: rgba(18, 22, 28, 0.92);
-    --surface-2: rgba(30, 36, 46, 0.6);
-    --border: rgba(255, 255, 255, 0.07);
-    --muted: rgba(148, 163, 184, 0.92);
-    --muted-2: rgba(148, 163, 184, 0.72);
-    --shadow: rgba(0, 0, 0, 0.5);
-    /* Gold accent – hotel & events */
-    --accent: #c9a227;
-    --accent-soft: rgba(201, 162, 39, 0.25);
-    --accent-glow: rgba(201, 162, 39, 0.15);
-    --bg-gradient: radial-gradient(ellipse 120% 80% at 50% -20%, #1a1f28 0%, #0c0f14 50%);
-    --bg-section: linear-gradient(180deg, rgba(26, 31, 40, 0.4) 0%, transparent 100%);
+    /* Refined luxury theme: Softer darks with warm neutrals */
+    --background: #12161c; /* Slightly warmer dark */
+    --foreground: #f0f2f5;
+    --surface: rgba(24, 28, 36, 0.9);
+    --surface-2: rgba(36, 42, 54, 0.6);
+    --border: rgba(255, 255, 255, 0.1);
+    --muted: rgba(163, 177, 198, 0.9);
+    --muted-2: rgba(163, 177, 198, 0.7);
+    --shadow: rgba(0, 0, 0, 0.4);
+    /* Gold accents for premium feel */
+    --accent: #d4af37;
+    --accent-soft: rgba(212, 175, 55, 0.2);
+    --accent-glow: rgba(212, 175, 55, 0.12);
+    --bg-gradient: radial-gradient(ellipse 120% 80% at 50% -20%, #1e2430 0%, #12161c 50%);
+    --bg-section: linear-gradient(180deg, rgba(30, 36, 46, 0.3) 0%, transparent 100%);
+    --neutral-light: #f5f5f5; /* For whitespace elements */
     --font-geist-mono: 'JetBrains Mono', monospace;
   }
 
@@ -32,31 +34,32 @@
     background: var(--bg-gradient);
     color: var(--foreground);
     min-height: 100vh;
+    font-family: var(--font-sans);
   }
 
   .font-heading {
-    font-family: var(--font-playfair), Georgia, serif;
+    font-family: var(--font-serif);
   }
 }
 
 @layer components {
   .form-input {
-    @apply w-full px-3 py-2 text-sm rounded-lg
-           text-slate-100 placeholder:text-slate-500
-           focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50 focus:border-[var(--accent)]/40
-           transition-all duration-200 backdrop-blur-sm;
-    background: rgba(15, 18, 24, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    @apply w-full px-4 py-3 text-base rounded-xl
+           text-gray-100 placeholder:text-gray-400
+           focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/40 focus:border-transparent
+           transition-all duration-300 backdrop-blur-md;
+    background: rgba(18, 22, 30, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .form-input:focus {
-    box-shadow: 0 0 0 3px var(--accent-glow);
+    box-shadow: 0 0 0 4px var(--accent-glow);
   }
 
   .form-input::-webkit-calendar-picker-indicator {
-    filter: invert(0.8) brightness(1.2);
+    filter: invert(0.9) brightness(1.1);
     cursor: pointer;
-    opacity: 0.7;
+    opacity: 0.8;
   }
 
   .form-input[type="date"],
@@ -73,135 +76,177 @@
   .app-header {
     background: var(--surface);
     border-color: var(--border);
+    @apply sticky top-0 z-50 backdrop-blur-lg;
   }
 
   .form-label {
-    @apply block text-xs font-semibold text-slate-300 mb-2 uppercase tracking-wider;
+    @apply block text-sm font-medium text-gray-300 mb-2 tracking-wide;
   }
 
   .form-select {
-    @apply w-full px-3 py-2 text-sm rounded-lg text-slate-100
-           focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50 focus:border-[var(--accent)]/40
-           transition-all duration-200 backdrop-blur-sm;
-    background: rgba(15, 18, 24, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    @apply w-full px-4 py-3 text-base rounded-xl text-gray-100
+           focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/40 focus:border-transparent
+           transition-all duration-300 backdrop-blur-md;
+    background: rgba(18, 22, 30, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .form-textarea {
-    @apply w-full px-3 py-2 text-sm rounded-lg text-slate-100 placeholder:text-slate-500
-           focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50 focus:border-[var(--accent)]/40
-           transition-all duration-200 resize-none backdrop-blur-sm;
-    background: rgba(15, 18, 24, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    @apply w-full px-4 py-3 text-base rounded-xl text-gray-100 placeholder:text-gray-400
+           focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/40 focus:border-transparent
+           transition-all duration-300 resize-y backdrop-blur-md;
+    background: rgba(18, 22, 30, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .btn-primary {
-    @apply px-6 py-2.5 text-slate-950 font-semibold rounded-lg
-           focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2 focus:ring-offset-[#0c0f14]
-           disabled:opacity-50 disabled:cursor-not-allowed
-           transition-all duration-200;
-    background: linear-gradient(135deg, #d4af37 0%, #c9a227 50%, #b8960c 100%);
-    box-shadow: 0 4px 20px var(--accent-glow);
+    @apply px-8 py-3 text-gray-900 font-bold rounded-xl
+           focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2 focus:ring-offset-[var(--background)]
+           disabled:opacity-60 disabled:cursor-not-allowed
+           transition-all duration-300;
+    background: linear-gradient(135deg, #e0c14a 0%, #d4af37 50%, #c9a227 100%);
+    box-shadow: 0 4px 15px var(--accent-glow);
   }
 
   .btn-primary:hover:not(:disabled) {
-    box-shadow: 0 6px 28px var(--accent-soft);
-    filter: brightness(1.08);
+    box-shadow: 0 6px 25px var(--accent-soft);
+    transform: translateY(-1px);
   }
 
   .btn-secondary {
-    @apply px-4 py-2 text-sm text-slate-200 font-semibold rounded-lg
-           border border-white/15 bg-white/5
-           focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50 focus:ring-offset-2 focus:ring-offset-[#0c0f14]
-           transition-all duration-200;
+    @apply px-6 py-3 text-base text-gray-200 font-medium rounded-xl
+           border border-white/10 bg-white/5
+           focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/40 focus:ring-offset-2 focus:ring-offset-[var(--background)]
+           transition-all duration-300;
   }
 
   .btn-secondary:hover {
-    @apply bg-white/10 border-white/20 text-white;
+    @apply bg-white/8 border-white/15 text-white;
+    transform: translateY(-1px);
   }
 
   .btn-danger {
-    @apply px-4 py-2 text-sm bg-red-600 text-white font-semibold rounded-lg
-           focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:ring-offset-2 focus:ring-offset-slate-950;
+    @apply px-6 py-3 text-base bg-red-700 text-white font-medium rounded-xl
+           focus:outline-none focus:ring-2 focus:ring-red-600/40 focus:ring-offset-2 focus:ring-offset-[var(--background)];
   }
 
   .btn-success {
-    @apply px-4 py-2 text-sm bg-emerald-600 text-white font-semibold rounded-lg
-           focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:ring-offset-2 focus:ring-offset-slate-950;
+    @apply px-6 py-3 text-base bg-emerald-700 text-white font-medium rounded-xl
+           focus:outline-none focus:ring-2 focus:ring-emerald-600/40 focus:ring-offset-2 focus:ring-offset-[var(--background)];
   }
 
   .card {
-    @apply rounded-2xl p-4 border relative overflow-hidden backdrop-blur-xl transition-all duration-300;
-    background: rgba(18, 22, 28, 0.7);
-    border-color: rgba(255, 255, 255, 0.06);
-    box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.4);
+    @apply rounded-3xl p-6 border relative overflow-hidden backdrop-blur-xl transition-all duration-500;
+    background: rgba(24, 28, 36, 0.8);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.35);
   }
 
   .card:hover {
-    border-color: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 24px 56px -12px rgba(0, 0, 0, 0.45);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.4);
+    transform: translateY(-4px);
   }
 
   .card::before {
     content: '';
-    @apply absolute -top-12 -right-12 w-24 h-24 rounded-full blur-3xl opacity-40;
+    @apply absolute -top-16 -right-16 w-32 h-32 rounded-full blur-3xl opacity-30;
     background: var(--accent);
+    transition: opacity 0.3s;
+  }
+
+  .card:hover::before {
+    opacity: 50%;
   }
 
   .card::after {
     content: '';
-    @apply absolute -bottom-12 -left-12 w-24 h-24 rounded-full blur-3xl opacity-20;
+    @apply absolute -bottom-16 -left-16 w-32 h-32 rounded-full blur-3xl opacity-15;
     background: var(--accent);
   }
 
   .card-header {
-    @apply border-b pb-3 mb-4 relative z-10;
-    border-color: rgba(255, 255, 255, 0.06);
+    @apply border-b pb-4 mb-5 relative z-10;
+    border-color: rgba(255, 255, 255, 0.08);
   }
 
-  /* Hotel room card – premium rate card feel */
-  .card-hotel {
-    @apply rounded-2xl border relative overflow-hidden backdrop-blur-xl transition-all duration-300;
-    background: linear-gradient(145deg, rgba(22, 27, 35, 0.9) 0%, rgba(18, 22, 28, 0.95) 100%);
-    border-color: rgba(201, 162, 39, 0.2);
-    box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255,255,255,0.03);
+  /* Room card: Minimalist luxury with whitespace */
+  .card-room {
+    @apply rounded-3xl border relative overflow-hidden backdrop-blur-xl transition-all duration-500;
+    background: linear-gradient(145deg, rgba(28, 32, 42, 0.85) 0%, rgba(24, 28, 36, 0.95) 100%);
+    border-color: rgba(212, 175, 55, 0.15);
+    box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.02);
   }
 
-  .card-hotel:hover {
-    border-color: rgba(201, 162, 39, 0.35);
-    box-shadow: 0 24px 56px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.05);
-    transform: translateY(-2px);
+  .card-room:hover {
+    border-color: rgba(212, 175, 55, 0.25);
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255,255,255,0.04);
+    transform: translateY(-4px);
   }
 
-  .card-hotel::before {
+  .card-room::before {
     content: '';
-    @apply absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl;
+    @apply absolute left-0 top-0 bottom-0 w-1.5 rounded-l-3xl;
     background: linear-gradient(180deg, var(--accent) 0%, transparent 100%);
   }
 
-  /* Conventions / events card */
+  /* Room / hotel card for homepage grid */
+  .card-hotel {
+    @apply rounded-3xl border relative overflow-hidden backdrop-blur-xl transition-all duration-500;
+    background: linear-gradient(145deg, rgba(28, 32, 42, 0.85) 0%, rgba(24, 28, 36, 0.95) 100%);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.35);
+  }
+
+  .card-hotel:hover {
+    border-color: rgba(212, 175, 55, 0.25);
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(212, 175, 55, 0.08);
+    transform: translateY(-4px);
+  }
+
+  /* Image placeholder / hero banner – connecting visual */
+  .section-image {
+    @apply rounded-3xl overflow-hidden relative;
+    background: linear-gradient(145deg, rgba(30, 36, 48, 0.95) 0%, rgba(20, 24, 32, 0.98) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .section-image-placeholder {
+    @apply w-full flex items-center justify-center text-slate-500;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.06) 0%, rgba(212, 175, 55, 0.02) 100%);
+  }
+
+  /* Testimonial quote block */
+  .testimonial-quote {
+    @apply relative rounded-2xl border border-white/8 bg-white/[0.03] p-6 backdrop-blur-sm;
+    border-left: 3px solid var(--accent);
+  }
+
+
+
+  /* Events card: Warm, inviting for conventions */
   .card-events {
-    @apply rounded-2xl border relative overflow-hidden backdrop-blur-xl transition-all duration-300;
-    background: linear-gradient(145deg, rgba(28, 24, 18, 0.85) 0%, rgba(18, 22, 28, 0.95) 100%);
-    border-color: rgba(201, 162, 39, 0.35);
-    box-shadow: 0 24px 56px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(201, 162, 39, 0.08);
+    @apply rounded-3xl border relative overflow-hidden backdrop-blur-xl transition-all duration-500;
+    background: linear-gradient(145deg, rgba(32, 28, 22, 0.8) 0%, rgba(24, 28, 36, 0.95) 100%);
+    border-color: rgba(212, 175, 55, 0.25);
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(212, 175, 55, 0.06);
   }
 
   .card-events:hover {
-    border-color: rgba(201, 162, 39, 0.5);
-    box-shadow: 0 28px 64px -12px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(201, 162, 39, 0.12);
-    transform: translateY(-2px);
+    border-color: rgba(212, 175, 55, 0.35);
+    box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(212, 175, 55, 0.1);
+    transform: translateY(-4px);
   }
 
   .card-events::before {
     content: '';
-    @apply absolute top-0 left-0 right-0 h-1 rounded-t-2xl;
+    @apply absolute top-0 left-0 right-0 h-1.5 rounded-t-3xl;
     background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
   }
 
   .section-title {
-    font-family: var(--font-playfair), Georgia, serif;
-    @apply text-slate-100 font-medium tracking-tight;
+    font-family: var(--font-serif);
+    @apply text-3xl md:text-4xl text-white font-light tracking-tight mb-8;
   }
 
   .text-accent {
@@ -213,60 +258,56 @@
   }
 
   .table-container {
-    @apply bg-slate-900/60 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/5 relative;
+    @apply bg-gray-900/50 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/8 relative;
   }
 
   .table {
-    @apply min-w-full divide-y divide-white/5;
+    @apply min-w-full divide-y divide-white/8;
   }
 
   .table thead {
-    @apply bg-slate-800/40 backdrop-blur-sm;
+    @apply bg-gray-800/30 backdrop-blur-sm;
   }
 
   .table th {
-    @apply px-4 py-2 text-left text-[11px] font-semibold text-slate-300 uppercase tracking-wider;
+    @apply px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider;
   }
 
   .table td {
-    @apply px-4 py-2 whitespace-nowrap text-xs text-slate-100;
+    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-100;
   }
 
   .table tbody tr {
-    @apply hover:bg-slate-800/40 transition-colors duration-150 border-b border-white/5;
+    @apply hover:bg-gray-800/30 transition-colors duration-200 border-b border-white/8 last:border-0;
   }
 
   .badge {
-    @apply inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold
-           ring-2 ring-offset-2 ring-offset-slate-900;
+    @apply inline-flex items-center px-4 py-2 rounded-full text-sm font-medium
+           ring-1 ring-offset-2 ring-offset-[var(--background)];
   }
 
   .badge-success {
-    @apply bg-emerald-500/20 text-emerald-400 ring-emerald-500/30;
+    @apply bg-emerald-600/20 text-emerald-300 ring-emerald-600/30;
   }
 
   .badge-warning {
-    @apply bg-yellow-500/20 text-yellow-400 ring-yellow-500/30;
+    @apply bg-yellow-600/20 text-yellow-300 ring-yellow-600/30;
   }
 
   .badge-danger {
-    @apply bg-red-500/20 text-red-400 ring-red-500/30;
+    @apply bg-red-600/20 text-red-300 ring-red-600/30;
   }
 
   .badge-info {
-    @apply bg-sky-500/20 text-sky-400 ring-sky-500/30;
+    @apply bg-sky-600/20 text-sky-300 ring-sky-600/30;
   }
 
   .badge-gray {
-    @apply bg-slate-700/40 text-slate-300 ring-slate-600/30;
+    @apply bg-gray-700/40 text-gray-300 ring-gray-600/30;
   }
 
-  .glow-sky {
-    @apply absolute w-96 h-96 bg-sky-600/30 rounded-full blur-3xl -z-10;
-  }
-
-  .glow-emerald {
-    @apply absolute w-96 h-96 bg-emerald-500/25 rounded-full blur-3xl -z-10;
+  .glow-accent {
+    @apply absolute w-80 h-80 bg-[var(--accent)]/20 rounded-full blur-3xl -z-10;
   }
 }
 
@@ -275,27 +316,27 @@
     text-wrap: balance;
   }
 
-  /* Animations */
+  /* Enhanced animations for engagement */
   .animate-fade-in {
-    animation: fadeIn 0.4s ease-out forwards;
+    animation: fadeIn 0.6s ease-out forwards;
   }
 
   .animate-slide-up {
-    animation: slideUp 0.5s ease-out forwards;
+    animation: slideUp 0.6s ease-out forwards;
   }
 
   .animate-scale-in {
-    animation: scaleIn 0.35s ease-out forwards;
+    animation: scaleIn 0.4s ease-out forwards;
   }
 
-  .animate-stagger-1 { animation-delay: 0.08s; animation-fill-mode: both; }
-  .animate-stagger-2 { animation-delay: 0.16s; animation-fill-mode: both; }
-  .animate-stagger-3 { animation-delay: 0.24s; animation-fill-mode: both; }
-  .animate-stagger-4 { animation-delay: 0.32s; animation-fill-mode: both; }
-  .animate-stagger-5 { animation-delay: 0.4s; animation-fill-mode: both; }
+  .animate-stagger-1 { animation-delay: 0.1s; animation-fill-mode: both; }
+  .animate-stagger-2 { animation-delay: 0.2s; animation-fill-mode: both; }
+  .animate-stagger-3 { animation-delay: 0.3s; animation-fill-mode: both; }
+  .animate-stagger-4 { animation-delay: 0.4s; animation-fill-mode: both; }
+  .animate-stagger-5 { animation-delay: 0.5s; animation-fill-mode: both; }
 }
 
-/* Nav link – underline on hover */
+/* Nav link: Subtle underline hover */
 .nav-link {
   position: relative;
 }
@@ -307,58 +348,42 @@
   width: 0;
   height: 1px;
   background: var(--accent);
-  transition: width 0.3s ease;
+  transition: width 0.4s ease;
 }
 .nav-link:hover::after {
   width: 100%;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.5);
+  background: rgba(18, 26, 48, 0.4);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(100, 116, 139, 0.4);
-  border-radius: 3px;
+  background: rgba(110, 126, 149, 0.4);
+  border-radius: 4px;
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(100, 116, 139, 0.4) rgba(15, 23, 42, 0.5);
+  scrollbar-color: rgba(110, 126, 149, 0.4) rgba(18, 26, 48, 0.4);
 }

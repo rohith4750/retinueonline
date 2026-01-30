@@ -4,12 +4,11 @@ import Link from "next/link";
 import { HOTEL } from "@/lib/site-content";
 
 const nav = [
+  { href: "/", label: "Home" },
   { href: "/rooms", label: "Rooms" },
   { href: "/conventions", label: "Conventions" },
   { href: "/contact", label: "Contact" },
   { href: "/book", label: "Book a room" },
-  { href: "/my-booking", label: "View my booking" },
-  { href: "/blog", label: "Blog" },
   { href: "/login", label: "Log in" },
   { href: "/signup", label: "Sign up" },
 ];

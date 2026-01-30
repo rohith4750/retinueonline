@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <defs>
+    <linearGradient id="lobby-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+    <linearGradient id="lobby-floor" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#334155"/>
+      <stop offset="100%" style="stop-color:#475569"/>
+    </linearGradient>
+    <linearGradient id="lobby-accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#c9a227"/>
+      <stop offset="100%" style="stop-color:#d4af37"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#lobby-bg)"/>
+  <!-- Floor -->
+  <rect y="380" width="800" height="220" fill="url(#lobby-floor)"/>
+  <!-- Reception desk -->
+  <rect x="200" y="320" width="400" height="80" rx="6" fill="#1e293b" stroke="rgba(212,175,55,0.4)" stroke-width="2"/>
+  <rect x="220" y="335" width="360" height="50" rx="4" fill="#0f172a"/>
+  <text x="400" y="368" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="rgba(212,175,55,0.9)">Reception</text>
+  <!-- Potted plant / decor left -->
+  <rect x="180" y="340" width="24" height="60" rx="4" fill="#334155"/>
+  <ellipse cx="192" cy="325" rx="28" ry="18" fill="#1e3a2f"/>
+  <!-- Potted plant right -->
+  <rect x="596" y="340" width="24" height="60" rx="4" fill="#334155"/>
+  <ellipse cx="608" cy="325" rx="28" ry="18" fill="#1e3a2f"/>
+  <!-- Seating area left -->
+  <rect x="120" y="420" width="100" height="60" rx="6" fill="#334155" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <rect x="130" y="430" width="80" height="40" rx="4" fill="#475569"/>
+  <!-- Seating area right -->
+  <rect x="580" y="420" width="100" height="60" rx="6" fill="#334155" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <rect x="590" y="430" width="80" height="40" rx="4" fill="#475569"/>
+  <!-- Accent strip above desk -->
+  <rect x="180" y="280" width="440" height="12" rx="2" fill="url(#lobby-accent)"/>
+  <!-- Title -->
+  <text x="400" y="260" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="600" fill="#f1f5f9">Hotel lobby</text>
+  <text x="400" y="285" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="rgba(148,163,184,0.8)">Comfortable stay</text>
+</svg>

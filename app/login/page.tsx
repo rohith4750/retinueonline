@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { sendOtp, verifyOtp, isApiError } from "@/lib/public-api";
 import { setLoggedIn, setCustomerToken, setCustomerEmail } from "@/lib/auth";
@@ -15,8 +15,9 @@ function maskEmail(email: string): string {
   return `${masked}@${domain}`;
 }
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -62,15 +63,16 @@ export default function LoginPage() {
     }
     setCustomerEmail(email.trim().toLowerCase());
     setLoggedIn();
-    router.push("/dashboard");
+    const returnTo = searchParams.get("redirect") || "/dashboard";
+    router.push(returnTo.startsWith("/") ? returnTo : "/dashboard");
     return;
   }
 
   return (
     <div className="min-h-screen app-shell animate-fade-in">
       <header className="border-b border-white/5 py-4" style={{ background: "rgba(12, 15, 20, 0.9)" }}>
-        <div className="max-w-md mx-auto px-4 flex items-center justify-center">
-          <span className="font-heading text-lg font-medium text-slate-100">Hotel The Retinue</span>
+        <div className="max-w-md mx-auto px-4 flex items-center justify-center text-center">
+          <span className="font-heading text-lg font-medium text-slate-100">Hotel The Retinue & Buchiraju Conventions</span>
         </div>
       </header>
       <main className="max-w-md mx-auto px-4 py-12 animate-slide-up">
@@ -136,11 +138,22 @@ export default function LoginPage() {
         </div>
         <p className="text-center text-slate-500 text-sm mt-6">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-[var(--accent)] hover:underline transition-colors">
+          <Link
+            href={searchParams.get("redirect") ? `/signup?redirect=${encodeURIComponent(searchParams.get("redirect")!)}` : "/signup"}
+            className="text-[var(--accent)] hover:underline transition-colors"
+          >
             Sign up
           </Link>
         </p>
       </main>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen app-shell flex items-center justify-center text-slate-400">Loading…</div>}>
+      <LoginForm />
+    </Suspense>
   );
 }

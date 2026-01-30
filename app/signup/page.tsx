@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
   sendOtp,
@@ -20,8 +20,9 @@ function maskEmail(email: string): string {
   return `${masked}@${domain}`;
 }
 
-export default function SignupPage() {
+function SignupForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -99,7 +100,8 @@ export default function SignupPage() {
     }
     setCustomerEmail(email.trim().toLowerCase());
     setLoggedIn();
-    router.push("/dashboard");
+    const returnTo = searchParams.get("redirect") || "/dashboard";
+    router.push(returnTo.startsWith("/") ? returnTo : "/dashboard");
     return;
   }
 
@@ -228,11 +230,24 @@ export default function SignupPage() {
         </div>
         <p className="text-center text-slate-500 text-sm mt-4">
           Already have an account?{" "}
-          <Link href="/login" className="text-[var(--accent)] hover:underline">Log in</Link>
+          <Link
+            href={searchParams.get("redirect") ? `/login?redirect=${encodeURIComponent(searchParams.get("redirect")!)}` : "/login"}
+            className="text-[var(--accent)] hover:underline"
+          >
+            Log in
+          </Link>
           {" · "}
           <Link href="/my-booking" className="text-[var(--accent)] hover:underline">View your booking</Link>
         </p>
       </main>
     </div>
+  );
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen app-shell flex items-center justify-center text-slate-400">Loading…</div>}>
+      <SignupForm />
+    </Suspense>
   );
 }
