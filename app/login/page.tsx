@@ -70,23 +70,23 @@ function LoginForm() {
 
   return (
     <div className="min-h-screen app-shell animate-fade-in">
-      <header className="border-b border-white/5 py-4" style={{ background: "rgba(12, 15, 20, 0.9)" }}>
-        <div className="w-full max-w-6xl mx-auto px-4 flex items-center flex-nowrap">
+      <header className="border-b border-white/5 py-3 sm:py-4" style={{ background: "rgba(12, 15, 20, 0.9)" }}>
+        <div className="w-full max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 flex items-center flex-nowrap gap-2 sm:gap-4">
           <span className="flex-1 min-w-0" aria-hidden />
-          <span className="font-heading text-lg font-medium text-slate-100 shrink-0 whitespace-nowrap">Hotel The Retinue & Buchiraju Conventions</span>
-          <span className="flex-1 min-w-0 flex justify-end">
+          <span className="font-heading text-sm sm:text-base md:text-lg font-medium text-slate-100 shrink-0 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-center">Hotel The Retinue & Buchiraju Conventions</span>
+          <span className="flex-1 min-w-0 flex justify-end shrink-0">
             <Link
               href="/"
-              className="text-sm text-[var(--accent)] hover:underline transition-colors whitespace-nowrap"
+              className="text-xs sm:text-sm text-[var(--accent)] hover:underline transition-colors whitespace-nowrap py-2 min-h-[44px] sm:min-h-0 flex items-center"
             >
               Back to home →
             </Link>
           </span>
         </div>
       </header>
-      <main className="max-w-md mx-auto px-4 py-12 animate-slide-up">
-        <div className="card p-6">
-          <h2 className="card-header font-heading text-2xl font-medium text-slate-100">
+      <main className="w-full max-w-md mx-auto px-3 sm:px-4 py-8 sm:py-12 animate-slide-up">
+        <div className="card p-4 sm:p-6">
+          <h2 className="card-header font-heading text-xl sm:text-2xl font-medium text-slate-100">
             Log in
           </h2>
           <p className="text-slate-400 text-sm mb-6">

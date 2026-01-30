@@ -20,7 +20,7 @@ const ROOM_IMAGE_MAP: Record<string, string> = {
 
 function HeroImage() {
   return (
-    <div className="section-image aspect-[21/9] min-h-[220px] md:min-h-[320px] rounded-3xl overflow-hidden relative bg-slate-800/50">
+    <div className="section-image aspect-[21/9] min-h-[180px] sm:min-h-[220px] md:min-h-[280px] lg:min-h-[320px] rounded-2xl sm:rounded-3xl overflow-hidden relative bg-slate-800/50">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={IMAGES.hero}
@@ -52,36 +52,36 @@ export default function HomePage() {
 
       <main className="flex-1">
         {/* Hero – connecting visual first */}
-        <section className="max-w-6xl mx-auto px-4 pt-8 pb-6 md:pt-10 md:pb-8">
+        <section className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 pt-6 sm:pt-8 pb-4 sm:pb-6 md:pt-10 md:pb-8">
           <HeroImage />
         </section>
 
         {/* Hero text – flows from the image */}
-        <section className="relative max-w-6xl mx-auto px-4 pt-6 pb-12 md:pt-8 md:pb-16 text-center overflow-hidden">
+        <section className="relative max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 pt-4 sm:pt-6 pb-10 sm:pb-12 md:pt-8 md:pb-16 text-center overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--accent-glow)]/20 via-transparent to-transparent pointer-events-none" />
           <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--accent)]/30 to-transparent" />
-          <h1 className="font-heading text-4xl md:text-6xl font-medium text-slate-100 mb-5 tracking-tight animate-slide-up relative">
+          <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-slate-100 mb-4 sm:mb-5 tracking-tight animate-slide-up relative">
             {HOTEL.name}
           </h1>
-          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed animate-slide-up animate-stagger-1 relative">
+          <p className="text-base sm:text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed animate-slide-up animate-stagger-1 relative px-1">
             {HOTEL.tagline}
           </p>
           <Link
             href="/book"
-            className="btn-primary inline-flex items-center justify-center py-3.5 px-12 text-base tracking-wide transition-all duration-300 hover:scale-[1.03] animate-slide-up animate-stagger-2 relative"
+            className="btn-primary inline-flex items-center justify-center py-3 sm:py-3.5 px-8 sm:px-12 text-sm sm:text-base tracking-wide transition-all duration-300 hover:scale-[1.03] animate-slide-up animate-stagger-2 relative min-h-[48px]"
           >
             Book a room
           </Link>
         </section>
 
         {/* About – connecting content */}
-        <section className="max-w-6xl mx-auto px-4 py-16 md:py-24">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+        <section className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-12 sm:py-16 md:py-24">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center">
             <div>
               <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">
                 About us
               </span>
-              <h2 className="section-title text-3xl md:text-4xl mt-2 mb-6">
+              <h2 className="section-title text-2xl sm:text-3xl md:text-4xl mt-2 mb-4 sm:mb-6">
                 {ABOUT_HOTEL.headline}
               </h2>
               <p className="text-slate-300 text-lg mb-4 leading-relaxed">
@@ -103,7 +103,7 @@ export default function HomePage() {
         </section>
 
         {/* Rooms – hygiene & celebrity messaging, with image areas */}
-        <section className="max-w-6xl mx-auto px-4 py-16 md:py-24 relative">
+        <section className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-12 sm:py-16 md:py-24 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[var(--accent-glow)]/10 to-transparent pointer-events-none rounded-3xl" />
           <div className="relative">
             <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">
@@ -118,7 +118,7 @@ export default function HomePage() {
             <p className="text-slate-400 mb-12 max-w-2xl">
               {ROOMS_HIGHLIGHT.celebrity}
             </p>
-            <div className="grid gap-8 sm:grid-cols-3">
+            <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {ROOM_CATEGORIES.map((cat, i) => (
                 <Link
                   key={cat.type}
@@ -133,7 +133,7 @@ export default function HomePage() {
                       className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
-                  <div className="p-6">
+                  <div className="p-4 sm:p-6">
                     <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">
                       From {formatPrice(cat.basePrice)}/day
                     </span>
@@ -150,11 +150,11 @@ export default function HomePage() {
                 </Link>
               ))}
             </div>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link href="/book" className="btn-primary py-3 px-8">
+            <div className="mt-8 sm:mt-10 flex flex-wrap gap-3 sm:gap-4">
+              <Link href="/book" className="btn-primary py-3 px-6 sm:px-8 min-h-[48px] sm:min-h-0 flex items-center justify-center">
                 Check availability & book
               </Link>
-              <Link href="/rooms" className="btn-secondary py-3 px-8">
+              <Link href="/rooms" className="btn-secondary py-3 px-6 sm:px-8 min-h-[48px] sm:min-h-0 flex items-center justify-center">
                 View all rooms & tariff
               </Link>
             </div>
@@ -166,10 +166,10 @@ export default function HomePage() {
           <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">
             What guests say
           </span>
-          <h2 className="section-title text-3xl md:text-4xl mt-2 mb-12">
+          <h2 className="section-title text-2xl sm:text-3xl md:text-4xl mt-2 mb-8 sm:mb-12">
             Reviews from our guests
           </h2>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
             {TESTIMONIALS.map((t, i) => (
               <div
                 key={i}
@@ -190,9 +190,9 @@ export default function HomePage() {
         </section>
 
         {/* Conventions – function hall */}
-        <section className="max-w-6xl mx-auto px-4 py-16 md:py-20 relative">
+        <section className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-12 sm:py-16 md:py-20 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[var(--accent-glow)]/15 to-transparent pointer-events-none rounded-3xl" />
-          <div className="card-events p-8 md:p-10 relative">
+          <div className="card-events p-5 sm:p-8 md:p-10 relative">
             <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">
               Function hall & events
             </span>
@@ -203,11 +203,11 @@ export default function HomePage() {
               {CONVENTIONS.description}
             </p>
             <p className="text-slate-400 mb-6">{CONVENTIONS.cta}</p>
-            <div className="flex flex-wrap gap-4">
-              <Link href="/conventions" className="btn-primary py-2.5 px-6">
+            <div className="flex flex-wrap gap-3 sm:gap-4">
+              <Link href="/conventions" className="btn-primary py-3 px-6 min-h-[48px] sm:min-h-0 flex items-center justify-center">
                 Enquire for events
               </Link>
-              <a href={`tel:${HOTEL.phone}`} className="btn-secondary py-2.5 px-6">
+              <a href={`tel:${HOTEL.phone}`} className="btn-secondary py-3 px-6 min-h-[48px] sm:min-h-0 flex items-center justify-center">
                 Call {HOTEL.phoneDisplay}
               </a>
             </div>
@@ -215,9 +215,9 @@ export default function HomePage() {
         </section>
 
         {/* Stay policy */}
-        <section className="max-w-6xl mx-auto px-4 py-16 md:py-20">
-          <h2 className="section-title text-3xl mb-6">Stay policy</h2>
-          <div className="card p-6 max-w-2xl">
+        <section className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-12 sm:py-16 md:py-20">
+          <h2 className="section-title text-2xl sm:text-3xl mb-4 sm:mb-6">Stay policy</h2>
+          <div className="card p-4 sm:p-6 max-w-2xl">
             <ul className="text-slate-400 space-y-3 text-sm leading-relaxed">
               <li>Minimum stay: {STAY_POLICY.minStay}</li>
               <li>Maximum stay: {STAY_POLICY.maxStay}</li>
@@ -228,9 +228,9 @@ export default function HomePage() {
         </section>
 
         {/* Contact */}
-        <section className="max-w-6xl mx-auto px-4 py-16 md:py-20">
-          <h2 className="section-title text-3xl mb-6">Contact & location</h2>
-          <div className="card p-6 max-w-xl">
+        <section className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-12 sm:py-16 md:py-20">
+          <h2 className="section-title text-2xl sm:text-3xl mb-4 sm:mb-6">Contact & location</h2>
+          <div className="card p-4 sm:p-6 max-w-xl">
             <p className="mb-2">
               <a href={`tel:${HOTEL.phone}`} className="text-[var(--accent)] hover:underline font-medium">
                 {HOTEL.phoneDisplay}
@@ -250,11 +250,11 @@ export default function HomePage() {
         </section>
 
         {/* Footer CTA */}
-        <section className="max-w-6xl mx-auto px-4 py-16 border-t border-white/5 flex flex-wrap gap-4 justify-center">
-          <Link href="/book" className="btn-primary py-3.5 px-10">
+        <section className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-12 sm:py-16 border-t border-white/5 flex flex-wrap gap-3 sm:gap-4 justify-center">
+          <Link href="/book" className="btn-primary py-3 sm:py-3.5 px-8 sm:px-10 min-h-[48px] sm:min-h-0 flex items-center justify-center">
             Book a room
           </Link>
-          <Link href="/signup" className="btn-secondary py-3.5 px-10">
+          <Link href="/signup" className="btn-secondary py-3 sm:py-3.5 px-8 sm:px-10 min-h-[48px] sm:min-h-0 flex items-center justify-center">
             Sign up
           </Link>
         </section>
