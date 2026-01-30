@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import BookLayout from "../../components/BookLayout";
@@ -14,7 +14,15 @@ import {
 
 const CONFIRM_KEY = "booking_confirmation";
 
-export default function BookCheckoutPage() {
+function CheckoutFallback() {
+  return (
+    <BookLayout currentStep="/book/checkout">
+      <div className="card p-8 text-center text-slate-400">Loading…</div>
+    </BookLayout>
+  );
+}
+
+function BookCheckoutContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const checkIn = searchParams.get("checkIn") ?? "";
@@ -218,5 +226,13 @@ export default function BookCheckoutPage() {
         </form>
       </div>
     </BookLayout>
+  );
+}
+
+export default function BookCheckoutPage() {
+  return (
+    <Suspense fallback={<CheckoutFallback />}>
+      <BookCheckoutContent />
+    </Suspense>
   );
 }

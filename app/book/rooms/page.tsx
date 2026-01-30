@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import BookLayout from "../../components/BookLayout";
@@ -13,7 +13,15 @@ import {
   type RoomType,
 } from "@/lib/public-api";
 
-export default function BookRoomsPage() {
+function RoomsFallback() {
+  return (
+    <BookLayout currentStep="/book/rooms">
+      <div className="card p-8 text-center text-slate-400">Loading…</div>
+    </BookLayout>
+  );
+}
+
+function BookRoomsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const checkIn = searchParams.get("checkIn") ?? "";
@@ -156,5 +164,13 @@ export default function BookRoomsPage() {
         </div>
       )}
     </BookLayout>
+  );
+}
+
+export default function BookRoomsPage() {
+  return (
+    <Suspense fallback={<RoomsFallback />}>
+      <BookRoomsContent />
+    </Suspense>
   );
 }
