@@ -1,0 +1,221 @@
+// Dashboard Page Styles
+.dashboardPage {
+  min-height: 100vh;
+  background: var(--background);
+}
+
+.container {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+
+  @media (min-width: 640px) {
+    padding: 3rem 1.5rem;
+  }
+}
+
+.header {
+  margin-bottom: 2rem;
+
+  .title {
+    font-size: 1.875rem;
+    font-weight: 300;
+    font-family: var(--font-heading);
+    margin-bottom: 0.5rem;
+    color: var(--foreground);
+  }
+
+  .subtitle {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+}
+
+.actionsGrid {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.actionCard {
+  display: block;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    .iconWrapper {
+      transform: scale(1.05);
+    }
+  }
+
+  .cardHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+
+    .iconWrapper {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.5rem;
+      background: var(--accent-soft);
+      transition: transform 0.3s ease;
+
+      svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        stroke: var(--accent);
+      }
+    }
+
+    .cardTitle {
+      font-weight: 600;
+      color: var(--foreground);
+      margin: 0;
+    }
+  }
+
+  .cardDescription {
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin: 0;
+  }
+}
+
+.bookingHistorySection {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+
+  .sectionTitle {
+    font-size: 1.25rem;
+    font-weight: 300;
+    font-family: var(--font-heading);
+    margin-bottom: 0.5rem;
+    color: var(--foreground);
+  }
+
+  .sectionSubtitle {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    color: var(--muted);
+  }
+
+  .loadingText {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+}
+
+.emptyState {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+
+  .emptyText {
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+    color: var(--muted);
+  }
+
+  .emptyLink {
+    font-size: 0.875rem;
+    color: var(--accent);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.bookingsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.bookingItem {
+  .bookingLink {
+    display: block;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .bookingHeader {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+
+      .bookingRef {
+        font-family: monospace;
+        font-weight: 600;
+        color: var(--accent);
+      }
+
+      .statusBadge {
+        font-size: 0.75rem;
+        padding: 0.125rem 0.5rem;
+        border-radius: 9999px;
+      }
+    }
+
+    .bookingInfo {
+      font-size: 0.875rem;
+      color: var(--foreground);
+      margin-bottom: 0.25rem;
+    }
+
+    .bookingDetails {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+  }
+}
+
+.logoutSection {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+
+  .logoutLink {
+    font-size: 0.875rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+}

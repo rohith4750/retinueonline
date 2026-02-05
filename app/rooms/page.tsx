@@ -41,15 +41,15 @@ export default function RoomsPage() {
             {ROOMS_HIGHLIGHT.badge}
           </span>
           <h1 className="section-title text-4xl md:text-5xl mt-2 mb-4">
-            Rooms & tariff
+            Our Featured Rooms
           </h1>
-          <p className="text-slate-300 text-lg mb-4 max-w-2xl leading-relaxed">
+          <p className="text-lg mb-4 max-w-2xl leading-relaxed" style={{ color: "var(--foreground)" }}>
             {HOTEL.tagline}
           </p>
-          <p className="text-slate-400 mb-2 max-w-2xl">
+          <p className="mb-2 max-w-2xl" style={{ color: "var(--muted)" }}>
             {ROOMS_HIGHLIGHT.hygiene}
           </p>
-          <p className="text-slate-400 max-w-2xl">
+          <p className="max-w-2xl" style={{ color: "var(--muted)" }}>
             {ROOMS_HIGHLIGHT.celebrity}
           </p>
         </div>
@@ -66,28 +66,28 @@ export default function RoomsPage() {
               </div>
               <div className={i % 2 === 1 ? "md:order-1" : ""}>
                 <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">
-                  Floor {cat.floor}
+                  FLOOR {cat.floor}
                 </span>
                 <h2 className="section-title text-2xl md:text-3xl mt-1 mb-3">
-                  {cat.type}
+                  The {cat.type}
                 </h2>
-                <p className="text-slate-400 mb-4 max-w-xl leading-relaxed">
+                <p className="mb-4 max-w-xl leading-relaxed" style={{ color: "var(--muted)" }}>
                   {cat.description}
                 </p>
-                <p className="text-slate-500 text-sm mb-6">
-                  Rooms: {cat.rooms} · Up to {cat.capacity} guests
+                <p className="text-sm mb-6" style={{ color: "var(--muted-2)" }}>
+                  {cat.rooms} · 🛏️ King size bed · 🌟 4.0 (24 reviews)
                 </p>
-                <div className="flex flex-wrap items-baseline gap-4">
-                  <p className="text-2xl md:text-3xl font-semibold text-[var(--accent)]">
+                <div className="flex flex-wrap items-baseline gap-2 mb-6">
+                  <p className="text-3xl md:text-4xl font-semibold text-[var(--accent)]">
                     {formatPrice(cat.basePrice)}
                   </p>
-                  <p className="text-slate-500 text-sm">per day</p>
+                  <p className="text-sm" style={{ color: "var(--muted)" }}>/night</p>
                 </div>
                 <Link
                   href="/book"
-                  className="btn-primary inline-block mt-6 py-3 px-8"
+                  className="btn-primary inline-block py-3 px-8"
                 >
-                  Check availability
+                  Reserve Your Stay
                 </Link>
               </div>
             </div>
@@ -96,8 +96,8 @@ export default function RoomsPage() {
 
         {/* Stay & pricing */}
         <div className="card p-6 md:p-8 mt-16">
-          <h3 className="section-title text-xl mb-4">Stay & pricing</h3>
-          <ul className="text-slate-400 text-sm space-y-2 leading-relaxed">
+          <h3 className="section-title text-xl mb-4">Stay & Pricing Policy</h3>
+          <ul className="text-sm space-y-2 leading-relaxed" style={{ color: "var(--muted)" }}>
             <li>• {STAY_POLICY.minStay} – {STAY_POLICY.maxStay}</li>
             <li>• {STAY_POLICY.pricing}</li>
             <li>• {STAY_POLICY.discount}</li>
@@ -107,8 +107,8 @@ export default function RoomsPage() {
         </div>
 
         {/* Short reviews strip */}
-        <section className="mt-16 pt-16 border-t border-white/5">
-          <h3 className="section-title text-2xl mb-8">What guests say</h3>
+        <section className="mt-16 pt-16 border-t" style={{ borderColor: "rgba(44, 36, 22, 0.1)" }}>
+          <h3 className="section-title text-2xl mb-8">Guest Reviews</h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {TESTIMONIALS.slice(0, 3).map((t, i) => (
               <div key={i} className="testimonial-quote">
@@ -117,8 +117,8 @@ export default function RoomsPage() {
                     <span key={j} aria-hidden>★</span>
                   ))}
                 </div>
-                <p className="text-slate-300 text-sm leading-relaxed line-clamp-3">&ldquo;{t.quote}&rdquo;</p>
-                <p className="text-slate-100 font-medium text-sm mt-3">{t.name}</p>
+                <p className="text-sm leading-relaxed line-clamp-3" style={{ color: "var(--foreground)" }}>&ldquo;{t.quote}&rdquo;</p>
+                <p className="font-medium text-sm mt-3" style={{ color: "var(--foreground)" }}>{t.name}</p>
               </div>
             ))}
           </div>

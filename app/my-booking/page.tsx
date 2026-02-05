@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import PrivateHeader from "../components/PrivateHeader";
+import SiteHeader from "../components/SiteHeader";
 import { isLoggedIn, getCustomerEmail } from "@/lib/auth";
 import {
   publicApi,
@@ -92,49 +92,29 @@ function MyBookingContent() {
 
   return (
     <div className="min-h-screen app-shell">
-      {loggedIn ? (
-        <PrivateHeader />
-      ) : (
-        <header className="app-header border-b" style={{ background: "rgba(12, 15, 20, 0.9)" }}>
-          <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-3">
-            <Link href="/" className="text-lg font-semibold text-slate-100">
-              Hotel The Retinue
-            </Link>
-            <nav className="flex flex-wrap gap-3 text-sm">
-              <Link href="/rooms" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Rooms</Link>
-              <Link href="/conventions" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Conventions</Link>
-              <Link href="/contact" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Contact</Link>
-              <Link href="/book" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Book a room</Link>
-              <Link href="/blog" className="text-slate-400 hover:text-[var(--accent)] transition-colors">Blog</Link>
-              <Link href="/login" className="text-slate-400 hover:text-[var(--accent)] transition-all duration-300">Log in</Link>
-              <Link href="/signup" className="text-slate-400 hover:text-[var(--accent)] transition-all duration-300">Sign up</Link>
-              <span className="text-[var(--accent)] font-medium">View my booking</span>
-            </nav>
-          </div>
-        </header>
-      )}
+      <SiteHeader />
 
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        <div className="card p-6 max-w-md mx-auto">
-          <h2 className="card-header text-xl font-semibold text-slate-100">
-            View my booking
+      <main className="max-w-4xl mx-auto px-4 py-12">
+        <div className="card p-6 sm:p-8 max-w-md mx-auto">
+          <h2 className="text-2xl font-light mb-2" style={{ color: "var(--foreground)", fontFamily: "var(--font-serif)" }}>
+            View My Booking
           </h2>
-          <p className="text-slate-400 text-sm mb-4">
-            Email is used as priority. Enter your email, booking reference, and phone used at booking.
+          <p className="text-sm mb-6" style={{ color: "var(--muted)" }}>
+            Enter your booking details to view and manage your reservation
           </p>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="form-label">Email (priority)</label>
+              <label className="form-label text-xs uppercase tracking-wider">Email Address</label>
               <input
                 type="email"
                 className="form-input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
+                placeholder="john@example.com"
               />
             </div>
             <div>
-              <label className="form-label">Booking reference</label>
+              <label className="form-label text-xs uppercase tracking-wider">Booking Reference</label>
               <input
                 type="text"
                 className="form-input font-mono uppercase"
@@ -145,7 +125,7 @@ function MyBookingContent() {
               />
             </div>
             <div>
-              <label className="form-label">Phone number</label>
+              <label className="form-label text-xs uppercase tracking-wider">Phone Number</label>
               <input
                 type="tel"
                 className="form-input"
@@ -156,7 +136,7 @@ function MyBookingContent() {
               />
             </div>
             {error && (
-              <p className="text-sm text-red-400" role="alert">
+              <p className="text-sm text-red-600" role="alert">
                 {error}
               </p>
             )}
@@ -165,16 +145,16 @@ function MyBookingContent() {
               disabled={loading}
               className="btn-primary w-full py-3"
             >
-              {loading ? "Loading…" : "View booking"}
+              {loading ? "Loading…" : "View Booking"}
             </button>
           </form>
         </div>
 
         {booking && (
-          <div className="card p-6 max-w-lg mx-auto mt-8">
-            <div className="flex items-center justify-between flex-wrap gap-2 mb-4">
-              <h3 className="text-lg font-semibold text-slate-100">
-                Booking details
+          <div className="card p-6 sm:p-8 max-w-2xl mx-auto mt-8">
+            <div className="flex items-center justify-between flex-wrap gap-2 mb-6">
+              <h3 className="text-xl font-light" style={{ color: "var(--foreground)", fontFamily: "var(--font-serif)" }}>
+                Booking Details
               </h3>
               <span
                 className={`badge ${statusBadge[booking.status] ?? "badge-gray"}`}
@@ -182,67 +162,70 @@ function MyBookingContent() {
                 {booking.status}
               </span>
             </div>
-            <div className="bg-slate-800/50 rounded-xl p-4 mb-4">
-              <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">
-                Reference
+            <div className="rounded-xl p-4 mb-6" style={{ background: "var(--accent-soft)" }}>
+              <p className="text-xs uppercase tracking-wider mb-1" style={{ color: "var(--muted)" }}>
+                Booking Reference
               </p>
-              <p className="text-xl font-mono font-semibold text-[var(--accent)]">
+              <p className="text-2xl font-mono font-bold text-[var(--accent)]">
                 {booking.bookingReference}
               </p>
             </div>
             <dl className="space-y-3 text-sm">
               <div className="flex justify-between">
-                <dt className="text-slate-400">Guest</dt>
-                <dd className="text-slate-100">{booking.guestName}</dd>
+                <dt style={{ color: "var(--muted)" }}>Guest Name</dt>
+                <dd className="font-medium" style={{ color: "var(--foreground)" }}>{booking.guestName}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-slate-400">Phone</dt>
-                <dd className="text-slate-100">{booking.guestPhone}</dd>
+                <dt style={{ color: "var(--muted)" }}>Phone</dt>
+                <dd className="font-medium" style={{ color: "var(--foreground)" }}>{booking.guestPhone}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-slate-400">Check-in</dt>
-                <dd className="text-slate-100">{formatDate(booking.checkIn)}</dd>
+                <dt style={{ color: "var(--muted)" }}>Check-in</dt>
+                <dd className="font-medium" style={{ color: "var(--foreground)" }}>{formatDate(booking.checkIn)}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-slate-400">Check-out</dt>
-                <dd className="text-slate-100">{formatDate(booking.checkOut)}</dd>
+                <dt style={{ color: "var(--muted)" }}>Check-out</dt>
+                <dd className="font-medium" style={{ color: "var(--foreground)" }}>{formatDate(booking.checkOut)}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-slate-400">Room</dt>
-                <dd className="text-slate-100">
+                <dt style={{ color: "var(--muted)" }}>Room</dt>
+                <dd className="font-medium" style={{ color: "var(--foreground)" }}>
                   {booking.roomNumber} · {booking.roomType}
                 </dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-slate-400">Guests</dt>
-                <dd className="text-slate-100">{booking.numberOfGuests}</dd>
+                <dt style={{ color: "var(--muted)" }}>Number of Guests</dt>
+                <dd className="font-medium" style={{ color: "var(--foreground)" }}>{booking.numberOfGuests}</dd>
               </div>
-              <div className="flex justify-between pt-2 border-t border-white/5">
-                <dt className="text-slate-400">Total</dt>
-                <dd className="text-slate-100">
+              <div className="flex justify-between pt-3 border-t" style={{ borderColor: "var(--border)" }}>
+                <dt style={{ color: "var(--muted)" }}>Total Amount</dt>
+                <dd className="font-bold" style={{ color: "var(--foreground)" }}>
                   {formatCurrency(booking.totalAmount)}
                 </dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-slate-400">Paid</dt>
-                <dd className="text-slate-100">
+                <dt style={{ color: "var(--muted)" }}>Amount Paid</dt>
+                <dd className="font-medium" style={{ color: "var(--accent)" }}>
                   {formatCurrency(booking.paidAmount)}
                 </dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-slate-400">Balance</dt>
-                <dd className="text-slate-100 font-medium">
+                <dt style={{ color: "var(--muted)" }}>Balance Due</dt>
+                <dd className="font-medium" style={{ color: booking.balanceAmount > 0 ? "var(--accent)" : "var(--foreground)" }}>
                   {formatCurrency(booking.balanceAmount)}
                 </dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-slate-400">Payment status</dt>
-                <dd className="text-slate-100">{booking.paymentStatus}</dd>
+                <dt style={{ color: "var(--muted)" }}>Payment Status</dt>
+                <dd className="font-medium" style={{ color: "var(--foreground)" }}>{booking.paymentStatus}</dd>
               </div>
             </dl>
-            <div className="mt-6 pt-4 border-t border-white/5">
-              <Link href="/book" className="btn-secondary w-full text-center">
-                Book another room
+            <div className="mt-6 pt-4 border-t space-y-3" style={{ borderColor: "var(--border)" }}>
+              <Link href="/book" className="btn-primary w-full text-center py-3">
+                Book Another Room
+              </Link>
+              <Link href="/" className="btn-secondary w-full text-center py-3">
+                Back to Home
               </Link>
             </div>
           </div>

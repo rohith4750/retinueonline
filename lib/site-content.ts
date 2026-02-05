@@ -2,16 +2,26 @@
  * Hotel The Retinue – marketing & site content
  */
 
-/** Image URLs. Hero & about = local hotel-themed images (always load, on-brand). Add hotel-exterior.jpg / hotel-lobby.jpg for real photos. */
+/** Image URLs. Hero & about = high-quality hotel images from Unsplash */
 export const IMAGES = {
-  hero: "/images/hotel-exterior.svg",
-  about: "/images/hotel-lobby.svg",
+  hero: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80",
+  about: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200&q=80",
   standardRoom:
     "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80",
   suite:
     "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80",
   suitePlus:
     "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80",
+  hotelLobby:
+    "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200&q=80",
+  hotelExterior:
+    "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80",
+  conventionHall:
+    "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=1200&q=80",
+  wedding:
+    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80",
+  conference:
+    "https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=800&q=80",
 } as const;
 
 export const HOTEL = {
@@ -28,6 +38,7 @@ export const HOTEL = {
     "Main Road, Ramachandrapuram, Rajgopal Centre, Near HP Petrol Bank, Near Reliance Trends, 2nd Floor, Hotel The Retinue",
   state: "Andhra Pradesh",
   pincode: "533255",
+  foundingYear: 2022, // Update this to the actual founding year
 } as const;
 
 export const ROOM_CATEGORIES = [
@@ -143,4 +154,10 @@ export function formatPrice(amount: number): string {
     currency: "INR",
     maximumFractionDigits: 0,
   }).format(amount);
+}
+
+/** Calculate years of operation based on founding year */
+export function getYearsOfOperation(): number {
+  const currentYear = new Date().getFullYear();
+  return currentYear - HOTEL.foundingYear;
 }

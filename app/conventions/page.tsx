@@ -13,14 +13,14 @@ export default function ConventionsPage() {
         <h1 className="section-title text-4xl md:text-5xl mt-2 mb-3">
           {CONVENTIONS.name}
         </h1>
-        <p className="text-slate-400 text-lg mb-2">{CONVENTIONS.subtitle}</p>
-        <p className="text-slate-400 mb-12 max-w-2xl leading-relaxed">
+        <p className="text-lg mb-2" style={{ color: "var(--foreground)" }}>{CONVENTIONS.subtitle}</p>
+        <p className="mb-12 max-w-2xl leading-relaxed" style={{ color: "var(--muted)" }}>
           {CONVENTIONS.description}
         </p>
 
         <div className="card-events p-8 md:p-10 mb-10">
-          <p className="text-slate-200 text-lg mb-3">{CONVENTIONS.cta}</p>
-          <p className="text-slate-500 text-sm mb-6">{CONVENTIONS.contactNote}</p>
+          <p className="text-lg mb-3" style={{ color: "var(--foreground)" }}>{CONVENTIONS.cta}</p>
+          <p className="text-sm mb-6" style={{ color: "var(--muted)" }}>{CONVENTIONS.contactNote}</p>
           <div className="flex flex-wrap gap-4">
             <a
               href={`tel:${HOTEL.phone}`}

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import PrivateHeader from "../components/PrivateHeader";
+import SiteHeader from "../components/SiteHeader";
 import { isLoggedIn, getCustomerToken, getCustomerEmail } from "@/lib/auth";
 import {
   getBookingHistory,
@@ -78,66 +78,61 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen app-shell">
-      <PrivateHeader />
-      <main className="max-w-2xl mx-auto px-4 py-12">
-        <h1 className="font-heading text-2xl font-medium text-slate-100 mb-2">
-          Your account
+      <SiteHeader />
+      <main className="max-w-4xl mx-auto px-4 py-12">
+        <h1 className="font-heading text-3xl font-light mb-2" style={{ color: "var(--foreground)" }}>
+          Your Dashboard
         </h1>
-        <p className="text-slate-400 text-sm mb-8">
-          Book a room or view your booking. No main site navigation here—just your flow.
+        <p className="text-sm mb-8" style={{ color: "var(--muted)" }}>
+          Manage your bookings and account settings
         </p>
         <div className="grid gap-4 sm:grid-cols-2">
           <Link
             href="/book"
-            className="card p-6 block hover:border-[var(--accent)]/50 transition-all duration-300 group"
+            className="card p-6 block hover:border-[var(--accent)] transition-all duration-300 group"
           >
             <div className="flex items-center gap-3 mb-2">
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--accent)]/20 text-[var(--accent)] group-hover:scale-105 transition-transform">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-lg group-hover:scale-105 transition-transform" style={{ background: "var(--accent-soft)" }}>
+                <svg className="w-5 h-5" fill="none" stroke="var(--accent)" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </span>
-              <span className="font-semibold text-slate-100">Book a room</span>
+              <span className="font-semibold" style={{ color: "var(--foreground)" }}>Book a Room</span>
             </div>
-            <p className="text-slate-400 text-sm">
-              Check availability and complete your booking.
+            <p className="text-sm" style={{ color: "var(--muted)" }}>
+              Check availability and complete your booking
             </p>
           </Link>
           <Link
             href="/my-booking"
-            className="card p-6 block hover:border-[var(--accent)]/50 transition-all duration-300 group"
+            className="card p-6 block hover:border-[var(--accent)] transition-all duration-300 group"
           >
             <div className="flex items-center gap-3 mb-2">
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 group-hover:scale-105 transition-transform">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-lg group-hover:scale-105 transition-transform" style={{ background: "var(--accent-soft)" }}>
+                <svg className="w-5 h-5" fill="none" stroke="var(--accent)" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
               </span>
-              <span className="font-semibold text-slate-100">View my booking</span>
+              <span className="font-semibold" style={{ color: "var(--foreground)" }}>View My Booking</span>
             </div>
-            <p className="text-slate-400 text-sm">
-              Look up your booking with reference and phone.
+            <p className="text-sm" style={{ color: "var(--muted)" }}>
+              Look up your booking with reference and phone
             </p>
           </Link>
         </div>
 
-        <section className="mt-10 pt-8 border-t border-white/5">
-          <h2 className="font-heading text-lg font-medium text-slate-100 mb-1">
-            Booking history
+        <section className="mt-10 pt-8 border-t" style={{ borderColor: "var(--border)" }}>
+          <h2 className="font-heading text-xl font-light mb-2" style={{ color: "var(--foreground)" }}>
+            Booking History
           </h2>
-          <p className="text-slate-400 text-sm mb-3">
-            Based on your account email. History is tied to your email, not phone.
+          <p className="text-sm mb-4" style={{ color: "var(--muted)" }}>
+            All bookings linked to your account email: {getCustomerEmail()}
           </p>
-          {getCustomerEmail() && (
-            <p className="text-slate-500 text-xs mb-3">
-              For: {getCustomerEmail()}
-            </p>
-          )}
           {bookingsLoading ? (
-            <p className="text-slate-400 text-sm">Loading your bookings…</p>
+            <p className="text-sm" style={{ color: "var(--muted)" }}>Loading your bookings…</p>
           ) : bookingsError || !Array.isArray(bookings) || bookings.length === 0 ? (
             <div className="card p-6 text-center">
-              <p className="text-slate-400 text-sm mb-3">
+              <p className="text-sm mb-3" style={{ color: "var(--muted)" }}>
                 {bookingsError
                   ? "We couldn’t load your booking history. Use View my booking to look up a booking by reference and phone."
                   : "No bookings yet. Book a room or look up an existing booking."}
@@ -160,7 +155,7 @@ export default function DashboardPage() {
                 <li key={b.bookingId}>
                   <Link
                     href={href}
-                    className="card p-4 block hover:border-[var(--accent)]/50 transition-all duration-300"
+                    className="card p-4 block hover:border-[var(--accent)] transition-all duration-300"
                   >
                     <div className="flex items-start justify-between gap-2 mb-2">
                       <span className="font-mono font-semibold text-[var(--accent)]">
@@ -174,10 +169,10 @@ export default function DashboardPage() {
                         {b.status}
                       </span>
                     </div>
-                    <p className="text-slate-100 text-sm">
+                    <p className="text-sm" style={{ color: "var(--foreground)" }}>
                       {b.roomNumber} · {b.roomType}
                     </p>
-                    <p className="text-slate-400 text-xs mt-1">
+                    <p className="text-xs mt-1" style={{ color: "var(--muted)" }}>
                       {formatDate(b.checkIn)} – {formatDate(b.checkOut)} ·{" "}
                       {formatCurrency(b.totalAmount)}
                     </p>
@@ -188,12 +183,13 @@ export default function DashboardPage() {
           )}
         </section>
 
-        <div className="mt-8 pt-6 border-t border-white/5">
+        <div className="mt-8 pt-6 border-t" style={{ borderColor: "var(--border)" }}>
           <Link
             href="/logout"
-            className="text-sm text-slate-400 hover:text-[var(--accent)] transition-colors"
+            className="text-sm hover:text-[var(--accent)] transition-colors"
+            style={{ color: "var(--muted)" }}
           >
-            Log out
+            Log out →
           </Link>
         </div>
       </main>

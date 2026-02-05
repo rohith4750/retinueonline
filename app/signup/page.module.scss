@@ -1,0 +1,147 @@
+// Signup Page Styles
+.signupPage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+}
+
+.contentWrapper {
+  flex: 1;
+  display: flex;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+
+  @media (min-width: 768px) {
+    padding: 3rem 2rem;
+  }
+}
+
+.signupCard {
+  width: 100%;
+  max-width: 28rem;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+  @media (min-width: 640px) {
+    padding: 3rem;
+  }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  .title {
+    font-size: 1.875rem;
+    font-weight: 300;
+    font-family: var(--font-heading);
+    margin-bottom: 0.5rem;
+    color: var(--foreground);
+  }
+
+  .subtitle {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+}
+
+.form {
+  .formGroup {
+    margin-bottom: 1.25rem;
+
+    .label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--foreground);
+    }
+
+    .input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      color: var(--foreground);
+      background: white;
+      transition: all 0.3s ease;
+
+      &:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+      }
+
+      &::placeholder {
+        color: var(--muted);
+      }
+    }
+  }
+
+  .errorMessage {
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    background: rgba(220, 38, 38, 0.1);
+    border: 1px solid rgba(220, 38, 38, 0.3);
+    border-radius: 0.5rem;
+    color: #DC2626;
+    font-size: 0.875rem;
+  }
+
+  .submitButton {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover:not(:disabled) {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+}
+
+.footer {
+  margin-top: 1.5rem;
+  text-align: center;
+
+  .footerText {
+    font-size: 0.875rem;
+    color: var(--muted);
+
+    .link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}

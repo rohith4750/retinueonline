@@ -69,75 +69,86 @@ export default function BookConfirmationPage() {
 
   return (
     <BookLayout currentStep="/book/confirmation">
-      <div className="card p-6 max-w-lg mx-auto">
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 mb-3">
+      <div className="card p-6 sm:p-8 max-w-2xl mx-auto">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4" style={{ background: "var(--accent-soft)" }}>
             <svg
-              className="w-6 h-6"
+              className="w-8 h-8"
               fill="none"
-              stroke="currentColor"
+              stroke="var(--accent)"
               viewBox="0 0 24 24"
+              strokeWidth={3}
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
                 d="M5 13l4 4L19 7"
               />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-slate-100">
-            Booking confirmed
+          <h2 className="text-2xl font-light mb-2" style={{ color: "var(--foreground)", fontFamily: "var(--font-serif)" }}>
+            Booking Confirmed!
           </h2>
-          <p className="text-slate-400 text-sm mt-1">
-            Save your booking reference to view or manage your booking.
+          <p className="text-sm" style={{ color: "var(--muted)" }}>
+            Your reservation has been successfully confirmed. Save your booking reference below.
           </p>
         </div>
 
-        <div className="bg-slate-800/50 rounded-xl p-4 mb-6">
-          <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">
-            Booking reference
+        <div className="rounded-2xl p-6 mb-6 text-center" style={{ background: "var(--accent-soft)", borderLeft: "4px solid var(--accent)" }}>
+          <p className="text-xs uppercase tracking-wider mb-2" style={{ color: "var(--muted)" }}>
+            Booking Reference
           </p>
-          <p className="text-2xl font-mono font-bold text-[var(--accent)] tracking-wider">
+          <p className="text-3xl font-mono font-bold tracking-wider" style={{ color: "var(--accent)" }}>
             {data.bookingReference}
           </p>
           {data.bookingId && (
-            <p className="text-slate-500 text-sm mt-1">ID: {data.bookingId}</p>
+            <p className="text-xs mt-2" style={{ color: "var(--muted)" }}>Booking ID: {data.bookingId}</p>
           )}
         </div>
 
-        <dl className="space-y-3 text-sm">
-          <div className="flex justify-between">
-            <dt className="text-slate-400">Guest</dt>
-            <dd className="text-slate-100">{data.guestName}</dd>
-          </div>
-          <div className="flex justify-between">
-            <dt className="text-slate-400">Phone</dt>
-            <dd className="text-slate-100">{data.guestPhone}</dd>
-          </div>
-          <div className="flex justify-between">
-            <dt className="text-slate-400">Check-in</dt>
-            <dd className="text-slate-100">{formatDate(data.checkIn)}</dd>
-          </div>
-          <div className="flex justify-between">
-            <dt className="text-slate-400">Check-out</dt>
-            <dd className="text-slate-100">{formatDate(data.checkOut)}</dd>
-          </div>
-          <div className="flex justify-between">
-            <dt className="text-slate-400">Room</dt>
-            <dd className="text-slate-100">
-              {data.roomNumber} · {data.roomType}
-            </dd>
-          </div>
-          <div className="flex justify-between pt-2 border-t border-white/5">
-            <dt className="text-slate-400">Total</dt>
-            <dd className="text-slate-100 font-semibold">
-              {formatCurrency(data.totalAmount)}
-            </dd>
-          </div>
-        </dl>
+        <div className="card p-6 mb-6">
+          <h3 className="text-sm font-semibold mb-4 uppercase tracking-wider" style={{ color: "var(--accent)" }}>
+            Booking Details
+          </h3>
+          <dl className="space-y-3 text-sm">
+            <div className="flex justify-between">
+              <dt style={{ color: "var(--muted)" }}>Guest Name</dt>
+              <dd className="font-medium" style={{ color: "var(--foreground)" }}>{data.guestName}</dd>
+            </div>
+            <div className="flex justify-between">
+              <dt style={{ color: "var(--muted)" }}>Phone Number</dt>
+              <dd className="font-medium" style={{ color: "var(--foreground)" }}>{data.guestPhone}</dd>
+            </div>
+            <div className="flex justify-between">
+              <dt style={{ color: "var(--muted)" }}>Check-in</dt>
+              <dd className="font-medium" style={{ color: "var(--foreground)" }}>{formatDate(data.checkIn)}</dd>
+            </div>
+            <div className="flex justify-between">
+              <dt style={{ color: "var(--muted)" }}>Check-out</dt>
+              <dd className="font-medium" style={{ color: "var(--foreground)" }}>{formatDate(data.checkOut)}</dd>
+            </div>
+            <div className="flex justify-between">
+              <dt style={{ color: "var(--muted)" }}>Room</dt>
+              <dd className="font-medium" style={{ color: "var(--foreground)" }}>
+                {data.roomNumber} · {data.roomType}
+              </dd>
+            </div>
+            <div className="flex justify-between pt-3 border-t" style={{ borderColor: "var(--border)" }}>
+              <dt className="font-semibold" style={{ color: "var(--foreground)" }}>Total Amount</dt>
+              <dd className="font-bold text-lg" style={{ color: "var(--accent)" }}>
+                {formatCurrency(data.totalAmount)}
+              </dd>
+            </div>
+            <div className="flex justify-between">
+              <dt style={{ color: "var(--muted)" }}>Status</dt>
+              <dd>
+                <span className="badge badge-success text-xs">{data.status}</span>
+              </dd>
+            </div>
+          </dl>
+        </div>
 
-        <div className="mt-6 pt-4 border-t border-white/5">
+        <div className="space-y-3">
           <Link
             href="/my-booking"
             className="btn-primary w-full py-3 flex items-center justify-center gap-2"
@@ -147,12 +158,19 @@ export default function BookConfirmationPage() {
               } catch (_) {}
             }}
           >
-            View my booking
+            View My Booking
           </Link>
-          <p className="text-slate-500 text-xs text-center mt-3">
-            Enter your booking reference and phone on the next page.
-          </p>
+          <Link
+            href="/"
+            className="btn-secondary w-full py-3 flex items-center justify-center"
+          >
+            Back to Home
+          </Link>
         </div>
+
+        <p className="text-center text-xs mt-6" style={{ color: "var(--muted)" }}>
+          A confirmation email has been sent to your registered email address.
+        </p>
       </div>
     </BookLayout>
   );

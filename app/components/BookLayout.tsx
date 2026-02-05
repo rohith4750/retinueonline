@@ -3,14 +3,14 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import PrivateHeader from "./PrivateHeader";
+import SiteHeader from "./SiteHeader";
 import { isLoggedIn } from "@/lib/auth";
 
 const steps = [
   { path: "/book", label: "Dates" },
-  { path: "/book/rooms", label: "Room" },
-  { path: "/book/checkout", label: "Details" },
-  { path: "/book/confirmation", label: "Confirm" },
+  { path: "/book/rooms", label: "Select Room" },
+  { path: "/book/checkout", label: "Guest Details" },
+  { path: "/book/confirmation", label: "Confirmation" },
 ];
 
 export default function BookLayout({
@@ -40,32 +40,33 @@ export default function BookLayout({
   if (checking || !loggedIn) {
     return (
       <div className="min-h-screen app-shell flex items-center justify-center">
-        <p className="text-slate-400">Redirecting to login…</p>
+        <p style={{ color: "var(--muted)" }}>Redirecting to login…</p>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen app-shell">
-      <PrivateHeader title="Hotel The Retinue & Buchiraju Conventions" />
+      <SiteHeader />
       {currentStep && (
-        <div className="border-b border-white/5" style={{ background: "rgba(12, 15, 20, 0.9)" }}>
-          <div className="max-w-4xl mx-auto px-4 py-3">
-            <div className="flex gap-2 text-xs text-slate-400">
-              {steps.map((s) => (
+        <div className="border-b" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
+          <div className="max-w-6xl mx-auto px-4 py-4">
+            <div className="flex gap-2 text-xs" style={{ color: "var(--muted)" }}>
+              {steps.map((s, idx) => (
                 <span key={s.path} className="contents">
                   <Link
                     href={s.path}
                     className={
                       currentStep === s.path
-                        ? "text-[var(--accent)] font-medium"
-                        : "hover:text-slate-300"
+                        ? "font-semibold hover:underline"
+                        : "hover:text-[var(--accent)]"
                     }
+                    style={{ color: currentStep === s.path ? "var(--accent)" : "inherit" }}
                   >
                     {s.label}
                   </Link>
-                  {steps.indexOf(s) < steps.length - 1 && (
-                    <span className="text-slate-600">/</span>
+                  {idx < steps.length - 1 && (
+                    <span>→</span>
                   )}
                 </span>
               ))}
@@ -73,7 +74,7 @@ export default function BookLayout({
           </div>
         </div>
       )}
-      <main className="max-w-4xl mx-auto px-4 py-8">{children}</main>
+      <main className="max-w-6xl mx-auto px-4 py-8">{children}</main>
     </div>
   );
 }

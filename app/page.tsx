@@ -3,14 +3,13 @@ import SiteHeader from "./components/SiteHeader";
 import {
   HOTEL,
   ROOM_CATEGORIES,
-  STAY_POLICY,
   CONVENTIONS,
-  ABOUT_HOTEL,
-  ROOMS_HIGHLIGHT,
   TESTIMONIALS,
   IMAGES,
   formatPrice,
+  getYearsOfOperation,
 } from "@/lib/site-content";
+import styles from "./page.module.scss";
 
 const ROOM_IMAGE_MAP: Record<string, string> = {
   Standard: IMAGES.standardRoom,
@@ -18,245 +17,466 @@ const ROOM_IMAGE_MAP: Record<string, string> = {
   "Suite+": IMAGES.suitePlus,
 };
 
-function HeroImage() {
-  return (
-    <div className="section-image aspect-[21/9] min-h-[180px] sm:min-h-[220px] md:min-h-[280px] lg:min-h-[320px] rounded-2xl sm:rounded-3xl overflow-hidden relative bg-slate-800/50">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={IMAGES.hero}
-        alt="Hotel The Retinue – exterior"
-        className="absolute inset-0 w-full h-full object-cover"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)]/60 via-transparent to-transparent pointer-events-none" />
-    </div>
-  );
-}
-
-function AboutImage() {
-  return (
-    <div className="section-image aspect-[4/3] rounded-2xl overflow-hidden relative min-h-[280px] bg-slate-800/50">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={IMAGES.about}
-        alt="Hotel lobby – comfortable stay"
-        className="absolute inset-0 w-full h-full object-cover"
-      />
-    </div>
-  );
-}
-
 export default function HomePage() {
   return (
-    <div className="min-h-screen app-shell flex flex-col">
+    <div className={styles.landingPage}>
       <SiteHeader />
 
-      <main className="flex-1">
-        {/* Hero – connecting visual first */}
-        <section className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 pt-6 sm:pt-8 pb-4 sm:pb-6 md:pt-10 md:pb-8">
-          <HeroImage />
-        </section>
-
-        {/* Hero text – flows from the image */}
-        <section className="relative max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 pt-4 sm:pt-6 pb-10 sm:pb-12 md:pt-8 md:pb-16 text-center overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--accent-glow)]/20 via-transparent to-transparent pointer-events-none" />
-          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--accent)]/30 to-transparent" />
-          <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-slate-100 mb-4 sm:mb-5 tracking-tight animate-slide-up relative">
-            {HOTEL.name}
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed animate-slide-up animate-stagger-1 relative px-1">
-            {HOTEL.tagline}
-          </p>
-          <Link
-            href="/book"
-            className="btn-primary inline-flex items-center justify-center py-3 sm:py-3.5 px-8 sm:px-12 text-sm sm:text-base tracking-wide transition-all duration-300 hover:scale-[1.03] animate-slide-up animate-stagger-2 relative min-h-[48px]"
-          >
-            Book a room
-          </Link>
-        </section>
-
-        {/* About – connecting content */}
-        <section className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-12 sm:py-16 md:py-24">
-          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center">
-            <div>
-              <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">
-                About us
-              </span>
-              <h2 className="section-title text-2xl sm:text-3xl md:text-4xl mt-2 mb-4 sm:mb-6">
-                {ABOUT_HOTEL.headline}
-              </h2>
-              <p className="text-slate-300 text-lg mb-4 leading-relaxed">
-                {ABOUT_HOTEL.lead}
+      <main>
+        {/* Hero Section */}
+        <section className={styles.heroSection}>
+          <div className={styles.heroGrid}>
+            {/* Left Content */}
+            <div className={styles.heroContent}>
+              <p className={styles.preTitle}>Not just a stay</p>
+              <h1 className={styles.title}>
+                <span className={styles.mainText}>The </span>
+                <span className={styles.accentText}>Retinue</span>
+              </h1>
+              <p className={styles.subtitle}>It's a whole mood...</p>
+              <p className={styles.description}>
+                Whether you're exploring the vibrant city, hosting your dream event, or just seeking a peaceful escape – Hotel The Retinue is your perfect sanctuary. With thoughtfully designed rooms, exceptional service, and the elegance of Buchiraju Conventions, every moment here is crafted to feel extraordinary.
               </p>
-              {ABOUT_HOTEL.body.map((para, i) => (
-                <p key={i} className="text-slate-400 mb-4 leading-relaxed">
-                  {para}
-                </p>
-              ))}
-              <Link href="/rooms" className="btn-secondary py-2.5 px-6 inline-block mt-2">
-                {ABOUT_HOTEL.cta}
+              
+              {/* Key Features */}
+              <div className={styles.featuresList}>
+                <div className={styles.featureItem}>
+                  <div className={styles.featureIcon}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" strokeWidth="2">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                      <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                  </div>
+                  <p className={styles.featureText}>Premium rooms with modern amenities</p>
+                </div>
+                <div className={styles.featureItem}>
+                  <div className={styles.featureIcon}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" strokeWidth="2">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                      <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                  </div>
+                  <p className={styles.featureText}>Celebrity-favourite hospitality standards</p>
+                </div>
+                <div className={styles.featureItem}>
+                  <div className={styles.featureIcon}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" strokeWidth="2">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                      <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                  </div>
+                  <p className={styles.featureText}>World-class convention facilities</p>
+                </div>
+              </div>
+
+              <Link href="/book" className={styles.primaryButton}>
+                Book Now
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
               </Link>
+              
+              {/* Decorative branch illustration */}
+              <div className={styles.decorativeBranch}>
+                <svg width="120" height="60" viewBox="0 0 120 60" fill="none" stroke="var(--accent)" strokeWidth="1">
+                  <path d="M10 30 Q 30 20, 50 30 T 90 30" strokeLinecap="round"/>
+                  <circle cx="20" cy="25" r="2" fill="var(--accent)"/>
+                  <circle cx="40" cy="35" r="2" fill="var(--accent)"/>
+                  <circle cx="60" cy="28" r="2" fill="var(--accent)"/>
+                  <circle cx="80" cy="32" r="2" fill="var(--accent)"/>
+                </svg>
+              </div>
             </div>
-            <div className="relative">
-              <AboutImage />
+
+            {/* Right Image */}
+            <div className={styles.heroImageContainer}>
+              <div className={styles.mainImage}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={IMAGES.hotelExterior}
+                  alt="Hotel The Retinue - Luxury hotel exterior with modern architecture"
+                />
+              </div>
+              {/* Floating badge */}
+              <div className={styles.floatingBadge}>
+                <p>{getYearsOfOperation()}+ Years</p>
+              </div>
+              {/* Additional small image overlay */}
+              <div className={styles.overlayImage}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={IMAGES.standardRoom}
+                  alt="Luxury hotel room interior with king bed"
+                />
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Rooms – hygiene & celebrity messaging, with image areas */}
-        <section className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-12 sm:py-16 md:py-24 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[var(--accent-glow)]/10 to-transparent pointer-events-none rounded-3xl" />
-          <div className="relative">
-            <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">
-              {ROOMS_HIGHLIGHT.badge}
-            </span>
-            <h2 className="section-title text-3xl md:text-4xl mt-2 mb-3">
-              Our rooms
-            </h2>
-            <p className="text-slate-400 mb-4 max-w-2xl">
-              {ROOMS_HIGHLIGHT.hygiene}
+        {/* About Us Section */}
+        <section className={styles.aboutSection}>
+          <div className={styles.aboutGrid}>
+            {/* Left Content */}
+            <div className={styles.aboutContent}>
+              <p className={styles.badge}>ABOUT US</p>
+              <h2 className={styles.heading}>
+                <span className={styles.normalText}>Where </span>
+                <span className={styles.accentText}>comfort</span>
+                <span className={styles.normalText}> meets</span>
+                <br />
+                <span className={styles.normalText}>care...</span>
+              </h2>
+              <p className={styles.paragraph}>
+                At Hotel The Retinue, we believe hospitality is more than just a service—it's an art. Located in the heart of Ramachandrapuram, we've been creating memorable experiences for over {getYearsOfOperation()} years, offering premium accommodations paired with warm, personalized service.
+              </p>
+              <p className={styles.paragraph}>
+                From our elegantly appointed Standard rooms to our luxurious Suite+ options, every space is designed with your comfort in mind. Whether you're traveling for business, leisure, or celebrating life's special moments at Buchiraju Conventions, we ensure every detail reflects our commitment to excellence.
+              </p>
+              
+              {/* Stats Grid */}
+              <div className={styles.statsGrid}>
+                <div className={styles.statItem}>
+                  <p className={styles.statValue}>1K+</p>
+                  <p className={styles.statLabel}>Happy Guests</p>
+                </div>
+                <div className={`${styles.statItem} ${styles.bordered}`}>
+                  <p className={styles.statValue}>500+</p>
+                  <p className={styles.statLabel}>Events Hosted</p>
+                </div>
+                <div className={styles.statItem}>
+                  <p className={styles.statValue}>4.9★</p>
+                  <p className={styles.statLabel}>Guest Rating</p>
+                </div>
+              </div>
+
+              <p className={styles.paragraph}>
+                Experience the perfect blend of modern amenities, attentive service, and a welcoming atmosphere that makes Hotel The Retinue your home away from home.
+              </p>
+              <Link href="/rooms" className={styles.secondaryButton}>
+                Explore Our Rooms
+              </Link>
+            </div>
+
+            {/* Right Images Grid */}
+            <div className={styles.imageGrid}>
+              {/* Main large image - Hotel Lobby */}
+              <div className={styles.mainImageLarge}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={IMAGES.hotelLobby}
+                  alt="Hotel The Retinue - Elegant lobby with modern reception desk"
+                />
+              </div>
+              {/* Two smaller images */}
+              <div className={styles.smallImage}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={IMAGES.suite}
+                  alt="Luxury suite with elegant furnishings and comfortable seating"
+                />
+              </div>
+              <div className={styles.smallImage}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={IMAGES.suitePlus}
+                  alt="Premium Suite Plus with spacious layout and modern design"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Why Choose Us Section */}
+        <section className={styles.whySection}>
+          <div className={styles.sectionHeader}>
+            <p className={styles.badge}>WHY CHOOSE US</p>
+            <h2 className={styles.heading}>Experience Excellence in Every Stay</h2>
+          </div>
+          
+          <div className={styles.cardsGrid}>
+            <div className={styles.card}>
+              <div className={styles.cardIcon}>
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" strokeWidth="2">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                  <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+              </div>
+              <h3 className={styles.cardTitle}>Premium Accommodations</h3>
+              <p className={styles.cardDescription}>
+                Thoughtfully designed rooms with modern amenities, ensuring comfort and luxury for every guest
+              </p>
+            </div>
+
+            <div className={styles.card}>
+              <div className={styles.cardIcon}>
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" strokeWidth="2">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                  <path d="M2 17l10 5 10-5"/>
+                  <path d="M2 12l10 5 10-5"/>
+                </svg>
+              </div>
+              <h3 className={styles.cardTitle}>Flexible Stay Options</h3>
+              <p className={styles.cardDescription}>
+                12-24 hour stay policies with transparent pricing and no hidden charges for your convenience
+              </p>
+            </div>
+
+            <div className={styles.card}>
+              <div className={styles.cardIcon}>
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" strokeWidth="2">
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                </svg>
+              </div>
+              <h3 className={styles.cardTitle}>Event Excellence</h3>
+              <p className={styles.cardDescription}>
+                World-class convention facilities at Buchiraju Conventions for memorable celebrations
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Our Featured Rooms */}
+        <section className={styles.roomsSection}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.heading}>Our Featured Rooms</h2>
+            <p className={styles.description}>
+              Experience luxury and comfort in our thoughtfully designed rooms, each offering modern amenities and a welcoming ambiance perfect for your stay.
             </p>
-            <p className="text-slate-400 mb-12 max-w-2xl">
-              {ROOMS_HIGHLIGHT.celebrity}
-            </p>
-            <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              {ROOM_CATEGORIES.map((cat, i) => (
-                <Link
-                  key={cat.type}
-                  href="/rooms"
-                  className="card-hotel block text-left overflow-hidden group animate-fade-in"
-                >
-                  <div className="section-image aspect-[4/3] relative overflow-hidden bg-slate-800/50">
+          </div>
+
+          <div className={styles.roomsGrid}>
+            {ROOM_CATEGORIES.map((cat) => (
+              <div key={cat.type} className={styles.roomCard}>
+                {/* Room Badge */}
+                <div className={styles.roomImageContainer}>
+                  <div className={styles.roomImage}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={ROOM_IMAGE_MAP[cat.type] ?? IMAGES.standardRoom}
                       alt={`${cat.type} room`}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
-                  <div className="p-4 sm:p-6">
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">
-                      From {formatPrice(cat.basePrice)}/day
-                    </span>
-                    <h3 className="font-heading text-xl font-medium text-slate-100 mt-2 mb-2 group-hover:text-[var(--accent)] transition-colors">
-                      {cat.type}
-                    </h3>
-                    <p className="text-slate-400 text-sm mb-4 leading-relaxed line-clamp-2">
-                      {cat.description}
-                    </p>
-                    <span className="text-slate-500 text-sm">
-                      {cat.rooms} · Floor {cat.floor}
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="mt-8 sm:mt-10 flex flex-wrap gap-3 sm:gap-4">
-              <Link href="/book" className="btn-primary py-3 px-6 sm:px-8 min-h-[48px] sm:min-h-0 flex items-center justify-center">
-                Check availability & book
-              </Link>
-              <Link href="/rooms" className="btn-secondary py-3 px-6 sm:px-8 min-h-[48px] sm:min-h-0 flex items-center justify-center">
-                View all rooms & tariff
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Customer reviews – connecting trust */}
-        <section className="max-w-6xl mx-auto px-4 py-16 md:py-24">
-          <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">
-            What guests say
-          </span>
-          <h2 className="section-title text-2xl sm:text-3xl md:text-4xl mt-2 mb-8 sm:mb-12">
-            Reviews from our guests
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-            {TESTIMONIALS.map((t, i) => (
-              <div
-                key={i}
-                className="testimonial-quote animate-fade-in"
-                style={{ animationDelay: `${i * 0.1}s` }}
-              >
-                <div className="flex gap-1 mb-3 text-[var(--accent)]">
-                  {Array.from({ length: t.rating }).map((_, j) => (
-                    <span key={j} aria-hidden>★</span>
-                  ))}
+                  <div className={styles.featuredBadge}>FEATURED</div>
                 </div>
-                <p className="text-slate-300 leading-relaxed mb-4">&ldquo;{t.quote}&rdquo;</p>
-                <p className="text-slate-100 font-medium">{t.name}</p>
-                <p className="text-slate-500 text-sm">{t.role}</p>
+
+                <div className={styles.roomContent}>
+                  <div className={styles.roomHeader}>
+                    <h3 className={styles.roomTitle}>{cat.type}</h3>
+                    <p className={styles.roomPrice}>{formatPrice(cat.basePrice)}</p>
+                  </div>
+                  
+                  <div className={styles.roomRating}>
+                    <div className={styles.stars}>
+                      {[...Array(5)].map((_, i) => (
+                        <span key={i}>★</span>
+                      ))}
+                    </div>
+                    <span className={styles.ratingText}>(4.8)</span>
+                  </div>
+
+                  <p className={styles.roomDescription}>{cat.description}</p>
+
+                  <div className={styles.roomTags}>
+                    <span className={styles.tag}>{cat.rooms}</span>
+                    <span className={styles.tag}>Floor {cat.floor}</span>
+                  </div>
+
+                  <Link href="/book" className={styles.bookButton}>
+                    Book Now
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Conventions – function hall */}
-        <section className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-12 sm:py-16 md:py-20 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[var(--accent-glow)]/15 to-transparent pointer-events-none rounded-3xl" />
-          <div className="card-events p-5 sm:p-8 md:p-10 relative">
-            <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">
-              Function hall & events
-            </span>
-            <h2 className="section-title text-3xl md:text-4xl mt-2 mb-4">
-              {CONVENTIONS.name}
-            </h2>
-            <p className="text-slate-300 text-lg mb-4 max-w-2xl leading-relaxed">
-              {CONVENTIONS.description}
-            </p>
-            <p className="text-slate-400 mb-6">{CONVENTIONS.cta}</p>
-            <div className="flex flex-wrap gap-3 sm:gap-4">
-              <Link href="/conventions" className="btn-primary py-3 px-6 min-h-[48px] sm:min-h-0 flex items-center justify-center">
-                Enquire for events
-              </Link>
-              <a href={`tel:${HOTEL.phone}`} className="btn-secondary py-3 px-6 min-h-[48px] sm:min-h-0 flex items-center justify-center">
-                Call {HOTEL.phoneDisplay}
-              </a>
+        {/* Conventions Section */}
+        <section className={styles.conventionsSection}>
+          <div className={styles.conventionsContainer}>
+            <div className={styles.conventionsGrid}>
+              {/* Left Content */}
+              <div className={styles.conventionsContent}>
+                <p className={styles.badge}>EVENTS & CELEBRATIONS</p>
+                <h2 className={styles.heading}>
+                  <span className={styles.normalText}>Moments Made Memorable</span>
+                </h2>
+                <h3 className={styles.subtitle}>Buchiraju Conventions</h3>
+                <p className={styles.paragraph}>{CONVENTIONS.description}</p>
+                <p className={styles.paragraph}>
+                  From intimate gatherings to grand celebrations, our state-of-the-art convention hall provides the perfect setting for weddings, corporate events, conferences, and special occasions. With modern amenities, elegant decor, and dedicated event coordination, we ensure every detail of your event is flawlessly executed.
+                </p>
+
+                {/* Convention Features */}
+                <div className={styles.conventionFeatures}>
+                  <div className={styles.featureItem}>
+                    <div className={styles.featureIcon}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" strokeWidth="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                    </div>
+                    <p className={styles.featureText}>Fully air-conditioned hall with flexible seating capacity</p>
+                  </div>
+                  <div className={styles.featureItem}>
+                    <div className={styles.featureIcon}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" strokeWidth="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                    </div>
+                    <p className={styles.featureText}>Modern AV equipment, projector, and stage setup</p>
+                  </div>
+                  <div className={styles.featureItem}>
+                    <div className={styles.featureIcon}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" strokeWidth="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                    </div>
+                    <p className={styles.featureText}>Elegant decor and customizable event arrangements</p>
+                  </div>
+                  <div className={styles.featureItem}>
+                    <div className={styles.featureIcon}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" strokeWidth="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                    </div>
+                    <p className={styles.featureText}>Dedicated event coordination and support staff</p>
+                  </div>
+                </div>
+
+                <div className={styles.buttonGroup}>
+                  <Link href="/conventions" className={styles.primaryButton}>
+                    Book Your Event
+                  </Link>
+                  <a href={`tel:${HOTEL.phone}`} className={styles.secondaryButton}>
+                    Call {HOTEL.phoneDisplay}
+                  </a>
+                </div>
+              </div>
+
+              {/* Right Images - Convention Hall Images */}
+              <div className={styles.conventionsImages}>
+                {/* Large convention hall image */}
+                <div className={styles.largeConventionImage}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={IMAGES.conventionHall}
+                    alt="Buchiraju Conventions - Elegant banquet hall with chandeliers and round tables"
+                  />
+                  <div className={styles.imageBadge}>
+                    <p>Convention Hall</p>
+                  </div>
+                </div>
+                {/* Two smaller images showing different event setups */}
+                <div className={styles.smallConventionImage}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={IMAGES.wedding}
+                    alt="Wedding celebration with beautiful decor at Buchiraju Conventions"
+                  />
+                </div>
+                <div className={styles.smallConventionImage}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={IMAGES.conference}
+                    alt="Corporate conference with modern AV setup and professional seating"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Stay policy */}
-        <section className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-12 sm:py-16 md:py-20">
-          <h2 className="section-title text-2xl sm:text-3xl mb-4 sm:mb-6">Stay policy</h2>
-          <div className="card p-4 sm:p-6 max-w-2xl">
-            <ul className="text-slate-400 space-y-3 text-sm leading-relaxed">
-              <li>Minimum stay: {STAY_POLICY.minStay}</li>
-              <li>Maximum stay: {STAY_POLICY.maxStay}</li>
-              <li>{STAY_POLICY.pricing}</li>
-              <li>{STAY_POLICY.discount}</li>
-            </ul>
+        {/* Client Feedback & Stories */}
+        <section className={styles.testimonialsSection}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.heading}>Client Feedback & Stories</h2>
+            <p className={styles.description}>
+              Hear what our valued guests have to say about their experiences at Hotel The Retinue
+            </p>
+          </div>
+
+          <div className={styles.testimonialsGrid}>
+            {TESTIMONIALS.map((t, i) => (
+              <div key={i} className={styles.testimonialCard}>
+                <div className={styles.rating}>
+                  {Array.from({ length: t.rating }).map((_, j) => (
+                    <span key={j}>★</span>
+                  ))}
+                </div>
+                <p className={styles.quote}>"{t.quote}"</p>
+                <div className={styles.author}>
+                  <div className={styles.avatar}>{t.name.charAt(0)}</div>
+                  <div className={styles.authorInfo}>
+                    <p className={styles.authorName}>{t.name}</p>
+                    <p className={styles.authorRole}>{t.role}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
-        {/* Contact */}
-        <section className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-12 sm:py-16 md:py-20">
-          <h2 className="section-title text-2xl sm:text-3xl mb-4 sm:mb-6">Contact & location</h2>
-          <div className="card p-4 sm:p-6 max-w-xl">
-            <p className="mb-2">
-              <a href={`tel:${HOTEL.phone}`} className="text-[var(--accent)] hover:underline font-medium">
-                {HOTEL.phoneDisplay}
-              </a>
-            </p>
-            <p className="mb-2">
-              <a href={`mailto:${HOTEL.email}`} className="text-[var(--accent)] hover:underline">
-                {HOTEL.email}
-              </a>
-            </p>
-            <p className="text-slate-400">{HOTEL.shortAddress}</p>
-            <p className="text-slate-500 text-sm mt-2">{HOTEL.landmark}</p>
-            <Link href="/contact" className="btn-secondary mt-5 inline-block">
-              Full contact details
-            </Link>
-          </div>
-        </section>
+        {/* Contact & CTA Footer */}
+        <section className={styles.footerSection}>
+          <div className={styles.footerContainer}>
+            <div className={styles.footerGrid}>
+              {/* Contact Info */}
+              <div className={styles.footerColumn}>
+                <h3 className={styles.footerHeading}>Contact</h3>
+                <div className={styles.footerLinks}>
+                  <p>
+                    <a href={`tel:${HOTEL.phone}`}>{HOTEL.phoneDisplay}</a>
+                  </p>
+                  <p>
+                    <a href={`mailto:${HOTEL.email}`}>{HOTEL.email}</a>
+                  </p>
+                </div>
+              </div>
 
-        {/* Footer CTA */}
-        <section className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-12 sm:py-16 border-t border-white/5 flex flex-wrap gap-3 sm:gap-4 justify-center">
-          <Link href="/book" className="btn-primary py-3 sm:py-3.5 px-8 sm:px-10 min-h-[48px] sm:min-h-0 flex items-center justify-center">
-            Book a room
-          </Link>
-          <Link href="/signup" className="btn-secondary py-3 sm:py-3.5 px-8 sm:px-10 min-h-[48px] sm:min-h-0 flex items-center justify-center">
-            Sign up
-          </Link>
+              {/* Address */}
+              <div className={styles.footerColumn}>
+                <h3 className={styles.footerHeading}>Address</h3>
+                <div className={styles.footerLinks}>
+                  <p>
+                    {HOTEL.shortAddress}
+                    <br />
+                    {HOTEL.landmark}
+                  </p>
+                </div>
+              </div>
+
+              {/* Quick Links */}
+              <div className={styles.footerColumn}>
+                <h3 className={styles.footerHeading}>Quick Links</h3>
+                <div className={styles.footerLinks}>
+                  <Link href="/rooms">Our Rooms</Link>
+                  <Link href="/conventions">Conventions</Link>
+                  <Link href="/blog">Blog</Link>
+                  <Link href="/contact">Contact Us</Link>
+                </div>
+              </div>
+
+              {/* CTA */}
+              <div className={styles.footerColumn}>
+                <h3 className={styles.footerHeading}>Get Started</h3>
+                <div className={styles.footerButtons}>
+                  <Link href="/book" className={`${styles.footerButton} ${styles.primary}`}>
+                    Book a Room
+                  </Link>
+                  <Link href="/signup" className={`${styles.footerButton} ${styles.secondary}`}>
+                    Sign Up
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Copyright */}
+            <div className={styles.copyright}>
+              <p>
+                © {new Date().getFullYear()} Hotel The Retinue & Buchiraju Conventions. All rights reserved.
+              </p>
+            </div>
+          </div>
         </section>
       </main>
     </div>
