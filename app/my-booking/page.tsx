@@ -188,9 +188,24 @@ function MyBookingContent() {
                 <dd className="font-medium" style={{ color: "var(--foreground)" }}>{formatDate(booking.checkOut)}</dd>
               </div>
               <div className="flex justify-between">
-                <dt style={{ color: "var(--muted)" }}>Room</dt>
+                <dt style={{ color: "var(--muted)" }}>
+                  {booking.isBatch && booking.rooms ? "Rooms" : "Room"}
+                </dt>
                 <dd className="font-medium" style={{ color: "var(--foreground)" }}>
-                  {booking.roomNumber} · {booking.roomType}
+                  {booking.isBatch && booking.rooms ? (
+                    <div className="space-y-2 text-right">
+                      {booking.rooms.map((room, idx) => (
+                        <div key={room.roomId} className="flex flex-col items-end">
+                          <span>{room.roomNumber} · {room.roomType.replace('_', ' ')}</span>
+                          <span className="text-xs" style={{ color: "var(--muted)" }}>
+                            {formatCurrency(room.basePrice)} per night
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <span>{booking.roomNumber} · {booking.roomType}</span>
+                  )}
                 </dd>
               </div>
               <div className="flex justify-between">

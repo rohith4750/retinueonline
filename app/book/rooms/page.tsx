@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import BookLayout from "../../components/BookLayout";
@@ -32,7 +32,7 @@ function getRoomName(roomType: string, roomNumber: string): string {
   return "The Suite";
 }
 
-export default function RoomsPage() {
+function RoomsPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [rooms, setRooms] = useState<RoomAvailable[]>([]);
@@ -381,5 +381,21 @@ export default function RoomsPage() {
         )}
       </div>
     </BookLayout>
+  );
+}
+
+export default function RoomsPage() {
+  return (
+    <Suspense fallback={
+      <BookLayout currentStep="/book/rooms">
+        <div className={styles.container}>
+          <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--muted)' }}>
+            Loading available rooms...
+          </div>
+        </div>
+      </BookLayout>
+    }>
+      <RoomsPageContent />
+    </Suspense>
   );
 }

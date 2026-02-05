@@ -141,9 +141,16 @@ export interface ViewBookingData {
   balanceAmount: number;
   guestName: string;
   guestPhone: string;
-  roomNumber: string;
-  roomType: string;
+  roomNumber?: string;
+  roomType?: string;
   numberOfGuests: number;
+  isBatch?: boolean;
+  rooms?: Array<{
+    roomId: string;
+    roomNumber: string;
+    roomType: string;
+    basePrice: number;
+  }>;
 }
 
 export const ROOM_TYPE_LABELS: Record<RoomType, string> = {

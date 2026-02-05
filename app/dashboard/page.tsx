@@ -170,7 +170,11 @@ export default function DashboardPage() {
                       </span>
                     </div>
                     <p className="text-sm" style={{ color: "var(--foreground)" }}>
-                      {b.roomNumber} · {b.roomType}
+                      {b.isBatch && b.rooms ? (
+                        <span>{b.rooms.length} Rooms - Multi-room Booking</span>
+                      ) : (
+                        <span>{b.roomNumber} · {b.roomType}</span>
+                      )}
                     </p>
                     <p className="text-xs mt-1" style={{ color: "var(--muted)" }}>
                       {formatDate(b.checkIn)} – {formatDate(b.checkOut)} ·{" "}

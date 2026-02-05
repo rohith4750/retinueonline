@@ -97,63 +97,62 @@ function BookCheckoutContent() {
     setLoading(true);
 
     try {
-      // Create bookings for all selected rooms
-      const bookingPromises = selectedRoomsData.rooms.map(room => {
-        const body: CreateBookingBody = {
-          roomId: room.id,
-          guestName: guestName.trim(),
-          guestPhone: phone,
-          checkIn: selectedRoomsData.checkIn,
-          checkOut: selectedRoomsData.checkOut,
-          numberOfGuests: numberOfGuests || 1,
-        };
-        if (specialRequests.trim()) body.guestAddress = specialRequests.trim();
+      // Use batch booking endpoint for multi-room bookings
+      const roomIds = selectedRoomsData.rooms.map(r => r.id);
+      
+      const body = {
+        roomIds: roomIds,
+        guestName: guestName.trim(),
+        guestPhone: phone,
+        checkIn: selectedRoomsData.checkIn,
+        checkOut: selectedRoomsData.checkOut,
+        numberOfGuests: numberOfGuests || 1,
+        guestAddress: specialRequests.trim() || undefined,
+        discount: 0,
+        advanceAmount: 0,
+      };
 
-        return publicApi<{
-          bookingReference: string;
-          bookingId: string;
-          guestName: string;
-          guestPhone: string;
-          checkIn: string;
-          checkOut: string;
+      const res = await publicApi<{
+        bookingReference: string;
+        rooms: Array<{
+          roomId: string;
           roomNumber: string;
           roomType: string;
-          totalAmount: number;
-          status: string;
-        }>("/bookings", {
-          method: "POST",
-          body: JSON.stringify(body),
-        });
+          basePrice: number;
+        }>;
+        totalAmount: number;
+        isBatch: boolean;
+        guestName: string;
+        guestPhone: string;
+        checkIn: string;
+        checkOut: string;
+        status: string;
+      }>("/bookings/batch", {
+        method: "POST",
+        body: JSON.stringify(body),
       });
 
-      const results = await Promise.all(bookingPromises);
-      
-      // Check if any bookings failed
-      const failedBookings = results.filter(res => isApiError(res));
-      if (failedBookings.length > 0) {
-        const firstError = failedBookings[0] as any;
-        setError(firstError.message || firstError.error || "Some bookings failed.");
+      if (isApiError(res)) {
+        setError(res.message || res.error || "Booking failed. Please try again.");
         setLoading(false);
         return;
       }
 
-      // All bookings successful - store the first one for confirmation page
-      const firstBooking = (results[0] as any).data;
+      // Store booking data for confirmation page
+      const bookingData = res.data;
       try {
         sessionStorage.setItem(
           CONFIRM_KEY,
           JSON.stringify({
-            bookingReference: firstBooking.bookingReference,
-            bookingId: firstBooking.bookingId,
-            guestName: firstBooking.guestName,
-            guestPhone: firstBooking.guestPhone,
-            checkIn: firstBooking.checkIn,
-            checkOut: firstBooking.checkOut,
-            roomNumber: firstBooking.roomNumber,
-            roomType: firstBooking.roomType,
-            totalAmount: firstBooking.totalAmount,
-            status: firstBooking.status,
-            totalRooms: selectedRoomsData.rooms.length,
+            bookingReference: bookingData.bookingReference,
+            guestName: bookingData.guestName,
+            guestPhone: bookingData.guestPhone,
+            checkIn: bookingData.checkIn,
+            checkOut: bookingData.checkOut,
+            totalAmount: bookingData.totalAmount,
+            status: bookingData.status,
+            rooms: bookingData.rooms,
+            isBatch: bookingData.isBatch,
           })
         );
         // Clear selected rooms

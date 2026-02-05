@@ -9,15 +9,22 @@ const CONFIRM_KEY = "booking_confirmation";
 
 type Stored = {
   bookingReference: string;
-  bookingId: string;
+  bookingId?: string;
   guestName: string;
   guestPhone: string;
   checkIn: string;
   checkOut: string;
-  roomNumber: string;
-  roomType: string;
+  roomNumber?: string;
+  roomType?: string;
   totalAmount: number;
   status: string;
+  rooms?: Array<{
+    roomId: string;
+    roomNumber: string;
+    roomType: string;
+    basePrice: number;
+  }>;
+  isBatch?: boolean;
 };
 
 export default function BookConfirmationPage() {
@@ -128,9 +135,21 @@ export default function BookConfirmationPage() {
               <dd className="font-medium" style={{ color: "var(--foreground)" }}>{formatDate(data.checkOut)}</dd>
             </div>
             <div className="flex justify-between">
-              <dt style={{ color: "var(--muted)" }}>Room</dt>
+              <dt style={{ color: "var(--muted)" }}>
+                {data.isBatch && data.rooms ? "Rooms" : "Room"}
+              </dt>
               <dd className="font-medium" style={{ color: "var(--foreground)" }}>
-                {data.roomNumber} · {data.roomType}
+                {data.isBatch && data.rooms ? (
+                  <div className="space-y-1 text-right">
+                    {data.rooms.map((room, idx) => (
+                      <div key={room.roomId}>
+                        {room.roomNumber} · {room.roomType.replace('_', ' ')}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <span>{data.roomNumber} · {data.roomType}</span>
+                )}
               </dd>
             </div>
             <div className="flex justify-between pt-3 border-t" style={{ borderColor: "var(--border)" }}>
