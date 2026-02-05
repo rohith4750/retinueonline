@@ -3,13 +3,14 @@
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { sendOtp, verifyOtp, isApiError } from "@/lib/public-api";
+import { sendOtp, verifyOtp, passwordLogin, isApiError } from "@/lib/public-api";
 import { setLoggedIn, setCustomerToken, setCustomerEmail } from "@/lib/auth";
 import { getYearsOfOperation } from "@/lib/site-content";
 import SiteHeader from "../components/SiteHeader";
 import styles from "./page.module.scss";
 
-type Step = "email" | "otp";
+type LoginMethod = "password" | "otp";
+type Step = "credentials" | "otp";
 
 function maskEmail(email: string): string {
   const [local, domain] = email.split("@");
@@ -21,11 +22,45 @@ function maskEmail(email: string): string {
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [step, setStep] = useState<Step>("email");
+  const [loginMethod, setLoginMethod] = useState<LoginMethod>("password");
+  const [step, setStep] = useState<Step>("credentials");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  async function handlePasswordLogin(e: React.FormEvent) {
+    e.preventDefault();
+    setError("");
+    const trimmed = email.trim().toLowerCase();
+    if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+      setError("Enter a valid email address.");
+      return;
+    }
+    if (!password.trim()) {
+      setError("Enter your password.");
+      return;
+    }
+    setLoading(true);
+    const res = await passwordLogin(trimmed, password);
+    setLoading(false);
+    if (isApiError(res)) {
+      setError(res.message || res.error || "Invalid email or password");
+      return;
+    }
+    // Store auth data
+    if (res.data.customerToken) {
+      setCustomerToken(res.data.customerToken);
+    }
+    if (res.data.customer) {
+      setCustomerEmail(res.data.customer.email || trimmed);
+    }
+    setLoggedIn();
+    const returnTo = searchParams.get("redirect") || "/dashboard";
+    router.push(returnTo.startsWith("/") ? returnTo : "/dashboard");
+  }
 
   async function handleSendOtp(e: React.FormEvent) {
     e.preventDefault();
@@ -36,7 +71,7 @@ function LoginForm() {
       return;
     }
     setLoading(true);
-    const res = await sendOtp(trimmed);
+    const res = await sendOtp(trimmed, "login");
     setLoading(false);
     if (isApiError(res)) {
       setError(res.message || res.error);
@@ -167,15 +202,102 @@ function LoginForm() {
 
           <div className="mb-8">
             <h1 className="font-heading text-3xl sm:text-4xl font-light mb-2" style={{ color: "var(--foreground)" }}>
-              Welcome Back!!
+              Welcome Back!
             </h1>
             <p className="text-sm" style={{ color: "var(--muted)" }}>
-              {step === "email" && "Enter your email address and we'll send you a verification code"}
+              {step === "credentials" && loginMethod === "password" && "Enter your email and password to continue"}
+              {step === "credentials" && loginMethod === "otp" && "Enter your email and we'll send you a verification code"}
               {step === "otp" && `We have sent a 6-digit code to ${maskEmail(email)}`}
             </p>
           </div>
 
-          {step === "email" && (
+          {/* Login Method Toggle */}
+          {step === "credentials" && (
+            <div className="flex gap-2 mb-6 p-1 rounded-lg" style={{ background: "var(--surface)" }}>
+              <button
+                type="button"
+                onClick={() => { setLoginMethod("password"); setError(""); }}
+                className={`flex-1 py-2.5 px-4 rounded-md text-sm font-medium transition-all ${
+                  loginMethod === "password" 
+                    ? "bg-white shadow-sm" 
+                    : "hover:bg-white/50"
+                }`}
+                style={{ 
+                  color: loginMethod === "password" ? "var(--accent)" : "var(--muted)"
+                }}
+              >
+                Password
+              </button>
+              <button
+                type="button"
+                onClick={() => { setLoginMethod("otp"); setError(""); }}
+                className={`flex-1 py-2.5 px-4 rounded-md text-sm font-medium transition-all ${
+                  loginMethod === "otp" 
+                    ? "bg-white shadow-sm" 
+                    : "hover:bg-white/50"
+                }`}
+                style={{ 
+                  color: loginMethod === "otp" ? "var(--accent)" : "var(--muted)"
+                }}
+              >
+                OTP
+              </button>
+            </div>
+          )}
+
+          {step === "credentials" && loginMethod === "password" && (
+            <form onSubmit={handlePasswordLogin} className="space-y-5">
+              <div>
+                <label className="form-label text-xs uppercase tracking-wider">Email Address</label>
+                <input
+                  type="email"
+                  className="form-input"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="john@example.com"
+                  required
+                />
+              </div>
+              <div>
+                <label className="form-label text-xs uppercase tracking-wider">Password</label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    className="form-input pr-12"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter your password"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 p-2 hover:bg-gray-100 rounded-md transition-colors"
+                    style={{ color: "var(--muted)" }}
+                    tabIndex={-1}
+                  >
+                    {showPassword ? (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"></path>
+                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                      </svg>
+                    ) : (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
+                    )}
+                  </button>
+                </div>
+              </div>
+              {error && <p className="text-sm text-red-600 animate-fade-in" role="alert">{error}</p>}
+              <button type="submit" disabled={loading} className="btn-primary w-full py-3.5">
+                {loading ? "Signing in…" : "Sign In"}
+              </button>
+            </form>
+          )}
+
+          {step === "credentials" && loginMethod === "otp" && (
             <form onSubmit={handleSendOtp} className="space-y-5">
               <div>
                 <label className="form-label text-xs uppercase tracking-wider">Email Address</label>
@@ -190,7 +312,7 @@ function LoginForm() {
               </div>
               {error && <p className="text-sm text-red-600 animate-fade-in" role="alert">{error}</p>}
               <button type="submit" disabled={loading} className="btn-primary w-full py-3.5">
-                {loading ? "Sending…" : "Login"}
+                {loading ? "Sending…" : "Send OTP"}
               </button>
             </form>
           )}
@@ -199,7 +321,7 @@ function LoginForm() {
             <>
               <button
                 type="button"
-                onClick={() => { setStep("email"); setError(""); }}
+                onClick={() => { setStep("credentials"); setError(""); setOtp(""); }}
                 className="text-sm text-[var(--accent)] hover:underline mb-6 transition-all duration-200"
               >
                 ← Change email address
@@ -219,7 +341,7 @@ function LoginForm() {
                   />
                 </div>
                 <p className="text-sm text-center" style={{ color: "var(--muted)" }}>
-                  Didn't receive the code? <button type="button" className="text-[var(--accent)] hover:underline">Resend Code</button>
+                  Didn't receive the code? <button type="button" onClick={handleSendOtp} className="text-[var(--accent)] hover:underline">Resend Code</button>
                 </p>
                 {error && <p className="text-sm text-red-600 animate-fade-in" role="alert">{error}</p>}
                 <button type="submit" disabled={loading} className="btn-primary w-full py-3.5">

@@ -4,7 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import SiteHeader from "../components/SiteHeader";
-import { isLoggedIn, getCustomerEmail } from "@/lib/auth";
+import { isLoggedIn } from "@/lib/auth";
 import {
   publicApi,
   isApiError,
@@ -23,7 +23,6 @@ const statusBadge: Record<string, string> = {
 
 function doLookup(
   ref: string,
-  ph: string,
   setError: (s: string) => void,
   setBooking: (b: ViewBookingData | null) => void,
   setLoading: (v: boolean) => void
@@ -33,7 +32,6 @@ function doLookup(
   setLoading(true);
   const params = new URLSearchParams({
     bookingReference: ref.trim().toUpperCase(),
-    phone: ph.trim().replace(/\D/g, ""),
   });
   publicApi<ViewBookingData>(`/bookings/by-reference?${params.toString()}`)
     .then((res) => {
@@ -50,44 +48,33 @@ function doLookup(
 function MyBookingContent() {
   const searchParams = useSearchParams();
   const [loggedIn, setLoggedIn] = useState(false);
-  const [email, setEmail] = useState("");
   const [reference, setReference] = useState("");
-  const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [booking, setBooking] = useState<ViewBookingData | null>(null);
 
   useEffect(() => {
     setLoggedIn(isLoggedIn());
-    const stored = getCustomerEmail();
-    if (stored) setEmail(stored);
   }, []);
 
   useEffect(() => {
     const ref = searchParams.get("ref") ?? "";
-    const ph = searchParams.get("phone") ?? "";
-    const em = searchParams.get("email") ?? "";
-    if (ref) setReference(ref);
-    if (ph) setPhone(ph);
-    if (em) setEmail(em);
-    if (ref && ph && ref.trim() && ph.trim().replace(/\D/g, "").length >= 4) {
-      doLookup(ref, ph, setError, setBooking, setLoading);
+    if (ref) {
+      setReference(ref);
+      if (ref.trim()) {
+        doLookup(ref, setError, setBooking, setLoading);
+      }
     }
   }, [searchParams]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const ref = reference.trim().toUpperCase();
-    const ph = phone.trim().replace(/\D/g, "");
-    if (!ref || !ph) {
-      setError("Please enter booking reference and phone number.");
+    if (!ref) {
+      setError("Please enter your booking reference.");
       return;
     }
-    if (ph.length < 4) {
-      setError("Enter full 10-digit phone or last 4 digits.");
-      return;
-    }
-    doLookup(reference, phone, setError, setBooking, setLoading);
+    doLookup(reference, setError, setBooking, setLoading);
   }
 
   return (
@@ -100,19 +87,9 @@ function MyBookingContent() {
             View My Booking
           </h2>
           <p className="text-sm mb-6" style={{ color: "var(--muted)" }}>
-            Enter your booking details to view and manage your reservation
+            Enter your booking reference to view and manage your reservation
           </p>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="form-label text-xs uppercase tracking-wider">Email Address</label>
-              <input
-                type="email"
-                className="form-input"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="john@example.com"
-              />
-            </div>
             <div>
               <label className="form-label text-xs uppercase tracking-wider">Booking Reference</label>
               <input
@@ -122,18 +99,11 @@ function MyBookingContent() {
                 onChange={(e) => setReference(e.target.value)}
                 placeholder="e.g. ABC12XY7"
                 maxLength={12}
+                required
               />
-            </div>
-            <div>
-              <label className="form-label text-xs uppercase tracking-wider">Phone Number</label>
-              <input
-                type="tel"
-                className="form-input"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="10 digits or last 4 digits"
-                maxLength={10}
-              />
+              <p className="text-xs mt-1" style={{ color: "var(--muted)" }}>
+                You received this code in your booking confirmation
+              </p>
             </div>
             {error && (
               <p className="text-sm text-red-600" role="alert">

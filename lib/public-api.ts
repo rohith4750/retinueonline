@@ -209,10 +209,24 @@ export interface SignupData {
   customerToken?: string;
 }
 
-export async function sendOtp(email: string): Promise<ApiResponse<SendOtpData>> {
+export interface PasswordLoginData {
+  customerToken: string;
+  customer: Customer;
+}
+
+export async function sendOtp(
+  email: string,
+  intent?: "login" | "signup"
+): Promise<ApiResponse<SendOtpData>> {
+  const body: { email: string; intent?: string } = { 
+    email: email.trim().toLowerCase() 
+  };
+  if (intent) {
+    body.intent = intent;
+  }
   return publicApi<SendOtpData>("/auth/send-otp", {
     method: "POST",
-    body: JSON.stringify({ email: email.trim().toLowerCase() }),
+    body: JSON.stringify(body),
   });
 }
 
@@ -229,9 +243,35 @@ export async function verifyOtp(
   });
 }
 
+export async function passwordLogin(
+  email: string,
+  password: string
+): Promise<ApiResponse<PasswordLoginData>> {
+  return publicApi<PasswordLoginData>("/auth/login", {
+    method: "POST",
+    body: JSON.stringify({
+      email: email.trim().toLowerCase(),
+      password,
+    }),
+  });
+}
+
+export async function directSignup(body: {
+  email: string;
+  password: string;
+  name: string;
+  phone: string;
+  address?: string;
+}): Promise<ApiResponse<SignupData>> {
+  return publicApi<SignupData>("/auth/signup-direct", {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+}
+
 export async function completeSignup(
   signupToken: string,
-  body: { name: string; phone: string; address?: string }
+  body: { name: string; phone: string; address?: string; password?: string }
 ): Promise<ApiResponse<SignupData>> {
   const res = await fetch(`${API_BASE}/auth/signup`, {
     method: "POST",

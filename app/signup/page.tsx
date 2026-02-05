@@ -3,109 +3,92 @@
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import {
-  sendOtp,
-  verifyOtp,
-  completeSignup,
-  isApiError,
-} from "@/lib/public-api";
+import { isApiError, directSignup } from "@/lib/public-api";
 import { setLoggedIn, setCustomerToken, setCustomerEmail } from "@/lib/auth";
 import { getYearsOfOperation } from "@/lib/site-content";
 import SiteHeader from "../components/SiteHeader";
 
-type Step = "email" | "otp" | "profile";
-
-function maskEmail(email: string): string {
-  const [local, domain] = email.split("@");
-  if (!domain) return email;
-  const masked = local.length <= 2 ? local + "***" : local.slice(0, 2) + "***";
-  return `${masked}@${domain}`;
-}
-
 function SignupForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [signupToken, setSignupToken] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  async function handleSendOtp(e: React.FormEvent) {
+  async function handleSignup(e: React.FormEvent) {
     e.preventDefault();
     setError("");
-    const trimmed = email.trim().toLowerCase();
-    if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+
+    // Validate email
+    const trimmedEmail = email.trim().toLowerCase();
+    if (!trimmedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
       setError("Enter a valid email address.");
       return;
     }
-    setLoading(true);
-    const res = await sendOtp(trimmed);
-    setLoading(false);
-    if (isApiError(res)) {
-      setError(res.message || res.error);
-      return;
-    }
-    setStep("otp");
-    setOtp("");
-  }
 
-  async function handleVerifyOtp(e: React.FormEvent) {
-    e.preventDefault();
-    setError("");
-    const code = otp.replace(/\D/g, "");
-    if (code.length !== 6) {
-      setError("Enter the 6-digit OTP.");
+    // Validate password
+    if (!password.trim()) {
+      setError("Password is required.");
       return;
     }
-    setLoading(true);
-    const res = await verifyOtp(email.trim().toLowerCase(), code);
-    setLoading(false);
-    if (isApiError(res)) {
-      setError(res.message || res.error);
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
       return;
     }
-    setSignupToken(res.data.signupToken);
-    setStep("profile");
-    setError("");
-  }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
 
-  async function handleCompleteSignup(e: React.FormEvent) {
-    e.preventDefault();
-    setError("");
+    // Validate name
     if (!name.trim()) {
       setError("Name is required.");
       return;
     }
+
+    // Validate phone
     const phoneDigits = phone.replace(/\D/g, "").slice(-10);
     if (phoneDigits.length !== 10) {
       setError("Enter a valid 10-digit mobile number.");
       return;
     }
+
     setLoading(true);
-    const res = await completeSignup(signupToken, {
-      name: name.trim(),
-      phone: phoneDigits,
-      address: address.trim() || undefined,
-    });
-    setLoading(false);
-    if (isApiError(res)) {
-      setError(res.message || res.error);
-      return;
+    try {
+      const res = await directSignup({
+        email: trimmedEmail,
+        password: password.trim(),
+        name: name.trim(),
+        phone: phoneDigits,
+        address: address.trim() || undefined,
+      });
+
+      if (isApiError(res)) {
+        setError(res.message || res.error);
+        return;
+      }
+
+      // Store auth data
+      if (res.data.customerToken) {
+        setCustomerToken(res.data.customerToken);
+      }
+      setCustomerEmail(res.data.customer.email || trimmedEmail);
+      setLoggedIn();
+
+      const returnTo = searchParams.get("redirect") || "/dashboard";
+      router.push(returnTo.startsWith("/") ? returnTo : "/dashboard");
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
-    if (res.data.customerToken) {
-      setCustomerToken(res.data.customerToken);
-    }
-    setCustomerEmail(email.trim().toLowerCase());
-    setLoggedIn();
-    const returnTo = searchParams.get("redirect") || "/dashboard";
-    router.push(returnTo.startsWith("/") ? returnTo : "/dashboard");
-    return;
   }
 
   return (
@@ -220,152 +203,136 @@ function SignupForm() {
           </div>
 
           <div className="mb-8">
-            {step === "profile" ? (
-              <>
-                <span className="text-xs uppercase tracking-wider" style={{ color: "var(--muted)" }}>MEMBERSHIP</span>
-                <h1 className="font-heading text-3xl sm:text-4xl font-light mb-2" style={{ color: "var(--foreground)" }}>
-                  Join the Community
-                </h1>
-                <p className="text-sm" style={{ color: "var(--muted)" }}>
-                  Create your account to start booking and unlock exclusive offers
-                </p>
-              </>
-            ) : step === "otp" ? (
-              <>
-                <span className="text-xs uppercase tracking-wider" style={{ color: "var(--muted)" }}>SECURITY VERIFICATION</span>
-                <h1 className="font-heading text-3xl sm:text-4xl font-light mb-2" style={{ color: "var(--foreground)" }}>
-                  Verify Your Account
-                </h1>
-                <p className="text-sm" style={{ color: "var(--muted)" }}>
-                  We have sent a 6-digit code to {maskEmail(email)}
-                </p>
-              </>
-            ) : (
-              <>
-                <span className="text-xs uppercase tracking-wider" style={{ color: "var(--muted)" }}>MEMBERSHIP</span>
-                <h1 className="font-heading text-3xl sm:text-4xl font-light mb-2" style={{ color: "var(--foreground)" }}>
-                  Join the Community
-                </h1>
-                <p className="text-sm" style={{ color: "var(--muted)" }}>
-                  Create your account to start booking and unlock exclusive offers
-                </p>
-              </>
-            )}
+            <span className="text-xs uppercase tracking-wider" style={{ color: "var(--muted)" }}>MEMBERSHIP</span>
+            <h1 className="font-heading text-3xl sm:text-4xl font-light mb-2" style={{ color: "var(--foreground)" }}>
+              Join the Community
+            </h1>
+            <p className="text-sm" style={{ color: "var(--muted)" }}>
+              Create your account to start booking and unlock exclusive offers
+            </p>
           </div>
 
-          {step === "email" && (
-            <form onSubmit={handleSendOtp} className="space-y-5">
-              <div>
-                <label className="form-label text-xs uppercase tracking-wider">Full Name</label>
+          <form onSubmit={handleSignup} className="space-y-5">
+            <div>
+              <label className="form-label text-xs uppercase tracking-wider">Full Name</label>
+              <input
+                type="text"
+                className="form-input"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="John Doe"
+                required
+              />
+            </div>
+            <div>
+              <label className="form-label text-xs uppercase tracking-wider">Email Address</label>
+              <input
+                type="email"
+                className="form-input"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="john@example.com"
+                required
+              />
+            </div>
+            <div>
+              <label className="form-label text-xs uppercase tracking-wider">Password</label>
+              <div className="relative">
                 <input
-                  type="text"
-                  className="form-input"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="John Doe"
-                  required
-                />
-              </div>
-              <div>
-                <label className="form-label text-xs uppercase tracking-wider">Email Address</label>
-                <input
-                  type="email"
-                  className="form-input"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="john@example.com"
-                  required
-                />
-              </div>
-              <div>
-                <label className="form-label text-xs uppercase tracking-wider">Password</label>
-                <input
-                  type="password"
-                  className="form-input"
+                  type={showPassword ? "text" : "password"}
+                  className="form-input pr-12"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
+                  minLength={6}
                 />
-              </div>
-              {error && <p className="text-sm text-red-600" role="alert">{error}</p>}
-              <div className="text-sm" style={{ color: "var(--muted)" }}>
-                <label className="flex items-start gap-2">
-                  <input type="checkbox" className="mt-1" required />
-                  <span>I agree to the Terms of Service and Privacy Policy. I understand the cancellation policy for this booking.</span>
-                </label>
-              </div>
-              <button type="submit" disabled={loading} className="btn-primary w-full py-3.5">
-                {loading ? "Sending…" : "Create My Account"}
-              </button>
-            </form>
-          )}
-
-          {step === "otp" && (
-            <>
-              <button
-                type="button"
-                onClick={() => { setStep("email"); setError(""); }}
-                className="text-sm text-[var(--accent)] hover:underline mb-6"
-              >
-                ← Change email address
-              </button>
-              <form onSubmit={handleVerifyOtp} className="space-y-5">
-                <div>
-                  <label className="form-label text-xs uppercase tracking-wider">Enter Code</label>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    className="form-input font-mono text-2xl tracking-widest text-center"
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                    placeholder="000000"
-                    maxLength={6}
-                    required
-                  />
-                </div>
-                <p className="text-sm text-center" style={{ color: "var(--muted)" }}>
-                  Didn't receive the code? <button type="button" className="text-[var(--accent)] hover:underline">Resend Code</button>
-                </p>
-                {error && <p className="text-sm text-red-600" role="alert">{error}</p>}
-                <button type="submit" disabled={loading} className="btn-primary w-full py-3.5">
-                  {loading ? "Verifying…" : "Verify & Continue"}
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 hover:bg-gray-100 rounded-md transition-colors"
+                  style={{ color: "var(--muted)" }}
+                  tabIndex={-1}
+                >
+                  {showPassword ? (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"></path>
+                      <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                  ) : (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  )}
                 </button>
-              </form>
-            </>
-          )}
-
-          {step === "profile" && (
-            <form onSubmit={handleCompleteSignup} className="space-y-5">
-              <div>
-                <label className="form-label text-xs uppercase tracking-wider">Full Name</label>
-                <input
-                  type="text"
-                  className="form-input"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="John Doe"
-                  required
-                />
               </div>
-              <div>
-                <label className="form-label text-xs uppercase tracking-wider">Phone (10 digits)</label>
+            </div>
+            <div>
+              <label className="form-label text-xs uppercase tracking-wider">Confirm Password</label>
+              <div className="relative">
                 <input
-                  type="tel"
-                  className="form-input"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="9876543210"
-                  maxLength={10}
+                  type={showConfirmPassword ? "text" : "password"}
+                  className="form-input pr-12"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="••••••••"
                   required
+                  minLength={6}
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 hover:bg-gray-100 rounded-md transition-colors"
+                  style={{ color: "var(--muted)" }}
+                  tabIndex={-1}
+                >
+                  {showConfirmPassword ? (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"></path>
+                      <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                  ) : (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  )}
+                </button>
               </div>
-              {error && <p className="text-sm text-red-600" role="alert">{error}</p>}
-              <button type="submit" disabled={loading} className="btn-primary w-full py-3.5">
-                {loading ? "Saving…" : "Complete Sign Up"}
-              </button>
-            </form>
-          )}
+            </div>
+            <div>
+              <label className="form-label text-xs uppercase tracking-wider">Phone Number</label>
+              <input
+                type="tel"
+                className="form-input"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="9876543210"
+                required
+              />
+            </div>
+            <div>
+              <label className="form-label text-xs uppercase tracking-wider">Address (Optional)</label>
+              <textarea
+                className="form-input"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Your address"
+                rows={2}
+              />
+            </div>
+            {error && <p className="text-sm text-red-600 animate-fade-in" role="alert">{error}</p>}
+            <div className="text-sm" style={{ color: "var(--muted)" }}>
+              <label className="flex items-start gap-2">
+                <input type="checkbox" className="mt-1" required />
+                <span>I agree to the Terms of Service and Privacy Policy</span>
+              </label>
+            </div>
+            <button type="submit" disabled={loading} className="btn-primary w-full py-3.5">
+              {loading ? "Creating Account…" : "Create My Account"}
+            </button>
+          </form>
 
           <p className="text-center text-sm mt-8" style={{ color: "var(--muted)" }}>
             Already have an account? <Link href={searchParams.get("redirect") ? `/login?redirect=${encodeURIComponent(searchParams.get("redirect")!)}` : "/login"} className="text-[var(--accent)] hover:underline font-medium">Login</Link>
