@@ -5,23 +5,22 @@
 /** Image URLs. Hero & about = high-quality hotel images from Unsplash */
 export const IMAGES = {
   hero: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80",
-  about: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200&q=80",
+  about: "/images/reception.png",
   standardRoom:
-    "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80",
+    "/images/rooms/WhatsApp Image 2026-02-06 at 6.36.48 PM.jpeg",
   suite:
-    "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80",
+    "/images/rooms/suite-room.jpeg",
   suitePlus:
-    "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80",
+    "/images/rooms/suite-plus.jpeg",
   hotelLobby:
-    "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200&q=80",
-  hotelExterior:
-    "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80",
+    "/images/reception.png",
+  hotelExterior: "/images/hotel-facade.png",
   conventionHall:
-    "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=1200&q=80",
+    "/images/conventions/WhatsApp Image 2026-02-06 at 7.22.36 PM.jpeg",
   wedding:
-    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80",
+    "/images/conventions/WhatsApp Image 2026-02-06 at 7.22.37 PM.jpeg",
   conference:
-    "https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=800&q=80",
+    "/images/conventions/WhatsApp Image 2026-02-06 at 7.22.38 PM.jpeg",
 } as const;
 
 export const HOTEL = {
@@ -71,10 +70,9 @@ export const ROOM_CATEGORIES = [
 export const STAY_POLICY = {
   minStay: "12 hours",
   maxStay: "24 hours (one calendar day)",
-  pricing: "Per room per day at base price; GST 18% on (base − discount).",
+  pricing: "",
   discount: "Up to 50% of base allowed.",
-  earlyCheckout:
-    "Stay < 12h: minimum 50% of base + GST. Stay ≥ 12h: charged by full day(s).",
+  earlyCheckout: "",
   included: "Room for 12–24 hours; pricing per room (subject to capacity).",
 } as const;
 
@@ -90,7 +88,6 @@ export const CONVENTIONS = {
 export const WHAT_WE_OFFER = [
   "Standard, Suite and Suite+ rooms.",
   "12–24 hour stays; check-in and check-out as per policy.",
-  "Per room per day pricing, 18% GST; discounts up to 50% of base.",
   "Function hall (Butchiraju Conventions) for events – contact hotel to book.",
   "Phone 7675800901, email hoteltheretinue@gmail.com, Main Rd, Ramachandrapuram, Andhra Pradesh 533255.",
 ] as const;
