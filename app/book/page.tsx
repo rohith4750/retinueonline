@@ -65,7 +65,7 @@ export default function BookPage() {
     if (!checkInDate || (checkInDate && checkOutDate)) {
       setCheckInDate(date);
       setCheckOutDate(null);
-    } else if (date > checkInDate) {
+    } else if (date >= checkInDate) {
       setCheckOutDate(date);
     } else {
       setCheckInDate(date);
@@ -73,10 +73,10 @@ export default function BookPage() {
     }
   };
 
-  const getNights = () => {
+  const getDuration = () => {
     if (!checkInDate || !checkOutDate) return 0;
     const diff = checkOutDate.getTime() - checkInDate.getTime();
-    return Math.ceil(diff / (1000 * 60 * 60 * 24));
+    return Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
   };
 
   const getTotalGuests = () => adults + children + infants;
@@ -279,7 +279,7 @@ export default function BookPage() {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <div className="text-[10px] uppercase tracking-wider mb-0.5" style={{ color: "var(--muted)" }}>Stay Duration</div>
-                  <div className="font-bold text-base">{getNights()} Nights</div>
+                  <div className="font-bold text-base">{getDuration()} Days</div>
                 </div>
                 <div>
                   <div className="text-[10px] uppercase tracking-wider mb-0.5" style={{ color: "var(--muted)" }}>Total Guests</div>
