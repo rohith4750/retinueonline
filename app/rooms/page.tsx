@@ -3,7 +3,6 @@ import SiteHeader from "../components/SiteHeader";
 import {
   HOTEL,
   ROOM_CATEGORIES,
-  STAY_POLICY,
   ROOMS_HIGHLIGHT,
   TESTIMONIALS,
   IMAGES,
@@ -92,18 +91,6 @@ export default function RoomsPage() {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Stay & pricing */}
-        <div className="card p-6 md:p-8 mt-16">
-          <h3 className="section-title text-xl mb-4">Stay & Pricing Policy</h3>
-          <ul className="text-sm space-y-2 leading-relaxed" style={{ color: "var(--muted)" }}>
-            <li>• {STAY_POLICY.minStay} – {STAY_POLICY.maxStay}</li>
-            <li>• {STAY_POLICY.pricing}</li>
-            <li>• {STAY_POLICY.discount}</li>
-            <li>• {STAY_POLICY.earlyCheckout}</li>
-            <li>• {STAY_POLICY.included}</li>
-          </ul>
         </div>
 
         {/* Short reviews strip */}

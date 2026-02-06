@@ -428,61 +428,65 @@ export default function HomePage() {
         <section className={`${styles.footerSection} animate-slide-up`}>
           <div className={styles.footerContainer}>
             <div className={styles.footerGrid}>
-              {/* Contact Info */}
+              {/* Column 1: Brand */}
+              <div className={styles.brandColumn}>
+                <div className={styles.brandHeader}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/logo-badge.png" alt="Logo" className={styles.footerLogo} />
+                  <span className={styles.brandName}>The Retinue & Buchiraju Conventions</span>
+                </div>
+                <p className={styles.brandTagline}>
+                  Host your milestones and rest your soul in spaces designed for human connection.
+                </p>
+              </div>
+
+              {/* Column 2: Quick Links */}
               <div className={styles.footerColumn}>
-                <h3 className={styles.footerHeading}>Contact</h3>
+                <h3 className={styles.footerHeading}>QUICK LINKS</h3>
                 <div className={styles.footerLinks}>
-                  <p>
-                    <a href={`tel:${HOTEL.phone}`}>{HOTEL.phoneDisplay}</a>
-                  </p>
-                  <p>
-                    <a href={`mailto:${HOTEL.email}`}>{HOTEL.email}</a>
-                  </p>
+                  <Link href="/">Home</Link>
+                  <Link href="/book">Book a Room</Link>
+                  <Link href="/book">Check Availability</Link>
                 </div>
               </div>
 
-              {/* Address */}
+              {/* Column 3: Company */}
               <div className={styles.footerColumn}>
-                <h3 className={styles.footerHeading}>Address</h3>
+                <h3 className={styles.footerHeading}>COMPANY</h3>
                 <div className={styles.footerLinks}>
-                  <p>
-                    {HOTEL.shortAddress}
-                    <br />
-                    {HOTEL.landmark}
-                  </p>
+                  <Link href="/conventions">Butchiraju Conventions</Link>
+                  <Link href="/about">About Us</Link>
+                  <Link href="/contact">Client Feedback</Link>
                 </div>
               </div>
 
-              {/* Quick Links */}
+              {/* Column 4: Support */}
               <div className={styles.footerColumn}>
-                <h3 className={styles.footerHeading}>Quick Links</h3>
+                <h3 className={styles.footerHeading}>SUPPORT</h3>
                 <div className={styles.footerLinks}>
-                  <Link href="/rooms">Our Rooms</Link>
-                  <Link href="/conventions">Conventions</Link>
-                  <Link href="/blog">Blog</Link>
+                  <Link href="/contact">Help Center</Link>
+                  <Link href="/policies">Cancellation Policy</Link>
                   <Link href="/contact">Contact Us</Link>
-                </div>
-              </div>
-
-              {/* CTA */}
-              <div className={styles.footerColumn}>
-                <h3 className={styles.footerHeading}>Get Started</h3>
-                <div className={styles.footerButtons}>
-                  <Link href="/book" className={`${styles.footerButton} ${styles.primary} animate-shimmer`}>
-                    Book a Room
-                  </Link>
-                  <Link href="/signup" className={`${styles.footerButton} ${styles.secondary}`}>
-                    Sign Up
-                  </Link>
                 </div>
               </div>
             </div>
 
-            {/* Copyright */}
+            {/* Copyright & Socials */}
             <div className={styles.copyright}>
               <p>
-                © {new Date().getFullYear()} Hotel The Retinue & Buchiraju Conventions. All rights reserved.
+                © {new Date().getFullYear()} THE RETINUE GROUP. ALL RIGHTS RESERVED.
               </p>
+              <div className={styles.socialIcons}>
+                <a href="#" aria-label="Website">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                </a>
+                <a href={`mailto:${HOTEL.email}`} aria-label="Email">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </a>
+                <a href="#" aria-label="Share">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                </a>
+              </div>
             </div>
           </div>
         </section>
