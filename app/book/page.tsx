@@ -19,6 +19,8 @@ export default function BookPage() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [checkInDate, setCheckInDate] = useState<Date | null>(null);
   const [checkOutDate, setCheckOutDate] = useState<Date | null>(null);
+  const [checkInTime, setCheckInTime] = useState("12:00");
+  const [checkOutTime, setCheckOutTime] = useState("11:00");
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
   const [infants, setInfants] = useState(0);
@@ -73,10 +75,39 @@ export default function BookPage() {
     }
   };
 
-  const getDuration = () => {
-    if (!checkInDate || !checkOutDate) return 0;
-    const diff = checkOutDate.getTime() - checkInDate.getTime();
-    return Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
+  const getDurationString = () => {
+    if (!checkInDate) return "Select Dates";
+
+    // Just show start time if only check-in is selected
+    if (!checkOutDate) {
+      return "Select Check-out Date";
+    }
+
+    const start = new Date(checkInDate);
+    const [startH, startM] = checkInTime.split(':').map(Number);
+    start.setHours(startH, startM);
+
+    const end = new Date(checkOutDate);
+    const [endH, endM] = checkOutTime.split(':').map(Number);
+    end.setHours(endH, endM);
+
+    if (end <= start) {
+      return "Invalid Duration"; // Check-out must be after check-in
+    }
+
+    const diffMs = end.getTime() - start.getTime();
+    const totalMinutes = Math.floor(diffMs / (1000 * 60));
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    const days = Math.floor(hours / 24);
+    const remainingHours = hours % 24;
+
+    if (days > 0) {
+      return `${days} Day${days > 1 ? 's' : ''}${remainingHours > 0 ? `, ${remainingHours} Hr${remainingHours > 1 ? 's' : ''}` : ''}`;
+    }
+
+    return `${hours} Hr${hours !== 1 ? 's' : ''}${minutes > 0 ? ` ${minutes} Min` : ''}`;
   };
 
   const getTotalGuests = () => adults + children + infants;
@@ -87,9 +118,26 @@ export default function BookPage() {
       setError("Please select check-in and check-out dates.");
       return;
     }
+
+    // Validate times
+    const start = new Date(checkInDate);
+    const [startH, startM] = checkInTime.split(':').map(Number);
+    start.setHours(startH, startM);
+
+    const end = new Date(checkOutDate);
+    const [endH, endM] = checkOutTime.split(':').map(Number);
+    end.setHours(endH, endM);
+
+    if (end <= start) {
+      setError("Check-out time must be after check-in time.");
+      return;
+    }
+
     const params = new URLSearchParams({
       checkIn: checkInDate.toISOString().slice(0, 10),
       checkOut: checkOutDate.toISOString().slice(0, 10),
+      checkInTime,
+      checkOutTime,
     });
     router.push(`/book/rooms?${params.toString()}`);
   };
@@ -103,7 +151,7 @@ export default function BookPage() {
           Your Haven Awaits
         </h2>
         <p className="text-xs mb-6 text-center" style={{ color: "var(--muted)" }}>
-          Select your preferred dates for booking
+          Select your preferred dates and times for booking
         </p>
 
         <div className="grid lg:grid-cols-[1.5fr,1fr] gap-6">
@@ -151,7 +199,7 @@ export default function BookPage() {
               ))}
             </div>
 
-            <div className="grid grid-cols-7 gap-1">
+            <div className="grid grid-cols-7 gap-1 mb-6">
               {days.map((date, idx) => {
                 if (!date) {
                   return <div key={`empty-${idx}`} />;
@@ -178,6 +226,30 @@ export default function BookPage() {
                   </button>
                 );
               })}
+            </div>
+
+            {/* Time Selection */}
+            <div className="grid grid-cols-2 gap-4 pb-4 border-b" style={{ borderColor: "var(--border)" }}>
+              <div>
+                <label className="block text-[10px] uppercase tracking-wider mb-1" style={{ color: "var(--muted)" }}>Check-in Time</label>
+                <input
+                  type="time"
+                  value={checkInTime}
+                  onChange={(e) => setCheckInTime(e.target.value)}
+                  className="w-full text-sm p-2 border rounded bg-white"
+                  style={{ borderColor: "var(--border)" }}
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] uppercase tracking-wider mb-1" style={{ color: "var(--muted)" }}>Check-out Time</label>
+                <input
+                  type="time"
+                  value={checkOutTime}
+                  onChange={(e) => setCheckOutTime(e.target.value)}
+                  className="w-full text-sm p-2 border rounded bg-white"
+                  style={{ borderColor: "var(--border)" }}
+                />
+              </div>
             </div>
           </div>
 
@@ -279,7 +351,7 @@ export default function BookPage() {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <div className="text-[10px] uppercase tracking-wider mb-0.5" style={{ color: "var(--muted)" }}>Stay Duration</div>
-                  <div className="font-bold text-base">{getDuration()} Days</div>
+                  <div className="font-bold text-base">{getDurationString()}</div>
                 </div>
                 <div>
                   <div className="text-[10px] uppercase tracking-wider mb-0.5" style={{ color: "var(--muted)" }}>Total Guests</div>
