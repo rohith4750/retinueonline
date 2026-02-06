@@ -3,31 +3,36 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), Georgia, serif;
   --font-mono: var(--font-geist-mono);
 }
 
 @layer base {
   :root {
-    /* Warm cream theme with orange accents */
-    --background: #F5F1E8; /* Cream/beige background */
-    --foreground: #2C2416; /* Dark brown text */
-    --surface: rgba(255, 255, 255, 0.95);
-    --surface-2: rgba(245, 241, 232, 0.8);
-    --border: rgba(44, 36, 22, 0.1);
-    --muted: rgba(92, 76, 56, 0.7);
-    --muted-2: rgba(92, 76, 56, 0.5);
-    --shadow: rgba(0, 0, 0, 0.08);
-    /* Orange/coral accents */
-    --accent: #FF6B35; /* Vibrant orange */
-    --accent-soft: rgba(255, 107, 53, 0.15);
-    --accent-glow: rgba(255, 107, 53, 0.08);
-    --accent-dark: #E85A28;
-    --bg-gradient: linear-gradient(135deg, #F5F1E8 0%, #F9F6F0 100%);
-    --bg-section: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, transparent 100%);
+    /* Refined Luxury Theme */
+    --background: #FAFAF5;
+    /* Lighter, cleaner cream */
+    --foreground: #1A1612;
+    /* Deep warm black/brown */
+    --surface: rgba(255, 255, 255, 0.98);
+    --surface-2: #F2EFE9;
+    --border: rgba(26, 22, 18, 0.08);
+    --muted: rgba(26, 22, 18, 0.6);
+    --muted-2: rgba(26, 22, 18, 0.4);
+    --shadow: rgba(0, 0, 0, 0.04);
+
+    /* Sophisticated Accents */
+    --accent: #D96C32;
+    /* Burnt Orange/Terracotta - more premium than #FF6B35 */
+    --accent-light: #F4A261;
+    --accent-soft: rgba(217, 108, 50, 0.1);
+    --accent-glow: rgba(217, 108, 50, 0.15);
+    --accent-dark: #B5501E;
+
+    --bg-gradient: linear-gradient(180deg, #FAFAF5 0%, #F5F1E8 100%);
+    --bg-section: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
     --neutral-light: #FFFFFF;
-    --font-geist-mono: 'JetBrains Mono', monospace;
   }
 
   body {
@@ -39,19 +44,18 @@
     font-family: var(--font-sans);
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
+
   }
 
   .font-heading {
     font-family: var(--font-serif);
+    font-weight: 500;
   }
 }
 
 @layer components {
   .form-input {
-    @apply w-full px-3 sm:px-4 py-3 min-h-[48px] sm:min-h-0 text-base rounded-xl
-           placeholder:text-gray-400
-           focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/40 focus:border-transparent
-           transition-all duration-300;
+    @apply w-full px-3 py-2.5 min-h-[40px] text-sm rounded-lg placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/40 focus:border-transparent transition-all duration-300;
     background: #FFFFFF;
     border: 1px solid rgba(44, 36, 22, 0.15);
     color: var(--foreground);
@@ -89,74 +93,66 @@
   }
 
   .form-select {
-    @apply w-full px-4 py-3 text-base rounded-xl
-           focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/40 focus:border-transparent
-           transition-all duration-300;
+    @apply w-full px-3 py-2.5 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/40 focus:border-transparent transition-all duration-300;
     background: #FFFFFF;
     border: 1px solid rgba(44, 36, 22, 0.15);
     color: var(--foreground);
   }
 
   .form-textarea {
-    @apply w-full px-4 py-3 text-base rounded-xl placeholder:text-gray-400
-           focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/40 focus:border-transparent
-           transition-all duration-300 resize-y;
+    @apply w-full px-3 py-2.5 text-sm rounded-lg placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/40 focus:border-transparent transition-all duration-300 resize-y;
     background: #FFFFFF;
     border: 1px solid rgba(44, 36, 22, 0.15);
     color: var(--foreground);
   }
 
   .btn-primary {
-    @apply px-8 py-3 text-white font-bold rounded-full
-           focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2 focus:ring-offset-[var(--background)]
-           disabled:opacity-60 disabled:cursor-not-allowed
-           transition-all duration-300;
+    @apply px-6 py-2.5 text-sm text-white font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2 focus:ring-offset-[var(--background)] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-500 ease-out;
     background: var(--accent);
-    box-shadow: 0 4px 20px var(--accent-soft);
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    box-shadow: 0 4px 20px var(--accent-glow);
+    letter-spacing: 0.02em;
   }
 
   .btn-primary:hover:not(:disabled) {
-    background: var(--accent-dark);
-    box-shadow: 0 6px 25px var(--accent-soft);
+    background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);
+    box-shadow: 0 8px 30px var(--accent-glow);
     transform: translateY(-2px);
   }
 
   .btn-secondary {
-    @apply px-6 py-3 text-base font-medium rounded-full
-           border-2 transition-all duration-300;
-    border-color: var(--accent);
-    color: var(--accent);
-    background: transparent;
+    @apply px-5 py-2.5 text-sm font-medium rounded-full border transition-all duration-300;
+    border-color: var(--border);
+    color: var(--foreground);
+    background: white;
   }
 
   .btn-secondary:hover {
-    background: var(--accent);
-    color: white;
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--surface);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   }
 
   .btn-danger {
-    @apply px-6 py-3 text-base bg-red-500 text-white font-medium rounded-full
-           focus:outline-none focus:ring-2 focus:ring-red-400/40 focus:ring-offset-2 focus:ring-offset-[var(--background)]
-           hover:bg-red-600 transition-all duration-300;
+    @apply px-6 py-3 text-base bg-red-500 text-white font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-red-400/40 focus:ring-offset-2 focus:ring-offset-[var(--background)] hover:bg-red-600 transition-all duration-300;
   }
 
   .btn-success {
-    @apply px-6 py-3 text-base bg-emerald-500 text-white font-medium rounded-full
-           focus:outline-none focus:ring-2 focus:ring-emerald-400/40 focus:ring-offset-2 focus:ring-offset-[var(--background)]
-           hover:bg-emerald-600 transition-all duration-300;
+    @apply px-6 py-3 text-base bg-emerald-500 text-white font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-400/40 focus:ring-offset-2 focus:ring-offset-[var(--background)] hover:bg-emerald-600 transition-all duration-300;
   }
 
   .card {
-    @apply rounded-2xl sm:rounded-3xl p-4 sm:p-6 border relative overflow-hidden transition-all duration-500;
+    @apply rounded-xl sm:rounded-2xl p-5 sm:p-6 border relative overflow-hidden transition-all duration-500;
     background: white;
-    border-color: rgba(44, 36, 22, 0.1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border-color: var(--border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
   }
 
   .card:hover {
-    border-color: rgba(44, 36, 22, 0.15);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border-color: var(--accent-soft);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
     transform: translateY(-4px);
   }
 
@@ -265,7 +261,7 @@
 
   .section-title {
     font-family: var(--font-serif);
-    @apply text-2xl sm:text-3xl md:text-4xl lg:text-[2.5rem] font-light tracking-tight mb-6 sm:mb-8;
+    @apply text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight mb-6 sm:mb-8;
     color: var(--foreground);
   }
 
@@ -304,6 +300,7 @@
   }
 
   @media (max-width: 640px) {
+
     .table td,
     .table th {
       white-space: normal;
@@ -316,8 +313,7 @@
   }
 
   .badge {
-    @apply inline-flex items-center px-4 py-2 rounded-full text-sm font-medium
-           ring-1 ring-offset-2 ring-offset-[var(--background)];
+    @apply inline-flex items-center px-4 py-2 rounded-full text-sm font-medium ring-1 ring-offset-2 ring-offset-[var(--background)];
   }
 
   .badge-success {
@@ -364,17 +360,37 @@
     animation: scaleIn 0.4s ease-out forwards;
   }
 
-  .animate-stagger-1 { animation-delay: 0.1s; animation-fill-mode: both; }
-  .animate-stagger-2 { animation-delay: 0.2s; animation-fill-mode: both; }
-  .animate-stagger-3 { animation-delay: 0.3s; animation-fill-mode: both; }
-  .animate-stagger-4 { animation-delay: 0.4s; animation-fill-mode: both; }
-  .animate-stagger-5 { animation-delay: 0.5s; animation-fill-mode: both; }
+  .animate-stagger-1 {
+    animation-delay: 0.1s;
+    animation-fill-mode: both;
+  }
+
+  .animate-stagger-2 {
+    animation-delay: 0.2s;
+    animation-fill-mode: both;
+  }
+
+  .animate-stagger-3 {
+    animation-delay: 0.3s;
+    animation-fill-mode: both;
+  }
+
+  .animate-stagger-4 {
+    animation-delay: 0.4s;
+    animation-fill-mode: both;
+  }
+
+  .animate-stagger-5 {
+    animation-delay: 0.5s;
+    animation-fill-mode: both;
+  }
 }
 
 /* Nav link: Subtle underline hover */
 .nav-link {
   position: relative;
 }
+
 .nav-link::after {
   content: "";
   position: absolute;
@@ -385,23 +401,84 @@
   background: var(--accent);
   transition: width 0.4s ease;
 }
+
 .nav-link:hover::after {
   width: 100%;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 4px 20px var(--accent-glow);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 0 0 25px rgba(244, 162, 97, 0.4);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% center;
+  }
+
+  100% {
+    background-position: -200% center;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s infinite ease-in-out;
+}
+
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 4s linear infinite;
+  background-image: linear-gradient(to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      transparent 100%);
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }
 
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 ::-webkit-scrollbar {

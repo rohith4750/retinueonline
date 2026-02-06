@@ -112,9 +112,9 @@ function LoginForm() {
       <div className="flex-1 flex">
       {/* Left Side - Hotel Info */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden" style={{ background: "#F5F1E8" }}>
-        <div className="w-full p-12 flex flex-col justify-center items-center text-center">
+        <div className="w-full px-16 py-16 flex flex-col justify-center items-center text-center">
           {/* Decorative lines */}
-          <div className="absolute top-8 left-8 w-24 h-24 opacity-10">
+          <div className="absolute top-10 left-10 w-28 h-28 opacity-10">
             <svg viewBox="0 0 100 100" fill="none" stroke="var(--accent)" strokeWidth="1">
               <circle cx="50" cy="50" r="45" />
               <circle cx="50" cy="50" r="35" />
@@ -123,59 +123,59 @@ function LoginForm() {
           </div>
 
           {/* Header */}
-          <div className="mb-12">
-            <p className="text-sm uppercase tracking-widest mb-2" style={{ color: "var(--accent)" }}>HOTEL</p>
-            <h1 className="font-heading text-4xl font-light mb-2" style={{ color: "var(--accent)" }}>
+          <div className="mb-16">
+            <p className="text-sm uppercase tracking-widest mb-3" style={{ color: "var(--accent)" }}>HOTEL</p>
+            <h1 className="font-heading text-5xl font-light mb-3" style={{ color: "var(--accent)" }}>
               THE RETINUE
             </h1>
-            <p className="text-lg mb-4" style={{ color: "var(--foreground)" }}>&</p>
-            <p className="text-xl uppercase tracking-wider mb-6" style={{ color: "var(--foreground)" }}>
+            <p className="text-xl mb-5" style={{ color: "var(--foreground)" }}>&</p>
+            <p className="text-xl uppercase tracking-wider mb-8" style={{ color: "var(--foreground)" }}>
               BUCHIRAJU CONVENTIONS
             </p>
-            <p className="text-sm max-w-sm mx-auto" style={{ color: "var(--muted)" }}>
+            <p className="text-base max-w-md mx-auto leading-relaxed" style={{ color: "var(--muted)" }}>
               Comfortable stays & elegant celebrations in Ramachandrapuram
             </p>
           </div>
 
           {/* Divider */}
-          <div className="flex items-center gap-4 my-8">
-            <div className="h-px w-20" style={{ background: "var(--accent)" }}></div>
-            <span style={{ color: "var(--accent)" }}>★</span>
-            <div className="h-px w-20" style={{ background: "var(--accent)" }}></div>
+          <div className="flex items-center gap-6 my-10">
+            <div className="h-px w-24" style={{ background: "var(--accent)" }}></div>
+            <span className="text-lg" style={{ color: "var(--accent)" }}>★</span>
+            <div className="h-px w-24" style={{ background: "var(--accent)" }}></div>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-4 mb-12 max-w-lg">
-            <div className="card p-4">
-              <svg className="w-8 h-8 mx-auto mb-2" fill="none" stroke="var(--accent)" strokeWidth="2" viewBox="0 0 24 24">
+          <div className="grid grid-cols-3 gap-6 mb-16 max-w-2xl w-full">
+            <div className="card p-6 rounded-xl">
+              <svg className="w-10 h-10 mx-auto mb-3" fill="none" stroke="var(--accent)" strokeWidth="2" viewBox="0 0 24 24">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                 <circle cx="9" cy="7" r="4"></circle>
               </svg>
-              <p className="text-2xl font-bold" style={{ color: "var(--accent)" }}>{getYearsOfOperation()}+</p>
-              <p className="text-xs" style={{ color: "var(--muted)" }}>Premium Hospitality</p>
+              <p className="text-3xl font-bold mb-2" style={{ color: "var(--accent)" }}>{getYearsOfOperation()}+</p>
+              <p className="text-sm" style={{ color: "var(--muted)" }}>Premium Hospitality</p>
             </div>
-            <div className="card p-4">
-              <svg className="w-8 h-8 mx-auto mb-2" fill="none" stroke="var(--accent)" strokeWidth="2" viewBox="0 0 24 24">
+            <div className="card p-6 rounded-xl">
+              <svg className="w-10 h-10 mx-auto mb-3" fill="none" stroke="var(--accent)" strokeWidth="2" viewBox="0 0 24 24">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                 <circle cx="9" cy="7" r="4"></circle>
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
               </svg>
-              <p className="text-2xl font-bold" style={{ color: "var(--accent)" }}>1K+</p>
-              <p className="text-xs" style={{ color: "var(--muted)" }}>Happy Guests</p>
+              <p className="text-3xl font-bold mb-2" style={{ color: "var(--accent)" }}>1K+</p>
+              <p className="text-sm" style={{ color: "var(--muted)" }}>Happy Guests</p>
             </div>
-            <div className="card p-4">
-              <svg className="w-8 h-8 mx-auto mb-2" fill="none" stroke="var(--accent)" strokeWidth="2" viewBox="0 0 24 24">
+            <div className="card p-6 rounded-xl">
+              <svg className="w-10 h-10 mx-auto mb-3" fill="none" stroke="var(--accent)" strokeWidth="2" viewBox="0 0 24 24">
                 <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
               </svg>
-              <p className="text-2xl font-bold" style={{ color: "var(--accent)" }}>500+</p>
-              <p className="text-xs" style={{ color: "var(--muted)" }}>Events Hosted</p>
+              <p className="text-3xl font-bold mb-2" style={{ color: "var(--accent)" }}>500+</p>
+              <p className="text-sm" style={{ color: "var(--muted)" }}>Events Hosted</p>
             </div>
           </div>
 
           {/* Quote */}
-          <div className="mt-auto">
-            <p className="text-sm italic" style={{ color: "var(--muted)" }}>
+          <div className="mt-auto mb-6">
+            <p className="text-base italic leading-relaxed" style={{ color: "var(--muted)" }}>
               <span style={{ color: "var(--accent)" }}>❤</span>
               {" "}"Stay with comfort, celebrate with elegance."{" "}
               <span style={{ color: "var(--accent)" }}>❤</span>
@@ -183,28 +183,28 @@ function LoginForm() {
           </div>
 
           {/* Back to home link */}
-          <Link href="/" className="mt-8 text-sm hover:text-[var(--accent)] transition-colors" style={{ color: "var(--muted)" }}>
+          <Link href="/" className="mt-6 text-sm hover:text-[var(--accent)] transition-colors" style={{ color: "var(--muted)" }}>
             ← Back to Home
           </Link>
         </div>
       </div>
 
       {/* Right Side - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 relative" style={{ background: "var(--background)" }}>
+      <div className="w-full lg:w-1/2 flex items-center justify-center px-8 py-12 lg:px-16 relative" style={{ background: "var(--background)" }}>
         <div className="w-full max-w-md">
-          <div className="lg:hidden mb-8 text-center">
-            <p className="text-xs uppercase tracking-widest mb-1" style={{ color: "var(--accent)" }}>HOTEL</p>
-            <h2 className="font-heading text-2xl font-light" style={{ color: "var(--accent)" }}>
+          <div className="lg:hidden mb-12 text-center">
+            <p className="text-xs uppercase tracking-widest mb-2" style={{ color: "var(--accent)" }}>HOTEL</p>
+            <h2 className="font-heading text-3xl font-light mb-2" style={{ color: "var(--accent)" }}>
               THE RETINUE
             </h2>
-            <p className="text-sm" style={{ color: "var(--foreground)" }}>& Buchiraju Conventions</p>
+            <p className="text-base" style={{ color: "var(--foreground)" }}>& Buchiraju Conventions</p>
           </div>
 
-          <div className="mb-8">
-            <h1 className="font-heading text-3xl sm:text-4xl font-light mb-2" style={{ color: "var(--foreground)" }}>
+          <div className="mb-10">
+            <h1 className="font-heading text-3xl sm:text-4xl font-light mb-4" style={{ color: "var(--foreground)" }}>
               Welcome Back!
             </h1>
-            <p className="text-sm" style={{ color: "var(--muted)" }}>
+            <p className="text-base leading-relaxed" style={{ color: "var(--muted)" }}>
               {step === "credentials" && loginMethod === "password" && "Enter your email and password to continue"}
               {step === "credentials" && loginMethod === "otp" && "Enter your email and we'll send you a verification code"}
               {step === "otp" && `We have sent a 6-digit code to ${maskEmail(email)}`}
@@ -213,11 +213,11 @@ function LoginForm() {
 
           {/* Login Method Toggle */}
           {step === "credentials" && (
-            <div className="flex gap-2 mb-6 p-1 rounded-lg" style={{ background: "var(--surface)" }}>
+            <div className="flex gap-2 mb-8 p-1.5 rounded-lg" style={{ background: "var(--surface)" }}>
               <button
                 type="button"
                 onClick={() => { setLoginMethod("password"); setError(""); }}
-                className={`flex-1 py-2.5 px-4 rounded-md text-sm font-medium transition-all ${
+                className={`flex-1 py-3.5 px-5 rounded-md text-sm font-medium transition-all ${
                   loginMethod === "password" 
                     ? "bg-white shadow-sm" 
                     : "hover:bg-white/50"
@@ -231,7 +231,7 @@ function LoginForm() {
               <button
                 type="button"
                 onClick={() => { setLoginMethod("otp"); setError(""); }}
-                className={`flex-1 py-2.5 px-4 rounded-md text-sm font-medium transition-all ${
+                className={`flex-1 py-3.5 px-5 rounded-md text-sm font-medium transition-all ${
                   loginMethod === "otp" 
                     ? "bg-white shadow-sm" 
                     : "hover:bg-white/50"
@@ -246,9 +246,9 @@ function LoginForm() {
           )}
 
           {step === "credentials" && loginMethod === "password" && (
-            <form onSubmit={handlePasswordLogin} className="space-y-5">
+            <form onSubmit={handlePasswordLogin} className="space-y-6">
               <div>
-                <label className="form-label text-xs uppercase tracking-wider">Email Address</label>
+                <label className="form-label text-xs uppercase tracking-wider mb-2 block">Email Address</label>
                 <input
                   type="email"
                   className="form-input"
@@ -259,11 +259,11 @@ function LoginForm() {
                 />
               </div>
               <div>
-                <label className="form-label text-xs uppercase tracking-wider">Password</label>
+                <label className="form-label text-xs uppercase tracking-wider mb-2 block">Password</label>
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
-                    className="form-input pr-12"
+                    className="form-input pr-14"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
@@ -272,7 +272,7 @@ function LoginForm() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-2 hover:bg-gray-100 rounded-md transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 p-2 hover:bg-gray-100 rounded-md transition-colors"
                     style={{ color: "var(--muted)" }}
                     tabIndex={-1}
                   >
@@ -290,17 +290,17 @@ function LoginForm() {
                   </button>
                 </div>
               </div>
-              {error && <p className="text-sm text-red-600 animate-fade-in" role="alert">{error}</p>}
-              <button type="submit" disabled={loading} className="btn-primary w-full py-3.5">
+              {error && <p className="text-sm text-red-600 animate-fade-in mt-4" role="alert">{error}</p>}
+              <button type="submit" disabled={loading} className="btn-primary w-full py-4 mt-8">
                 {loading ? "Signing in…" : "Sign In"}
               </button>
             </form>
           )}
 
           {step === "credentials" && loginMethod === "otp" && (
-            <form onSubmit={handleSendOtp} className="space-y-5">
+            <form onSubmit={handleSendOtp} className="space-y-6">
               <div>
-                <label className="form-label text-xs uppercase tracking-wider">Email Address</label>
+                <label className="form-label text-xs uppercase tracking-wider mb-2 block">Email Address</label>
                 <input
                   type="email"
                   className="form-input"
@@ -310,8 +310,8 @@ function LoginForm() {
                   required
                 />
               </div>
-              {error && <p className="text-sm text-red-600 animate-fade-in" role="alert">{error}</p>}
-              <button type="submit" disabled={loading} className="btn-primary w-full py-3.5">
+              {error && <p className="text-sm text-red-600 animate-fade-in mt-4" role="alert">{error}</p>}
+              <button type="submit" disabled={loading} className="btn-primary w-full py-4 mt-8">
                 {loading ? "Sending…" : "Send OTP"}
               </button>
             </form>
@@ -322,17 +322,17 @@ function LoginForm() {
               <button
                 type="button"
                 onClick={() => { setStep("credentials"); setError(""); setOtp(""); }}
-                className="text-sm text-[var(--accent)] hover:underline mb-6 transition-all duration-200"
+                className="text-sm text-[var(--accent)] hover:underline mb-8 transition-all duration-200"
               >
                 ← Change email address
               </button>
-              <form onSubmit={handleVerifyOtp} className="space-y-5">
+              <form onSubmit={handleVerifyOtp} className="space-y-6">
                 <div>
-                  <label className="form-label text-xs uppercase tracking-wider">Enter Code</label>
+                  <label className="form-label text-xs uppercase tracking-wider mb-3 block">Enter Code</label>
                   <input
                     type="text"
                     inputMode="numeric"
-                    className="form-input font-mono text-2xl tracking-widest text-center"
+                    className="form-input font-mono text-2xl tracking-widest text-center py-5"
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
                     placeholder="000000"
@@ -340,25 +340,25 @@ function LoginForm() {
                     required
                   />
                 </div>
-                <p className="text-sm text-center" style={{ color: "var(--muted)" }}>
-                  Didn't receive the code? <button type="button" onClick={handleSendOtp} className="text-[var(--accent)] hover:underline">Resend Code</button>
+                <p className="text-sm text-center pt-2" style={{ color: "var(--muted)" }}>
+                  Didn't receive the code? <button type="button" onClick={handleSendOtp} className="text-[var(--accent)] hover:underline font-medium">Resend Code</button>
                 </p>
-                {error && <p className="text-sm text-red-600 animate-fade-in" role="alert">{error}</p>}
-                <button type="submit" disabled={loading} className="btn-primary w-full py-3.5">
+                {error && <p className="text-sm text-red-600 animate-fade-in mt-4" role="alert">{error}</p>}
+                <button type="submit" disabled={loading} className="btn-primary w-full py-4 mt-8">
                   {loading ? "Verifying…" : "Verify & Continue"}
                 </button>
               </form>
             </>
           )}
 
-          <p className="text-center text-sm mt-8" style={{ color: "var(--muted)" }}>
+          <p className="text-center text-base mt-12" style={{ color: "var(--muted)" }}>
             Don't have an account? <Link href={searchParams.get("redirect") ? `/signup?redirect=${encodeURIComponent(searchParams.get("redirect")!)}` : "/signup"} className="text-[var(--accent)] hover:underline font-medium">Sign Up</Link>
           </p>
 
-          <div className="flex justify-center gap-6 mt-8 text-xs" style={{ color: "var(--muted)" }}>
-            <Link href="#" className="hover:text-[var(--accent)]">SUPPORT</Link>
-            <Link href="#" className="hover:text-[var(--accent)]">PRIVACY</Link>
-            <Link href="#" className="hover:text-[var(--accent)]">GENERAL</Link>
+          <div className="flex justify-center gap-8 mt-10 text-xs uppercase tracking-wider" style={{ color: "var(--muted)" }}>
+            <Link href="#" className="hover:text-[var(--accent)] transition-colors">SUPPORT</Link>
+            <Link href="#" className="hover:text-[var(--accent)] transition-colors">PRIVACY</Link>
+            <Link href="#" className="hover:text-[var(--accent)] transition-colors">GENERAL</Link>
           </div>
         </div>
       </div>

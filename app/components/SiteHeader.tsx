@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HOTEL } from "@/lib/site-content";
 import { isLoggedIn, getCustomerEmail } from "@/lib/auth";
+import Logo from "./Logo";
 
 const nav = [
   { href: "/", label: "Home" },
@@ -40,6 +41,7 @@ export default function SiteHeader() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -60,49 +62,48 @@ export default function SiteHeader() {
 
   return (
     <header className="border-b sticky top-0 z-20 bg-white shadow-sm">
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-          <div className="w-8 h-8 rounded flex items-center justify-center" style={{ background: "var(--accent)" }}>
-            <svg width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 12L16 8L24 12V20L16 24L8 20V12Z" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M16 8V16" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
-              <path d="M8 12L16 16L24 12" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div className="h-16 md:h-20 flex items-center justify-between gap-4">
+          {/* Logo and Brand */}
+          <div className="flex items-center gap-3 md:gap-5 min-w-0 flex-shrink">
+            <Link href="/" className="hover:opacity-80 transition-opacity flex-shrink-0">
+              <Logo />
+            </Link>
+            <div className="hidden md:block font-heading text-base lg:text-lg xl:text-xl font-semibold tracking-tight whitespace-nowrap">
+              <span style={{ color: "var(--foreground)" }}>Hotel </span>
+              <span style={{ color: "var(--accent)" }}>The Retinue</span>
+              <span className="text-xs lg:text-sm" style={{ color: "var(--muted)" }}> & Buchiraju Convention</span>
+            </div>
           </div>
-          <span className="font-medium text-sm" style={{ color: "var(--foreground)" }}>
-            {HOTEL.name}
-          </span>
-        </Link>
 
-        {/* Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-          {nav.map(({ href, label }) => {
-            const isActive = pathname === href || (href !== "/" && pathname.startsWith(href));
-            return (
-              <Link
-                key={href}
-                href={href}
-                className="relative text-sm font-medium transition-colors hover:text-[var(--accent)] pb-1"
-                style={{ color: isActive ? "var(--accent)" : "var(--foreground)" }}
-              >
-                {label}
-                {isActive && (
-                  <span
-                    className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
-                    style={{ background: "var(--accent)" }}
-                  />
-                )}
-              </Link>
-            );
-          })}
-        </nav>
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-6">
+            {nav.map(({ href, label }) => {
+              const isActive = pathname === href || (href !== "/" && pathname.startsWith(href));
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className="relative text-sm font-medium transition-colors hover:text-[var(--accent)] pb-1 whitespace-nowrap"
+                  style={{ color: isActive ? "var(--accent)" : "var(--foreground)" }}
+                >
+                  {label}
+                  {isActive && (
+                    <span
+                      className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
+                      style={{ background: "var(--accent)" }}
+                    />
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
 
-        {/* Auth Section */}
-        <div className="flex items-center gap-3">
-          {loggedIn ? (
-            /* User Profile Dropdown */
-            <div className="relative" ref={dropdownRef}>
+          {/* Auth Section */}
+          <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
+            {loggedIn ? (
+              /* User Profile Dropdown */
+              <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className="flex items-center gap-3 px-4 py-2 rounded-full border transition-all hover:shadow-md"
@@ -122,12 +123,12 @@ export default function SiteHeader() {
                 <span className="font-medium text-sm hidden sm:block" style={{ color: "var(--foreground)" }}>
                   {getDisplayName(userEmail)}
                 </span>
-                <svg 
-                  width="16" 
-                  height="16" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
                   strokeWidth="2"
                   className={`transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}
                   style={{ color: "var(--muted)" }}
@@ -138,9 +139,9 @@ export default function SiteHeader() {
 
               {/* Dropdown Menu */}
               {dropdownOpen && (
-                <div 
+                <div
                   className="absolute right-0 mt-2 w-56 rounded-lg shadow-lg border overflow-hidden"
-                  style={{ 
+                  style={{
                     background: "white",
                     borderColor: "var(--border)"
                   }}
@@ -153,7 +154,7 @@ export default function SiteHeader() {
                       {userEmail}
                     </p>
                   </div>
-                  
+
                   <div className="py-1">
                     <Link
                       href="/dashboard"
@@ -169,7 +170,7 @@ export default function SiteHeader() {
                       </svg>
                       Dashboard
                     </Link>
-                    
+
                     <Link
                       href="/my-booking"
                       onClick={() => setDropdownOpen(false)}
@@ -181,9 +182,9 @@ export default function SiteHeader() {
                       </svg>
                       My Bookings
                     </Link>
-                    
+
                     <div className="border-t my-1" style={{ borderColor: "var(--border)" }}></div>
-                    
+
                     <Link
                       href="/logout"
                       onClick={() => setDropdownOpen(false)}
@@ -204,38 +205,97 @@ export default function SiteHeader() {
           ) : (
             /* Guest Buttons */
             <>
-              <Link
-                href="/login"
-                className="text-sm font-medium px-4 py-2 hover:text-[var(--accent)] transition-colors hidden sm:block"
-                style={{ color: "var(--foreground)" }}
-              >
-                Login
-              </Link>
-              <Link
-                href="/signup"
-                className="text-sm font-medium px-4 py-2 hover:text-[var(--accent)] transition-colors hidden sm:block"
-                style={{ color: "var(--foreground)" }}
-              >
-                Sign Up
-              </Link>
+              <div className="hidden md:flex items-center gap-1 border rounded-full px-2 py-1 whitespace-nowrap" style={{ borderColor: "var(--border)" }}>
+                <Link
+                  href="/login"
+                  className="text-xs md:text-sm font-medium px-2 md:px-3 py-1.5 rounded-full hover:bg-gray-50 transition-colors whitespace-nowrap"
+                  style={{ color: "var(--foreground)" }}
+                >
+                  Login
+                </Link>
+                <span className="text-xs" style={{ color: "var(--border)" }}>/</span>
+                <Link
+                  href="/signup"
+                  className="text-xs md:text-sm font-medium px-2 md:px-3 py-1.5 rounded-full hover:bg-gray-50 transition-colors whitespace-nowrap"
+                  style={{ color: "var(--foreground)" }}
+                >
+                  Sign Up
+                </Link>
+              </div>
               <Link
                 href="/book"
-                className="btn-primary px-5 py-2 text-sm font-medium"
+                className="btn-primary px-3 md:px-5 py-1.5 md:py-2 text-xs md:text-sm font-medium whitespace-nowrap"
               >
                 Book Now
               </Link>
             </>
           )}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 hover:bg-gray-100 rounded-md transition-colors" 
+            aria-label="Menu"
+          >
+            {mobileMenuOpen ? (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            ) : (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            )}
+          </button>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button className="md:hidden p-2" aria-label="Menu">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden border-t py-4 space-y-1">
+            {nav.map(({ href, label }) => {
+              const isActive = pathname === href || (href !== "/" && pathname.startsWith(href));
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-4 py-2.5 text-sm font-medium transition-colors hover:bg-gray-50 rounded-md"
+                  style={{ 
+                    color: isActive ? "var(--accent)" : "var(--foreground)",
+                    backgroundColor: isActive ? "rgba(218, 165, 32, 0.05)" : "transparent"
+                  }}
+                >
+                  {label}
+                </Link>
+              );
+            })}
+            
+            {!loggedIn && (
+              <div className="pt-3 mt-3 border-t space-y-2">
+                <Link
+                  href="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-4 py-2.5 text-sm font-medium transition-colors hover:bg-gray-50 rounded-md text-center"
+                  style={{ color: "var(--foreground)" }}
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-4 py-2.5 text-sm font-medium transition-colors hover:bg-gray-50 rounded-md text-center"
+                  style={{ color: "var(--foreground)" }}
+                >
+                  Sign Up
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </header>
   );
