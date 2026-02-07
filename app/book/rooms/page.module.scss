@@ -1,17 +1,8 @@
 // Available Rooms Page Styles
-.roomsPage {
-  min-height: 100vh;
-  background: var(--background);
-}
-
 .container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 2rem 1rem;
-
-  @media (min-width: 640px) {
-    padding: 2rem 1.5rem;
-  }
 
   @media (min-width: 1024px) {
     padding: 3rem 2rem;
@@ -19,592 +10,429 @@
 }
 
 .pageLayout {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
-
-  @media (min-width: 1024px) {
-    grid-template-columns: 280px 1fr;
-    gap: 2rem;
-  }
 }
 
-// Sidebar Styles
+// Sidebar Styles (Now Top Info Bar)
 .sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.sidebarCard {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  padding: 1.5rem;
-
-  .cardTitle {
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 1rem;
-    color: var(--foreground);
-  }
-
-  .featuresList {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    .featureItem {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-
-      .featureIcon {
-        width: 2rem;
-        height: 2rem;
-        border-radius: 0.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--accent-soft);
-        flex-shrink: 0;
-
-        svg {
-          width: 1.125rem;
-          height: 1.125rem;
-          stroke: var(--accent);
-        }
-      }
-
-      .featureName {
-        font-size: 0.875rem;
-        color: var(--foreground);
-      }
-    }
-  }
-
-  .experienceList {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-
-    .experienceItem {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.875rem;
-      color: var(--muted);
-
-      .checkIcon {
-        width: 1rem;
-        height: 1rem;
-        color: var(--accent);
-        flex-shrink: 0;
-      }
-    }
-  }
-}
-
-.promoCard {
-  background: linear-gradient(135deg, var(--accent-soft) 0%, white 100%);
-  border: 1px solid var(--accent);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  text-align: center;
-
-  .promoTitle {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-    color: var(--foreground);
-  }
-
-  .promoText {
-    font-size: 0.875rem;
-    margin-bottom: 1rem;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  .promoLink {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--accent);
-    text-decoration: none;
-    transition: transform 0.3s ease;
-
-    &:hover {
-      transform: translateX(4px);
-    }
-
-    svg {
-      width: 1rem;
-      height: 1rem;
-    }
-  }
-}
-
-// Main Content Styles
-.mainContent {
-  .contentHeader {
-    margin-bottom: 2rem;
-
-    .headerTop {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 0.75rem;
-      flex-wrap: wrap;
-      gap: 1rem;
-
-      .pageTitle {
-        font-size: 1.875rem;
-        font-weight: 300;
-        font-family: var(--font-heading);
-        color: var(--foreground);
-        margin: 0;
-      }
-    }
-
-    .dateInfo {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.875rem;
-      color: var(--muted);
-
-      .changeDates {
-        color: var(--accent);
-        text-decoration: none;
-        font-weight: 500;
-        margin-left: 0.5rem;
-        transition: opacity 0.3s ease;
-
-        &:hover {
-          opacity: 0.8;
-        }
-      }
-    }
-
-    .subtitle {
-      font-size: 0.875rem;
-      color: var(--muted);
-      margin-top: 0.5rem;
-    }
-  }
-}
-
-// Categories Container
-.categoriesContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-}
-
-.categorySection {
-  .categoryHeader {
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid var(--accent);
-
-    .categoryTitle {
-      font-size: 1.5rem;
-      font-weight: 600;
-      font-family: var(--font-heading);
-      margin-bottom: 0.5rem;
-      color: var(--foreground);
-    }
-
-    .categoryDescription {
-      font-size: 0.875rem;
-      color: var(--muted);
-      margin: 0;
-    }
-  }
-}
-
-// Room Cards Grid
-.roomsGrid {
   display: grid;
   gap: 1.5rem;
   grid-template-columns: 1fr;
 
   @media (min-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.sidebarSection {
+  // margin-bottom: 0; // Handled by grid gap
+
+  .sidebarTitle {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #a16207; // Golden/Brownish color from image
+    margin-bottom: 1rem;
+    font-family: sans-serif;
+  }
+}
+
+.checkList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--foreground);
+    line-height: 1.4;
+
+    &.unchecked {
+      color: var(--muted);
+      opacity: 0.7;
+    }
+
+    .checkIcon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.25rem;
+      height: 1.25rem;
+      background: #ff6b35; // Orange check bg
+      color: white;
+      border-radius: 50%;
+      font-size: 0.6rem;
+      flex-shrink: 0;
+    }
+
+    .checkBox {
+      display: inline-block;
+      width: 1.25rem;
+      height: 1.25rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.promoCard {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+
+  .promoTag {
+    background: #e0f2fe;
+    color: #0284c7;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 1rem;
   }
 
-  @media (min-width: 1280px) {
-    grid-template-columns: repeat(3, 1fr);
+  h3 {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+    color: var(--foreground);
+  }
+
+  p {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .promoLinks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    
+    small {
+      font-size: 0.7rem;
+      color: #b45309;
+      background: #fff7ed;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+  }
+
+  .promoImages {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    
+    .promoImg {
+      width: 33%;
+      aspect-ratio: 1;
+      border-radius: 0.5rem;
+      background-size: cover;
+      background-position: center;
+      background-color: #eee;
+    }
+  }
+
+  .promoButton {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: #2b7a78; // Teal color
+    color: white;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: opacity 0.2s;
+    text-decoration: none;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+
+// Main Content
+.mainContent {
+  .contentHeader {
+    margin-bottom: 2rem;
+
+    .pageTitle {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--foreground);
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+  }
+}
+
+// Room List (Horizontal Cards)
+.roomsList {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  @media (min-width: 1024px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 .roomCard {
   background: white;
-  border: 1px solid var(--border);
-  border-radius: 1rem;
+  border: 1px solid #f0f0f0;
+  border-radius: 1.5rem; // large radius as in design
   overflow: hidden;
-  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s;
   display: flex;
   flex-direction: column;
+  height: 100%;
 
   &:hover {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    transform: translateY(-4px);
-
-    .roomImage img {
-      transform: scale(1.05);
-    }
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
   }
 }
 
 .roomImageWrapper {
   position: relative;
-  background: rgba(30, 41, 59, 0.5);
+  height: 240px;
+  width: 100%;
+  flex-shrink: 0;
 
-  .roomImage {
-    aspect-ratio: 4 / 3;
-    position: relative;
-    overflow: hidden;
-
-    img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block; // Remove inline spacing
   }
 
   .roomBadge {
     position: absolute;
-    top: 0.75rem;
-    left: 0.75rem;
+    top: 1.5rem;
+    left: 1.5rem;
     background: white;
+    padding: 0.35rem 0.85rem;
+    border-radius: 2rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     color: var(--foreground);
-    padding: 0.375rem 0.75rem;
-    border-radius: 0.375rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.025em;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-    &.standard {
-      background: #E8F5E9;
-      color: #2E7D32;
-    }
-
-    &.suite {
-      background: #E3F2FD;
-      color: #1565C0;
-    }
-
-    &.suitePlus {
-      background: #FFF3E0;
-      color: #E65100;
-    }
+    z-index: 2;
   }
 }
 
 .roomContent {
-  padding: 1.25rem;
-  flex: 1;
+  padding: 1.5rem 2rem;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+}
 
-  .roomHeader {
+.roomHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  width: 100%;
+
+  .roomName {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 600;
     margin-bottom: 0.75rem;
-
-    .roomName {
-      font-size: 1.125rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-      color: var(--foreground);
-    }
-
-    .roomNumber {
-      font-size: 0.875rem;
-      color: var(--muted);
-    }
+    color: var(--foreground);
+    line-height: 1.2;
   }
 
-  .roomPrice {
-    display: flex;
-    align-items: baseline;
-    gap: 0.25rem;
-    margin-bottom: 0.75rem;
-
+  .roomPriceBlock {
+    text-align: right;
+    min-width: 120px;
+    
     .price {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 700;
-      color: var(--accent);
+      color: var(--foreground);
+      display: block;
+    }
+    
+    .period {
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 0.25rem;
     }
 
-    .period {
-      font-size: 0.875rem;
+    .capacity {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      font-size: 0.75rem;
       color: var(--muted);
+      margin-top: 0.25rem;
     }
   }
+}
+
+.amenitiesList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+
+  .amenityItem {
+    font-size: 0.8rem;
+    color: #b45309; // matching the brownish text
+    font-weight: 500;
+  }
+}
+
+.roomFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto; // push to bottom
+  padding-top: 1.5rem;
+  width: 100%;
 
   .roomRating {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border);
-
-    .stars {
-      display: flex;
-      gap: 0.125rem;
-      color: #FFA000;
-      font-size: 0.875rem;
-    }
-
-    .ratingScore {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--foreground);
-    }
-
-    .reviewCount {
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
-  }
-
-  .roomFeatures {
-    display: flex;
-    flex-direction: column;
-    gap: 0.625rem;
-    margin-bottom: 1rem;
-
-    .feature {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.875rem;
-      color: var(--muted);
-
-      .icon {
-        width: 1rem;
-        height: 1rem;
-        stroke: var(--accent);
-        flex-shrink: 0;
-      }
-    }
-  }
-
-  .roomInfo {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border);
-
-    .info {
-      display: flex;
-      align-items: center;
-      gap: 0.375rem;
-      font-size: 0.875rem;
-      color: var(--muted);
-
-      .icon {
-        width: 1rem;
-        height: 1rem;
-        stroke: var(--accent);
-      }
-    }
-  }
-
-  .selectButton {
-    width: 100%;
-    padding: 0.75rem 1.5rem;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
+    gap: 0.25rem;
     font-size: 0.875rem;
     font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: auto;
 
-    &:hover {
-      background: var(--accent-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
-    }
-
-    &.selected {
-      background: #059669;
-      
-      &:hover {
-        background: #047857;
-      }
-    }
-
-    &:disabled {
-      background: var(--muted);
-      cursor: not-allowed;
-      transform: none;
-
-      &:hover {
-        transform: none;
-      }
+    .star { color: #f59e0b; }
+    .score { color: var(--foreground); }
+    .reviews { 
+      color: var(--muted); 
+      font-weight: 400;
+      font-size: 0.8rem;
+      margin-left: 0.25rem;
     }
   }
 }
 
-// Loading State
-.loadingContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 400px;
+.selectButton {
+  background: #ff6b35; // Orange/Red from image
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 2rem; // Capsule shape
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 6px rgba(255, 107, 53, 0.2);
 
-  .loadingText {
-    font-size: 1rem;
-    color: var(--muted);
+  &:hover {
+    background: #e85d2a;
+    transform: scale(1.02);
+    box-shadow: 0 6px 8px rgba(255, 107, 53, 0.3);
+  }
+
+  &.selected {
+    background: #059669; // Green for selected
+    cursor: default;
+    transform: none;
+    box-shadow: none;
+  }
+
+  &:disabled {
+    background: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
   }
 }
 
-// Empty State
-.emptyState {
+// Helpers
+.loadingContainer, .emptyState {
   text-align: center;
   padding: 4rem 2rem;
-
-  .emptyIcon {
-    width: 4rem;
-    height: 4rem;
-    margin: 0 auto 1.5rem;
-    color: var(--muted);
-    opacity: 0.5;
-  }
-
-  .emptyTitle {
+  
+  h2 {
     font-size: 1.5rem;
-    font-weight: 600;
     margin-bottom: 0.5rem;
     color: var(--foreground);
   }
-
-  .emptyText {
-    font-size: 1rem;
+  
+  p {
     color: var(--muted);
-    margin-bottom: 1.5rem;
   }
 
   .emptyButton {
     display: inline-block;
-    padding: 0.75rem 2rem;
-    background: var(--accent);
-    color: white;
-    border-radius: 0.5rem;
-    text-decoration: none;
+    margin-top: 1.5rem;
+    color: var(--accent);
+    text-decoration: underline;
     font-weight: 500;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background: var(--accent-hover);
-      transform: translateY(-2px);
-    }
   }
 }
 
-// Floating Cart
 .floatingCart {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 50;
+  bottom: 0; left: 0; right: 0;
   background: white;
-  border-top: 1px solid var(--border);
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
-  padding: 1.25rem 1rem;
-  animation: slideUp 0.3s ease-out;
-
-  @media (min-width: 640px) {
-    padding: 1.5rem 2rem;
-  }
-
-  @keyframes slideUp {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
+  border-top: 1px solid #e5e7eb;
+  padding: 1rem 2rem;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+  z-index: 50;
 
   .cartContent {
     max-width: 1400px;
     margin: 0 auto;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-
-    @media (min-width: 768px) {
-      flex-wrap: nowrap;
-    }
-  }
-
-  .cartInfo {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-
-    @media (min-width: 640px) {
-      flex-direction: row;
+    align-items: center;
+    font-weight: 500;
+    color: var(--foreground);
+    
+    span {
+      display: flex;
       align-items: center;
-      gap: 1.5rem;
-    }
-
-    .cartCount {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--foreground);
-    }
-
-    .cartTotal {
-      font-size: 1.125rem;
-      font-weight: 700;
-      color: var(--accent);
     }
   }
 
   .checkoutButton {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.875rem 2rem;
     background: var(--accent);
     color: white;
     border: none;
+    padding: 0.625rem 1.5rem;
     border-radius: 0.5rem;
-    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-
-    svg {
-      width: 1.25rem;
-      height: 1.25rem;
-    }
-
+    transition: background 0.2s;
+    
     &:hover {
       background: var(--accent-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
     }
   }
 }
